@@ -1,3 +1,7 @@
 .profile {
   margin-top: 40px;
+  color: #fff;
+  display: flex;
+  column-gap: 30px;
+  align-items: flex-start;
 }
