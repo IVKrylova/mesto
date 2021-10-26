@@ -2,7 +2,9 @@
   font-family: 'Inter', Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  background-color: #000;
+  max-width: 880px;
+  width: 68.75%;
+  margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
