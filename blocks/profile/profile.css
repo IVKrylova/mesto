@@ -1,7 +1,8 @@
 .profile {
   margin-top: 40px;
   color: #fff;
-  display: flex;
+  display: grid;
+  grid-template-columns: 120px calc(100% - 120px - 30px - 30px - 150px) 150px;
   column-gap: 30px;
-  align-items: flex-start;
+  align-items: center;
 }
