@@ -9,3 +9,9 @@
   height: 30px;
   margin: 30px;
 }
+
+.element__like:hover {
+  opacity: .5;
+  cursor: pointer;
+  transition: .7s;
+}

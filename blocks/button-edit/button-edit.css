@@ -9,3 +9,9 @@
   height: 24px;
   margin: 14px 0 0 18px;
 }
+
+.button-edit:hover {
+  opacity: .6;
+  cursor: pointer;
+  transition: .7s;
+}
