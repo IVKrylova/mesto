@@ -1,6 +1,7 @@
 .button-edit {
   border: 1px solid #FFFFFF;
   box-sizing: border-box;
+  padding: 0;
   background-color: #000;
   background-image: url(../../images/button-edit.svg);
   background-position: center;
@@ -14,4 +15,19 @@
   opacity: .6;
   cursor: pointer;
   transition: .7s;
+}
+
+@media screen and (max-width: 768px) {
+  .button-edit {
+    width: 18px;
+    height: 18px;
+    background-size: 42%;
+    margin: 12px 0 0 14px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .button-edit {
+    margin: 35px 0 0 10px;
+  }
 }

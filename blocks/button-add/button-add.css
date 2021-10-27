@@ -1,5 +1,6 @@
 .button-add {
   box-sizing: border-box;
+  padding: 0;
   background-color: #000;
   background-image: url(../../images/button-add.svg);
   background-repeat: no-repeat;
@@ -14,4 +15,23 @@
   opacity: .6;
   cursor: pointer;
   transition: .7s;
+}
+
+@media screen and (max-width: 768px) {
+  .button-add {
+    width: 120px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .button-add {
+    width: 150px;
+    margin-top: 36px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .button-add {
+    width: 100%;
+  }
 }

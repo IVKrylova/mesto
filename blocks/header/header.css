@@ -4,3 +4,15 @@
   flex-direction: column;
   flex: 0 0 auto;
 }
+
+@media screen and (max-width: 768px) {
+  .header {
+    margin-top: 36px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .header {
+    margin-top: 28px;
+  }
+}

@@ -6,3 +6,19 @@
   column-gap: 30px;
   align-items: center;
 }
+
+@media screen and (max-width: 768px) {
+  .profile {
+    grid-template-columns: 120px calc(100% - 120px - 30px - 30px - 120px) 120px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profile {
+    grid-template-columns: 1fr;
+    margin: 42px 19px 0;
+    text-align: center;
+    column-gap: 0;
+    justify-items: center;
+  }
+}

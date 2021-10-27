@@ -5,3 +5,9 @@
   border-bottom: 1px solid #545454;
   opacity: .7;
 }
+
+@media screen and (max-width: 640px) {
+  .header__line {
+    margin-top: 32px;
+  }
+}
