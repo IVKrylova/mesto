@@ -15,4 +15,4 @@
 * Добавить возможность ставить лайки
 * Добавить возможность редактировать аватар
 
-[Ссылка на проект в GitHub Pages]()
+[Ссылка на проект в GitHub Pages](https://ivkrylova.github.io/mesto/index.html)
