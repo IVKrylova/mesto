@@ -9,3 +9,13 @@
   border-radius: 10px;
   z-index: 2;
 }
+
+@media screen and (max-width: 640px) {
+  .popup__container {
+    width: 282px;
+    top: 123px;
+    left: calc((100% - 282px) / 2);
+    transform: none;
+
+  }
+}

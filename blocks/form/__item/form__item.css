@@ -29,3 +29,9 @@
   line-height: 1.21;
   color: #000000;
 }
+
+@media screen and (max-width: 640px) {
+  .form__item:not(:first-child) {
+    margin-top: 25px;
+  }
+}

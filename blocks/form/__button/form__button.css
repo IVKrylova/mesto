@@ -21,3 +21,12 @@
   cursor: pointer;
   transition: .7s;
 }
+
+@media screen and (max-width: 640px) {
+  .form__button {
+    margin-top: 45px;
+    font-size: 14px;
+    line-height: 1.21;
+    padding-bottom: 14px;
+  }
+}
