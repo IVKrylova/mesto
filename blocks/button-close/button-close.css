@@ -3,6 +3,9 @@
   width: 32px;
   height: 32px;
   background-image: url(../../images/button-close.svg);
+  background-color: transparent;
+  box-sizing: border-box;
+  border: none;
   padding: 0;
   text-decoration: none;
   position: absolute;
