@@ -6,7 +6,6 @@ const inputName = document.querySelector('#name');
 const profileProfession = document.querySelector('.profile__profession');
 const inputProfession = document.querySelector('#profession');
 const formElement = document.querySelector('.form');
-const formButton = document.querySelector('.form__button');
 
 // функция открытия popup
 function popupOpened() {
@@ -25,12 +24,12 @@ function formSubmitHandler (evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileProfession.textContent = inputProfession.value;
+  popupClouse();
 }
 
 // открытие и закрытие popup
 buttonEdit.addEventListener('click', popupOpened);
 buttonClose.addEventListener('click', popupClouse);
 
-// прикрепляем обработчик к форме и закрываем форму при нажатии на кнопку 'сохранить'
+// прикрепляем обработчик к форме
 formElement.addEventListener('submit', formSubmitHandler);
-formButton.addEventListener('click', popupClouse);
