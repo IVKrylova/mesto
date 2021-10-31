@@ -2,8 +2,9 @@
   display: block;
   font-family: inherit;
   box-sizing: border-box;
-  padding: 0;
+  padding: 0 0 13px;
   border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
