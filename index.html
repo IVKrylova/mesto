@@ -35,56 +35,23 @@
         </div>
       </section>
       <section class="elements">
-        <ul class="elements__list">
-          <li class="element">
-            <img src="./images/element-karachay-cherkessia.jpg" alt="Карачаевск" class="element__image">
-            <div class="element__description">
-              <h2 class="element__title">Карачаевск</h2>
-              <button class="element__like" type="button" aria-label="Кнопка поставить лайк"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/element-elbrus.jpg" alt="Гора Эльбрус" class="element__image">
-            <div class="element__description">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <button class="element__like" type="button" aria-label="Кнопка поставить лайк"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/element-dombay.jpg" alt="Домбай" class="element__image">
-            <div class="element__description">
-              <h2 class="element__title">Домбай</h2>
-              <button class="element__like" type="button" aria-label="Кнопка поставить лайк"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/element-elbrus.jpg" alt="Гора Эльбрус" class="element__image">
-            <div class="element__description">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <button class="element__like" type="button" aria-label="Кнопка поставить лайк"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/element-dombay.jpg" alt="Домбай" class="element__image">
-            <div class="element__description">
-              <h2 class="element__title">Домбай</h2>
-              <button class="element__like" type="button" aria-label="Кнопка поставить лайк"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/element-karachay-cherkessia.jpg" alt="Карачеево-Черкессия" class="element__image">
-            <div class="element__description">
-              <h2 class="element__title">Карачеево-Черкессия</h2>
-              <button class="element__like" type="button" aria-label="Кнопка поставить лайк"></button>
-            </div>
-          </li>
-        </ul>
+        <ul class="elements__list"></ul>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
+  <template id="element-template">
+    <li class="element">
+      <img class="element__image">
+      <div class="element__description">
+        <h2 class="element__title"></h2>
+        <button class="element__like" type="button" aria-label="Кнопка поставить лайк"></button>
+      </div>
+    </li>
+  </template>
   <script src="./blocks/popup/popup.js"></script>
+  <script src="./blocks/elements/__list/elements__list.js"></script>
 </body>
 </html>
