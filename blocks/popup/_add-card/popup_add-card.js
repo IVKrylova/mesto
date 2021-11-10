@@ -24,6 +24,12 @@ function addElements(imageSrc, titleValue) {
   elementCard.querySelector('.element__image').alt = titleValue;
   elementCard.querySelector('.element__title').textContent = titleValue;
 
+  // переключение цвета лайка при клике
+  elementCard.querySelector('.element__like').addEventListener('click', (evt) => {
+    const eventTarget = evt.target;
+    eventTarget.classList.toggle('element__like_active');
+  });
+
   elementsList.prepend(elementCard);
 }
 
