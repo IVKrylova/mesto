@@ -35,6 +35,9 @@ function addElements(imageSrc, titleValue) {
   elementCard.querySelector('.element__image').src = imageSrc;
   elementCard.querySelector('.element__image').alt = titleValue;
   elementCard.querySelector('.element__title').textContent = titleValue;
+  elementCard.querySelector('.popup__image').src = imageSrc;
+  elementCard.querySelector('.popup__image').alt = titleValue;
+  elementCard.querySelector('.popup__description').textContent = titleValue;
 
   // переключение цвета лайка при клике
   elementCard.querySelector('.element__like').addEventListener('click', (evt) => {
