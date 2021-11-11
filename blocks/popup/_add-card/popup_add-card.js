@@ -1,4 +1,4 @@
-/* const formElement = document.querySelector('.form'); */
+const formAddCard = document.querySelector('#form-add-card');
 const buttonAdd = document.querySelector('.button-add');
 const popupElementCard = document.querySelector('#popup-element-card');
 const buttonClosePopupElementCard = document.querySelector('#button-close-popup-element-card');
@@ -44,6 +44,7 @@ function addElements(imageSrc, titleValue) {
 function formSubmitHandlerElementCard (evt) {
   evt.preventDefault();
   addElements(inputPlaceUrl.value, inputPlace.value);
+  formAddCard.reset();
   popupElementCardClouse();
 }
 
