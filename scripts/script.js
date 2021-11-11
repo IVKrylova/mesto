@@ -92,6 +92,24 @@ function createElementCard(imageSrc, titleValue) {
     elementCardDelete.remove();
   });
 
+  // открытие popup для image
+  elementCard.querySelector('.element__link-to-popup').addEventListener('click', (evt) => {
+    const eventTarget = evt.target;
+    const elementCard = eventTarget.closest('.element');
+    const popupElementImage = elementCard.querySelector('.element__popup');
+
+    popupElementImage.classList.add('popup_opened');
+  });
+
+  // закрытие popup для image
+  elementCard.querySelector('.button-close').addEventListener('click', (evt) => {
+    const eventTarget = evt.target;
+    const elementCard = eventTarget.closest('.element');
+    const popupElementImage = elementCard.querySelector('.element__popup');
+
+    popupElementImage.classList.remove('popup_opened');
+  });
+
   return elementCard;
 }
 
@@ -142,29 +160,3 @@ buttonClosePopupElementCard.addEventListener('click', popupElementCardClouse);
 // имя карточки для теста Холмогорский район
 // ссылка карточки для теста https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg
 popupElementCard.addEventListener('submit', formSubmitHandlerElementCard);
-
-// открытие popup для image из NodeList, на котором произошло событие
-elementImageList.forEach((image) => {
-  image.addEventListener('click', (evt) => {
-    const eventTarget = evt.target;
-    const elementCard = eventTarget.closest('.element');
-    const popupElementImage = elementCard.querySelector('.element__popup');
-    const buttonClose = elementCard.querySelector('.button-close');
-
-    // функция открытия popup
-    function popupElementImageOpened() {
-      popupElementImage.classList.add('popup_opened');
-    }
-
-    // функция закрытия popup
-    function popupElementImageClouse() {
-      popupElementImage.classList.remove('popup_opened');
-    }
-
-    // открытие popup
-    image.addEventListener('click', popupElementImageOpened);
-
-    // закрытие popup
-    buttonClose.addEventListener('click', popupElementImageClouse);
-  });
-});
