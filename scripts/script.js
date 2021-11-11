@@ -48,14 +48,14 @@ const inputPlaceUrl = document.querySelector('#place-url');
 const elementImageList = document.querySelectorAll('.element__image');
 
 // функция открытия popup в profile__info
-function popupProfileInfoOpened() {
+function openPopupProfileInfo() {
   popupProfileInfo.classList.add('popup_opened');
   inputName.value = profileName.textContent;
   inputProfession.value = profileProfession.textContent;
 }
 
 // функция закрытия popup в profile__info
-function popupProfileInfoClouse() {
+function clousePopupProfileInfo() {
   popupProfileInfo.classList.remove('popup_opened');
 }
 
@@ -64,7 +64,7 @@ function formSubmitHandlerProfileInfo (evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileProfession.textContent = inputProfession.value;
-  popupProfileInfoClouse();
+  clousePopupProfileInfo();
 }
 
 // функция создания карточек
@@ -121,12 +121,12 @@ function addElementsFromArrey() {
 }
 
 // функция открытия popup для добавления карточки в elements
-function popupElementCardOpened() {
+function openedPopupElementCard() {
   popupElementCard.classList.add('popup_opened');
 }
 
 // функция закрытия popup для добавления карточки в elements
-function popupElementCardClouse() {
+function clousePopupElementCard() {
   popupElementCard.classList.remove('popup_opened');
 }
 
@@ -135,26 +135,26 @@ function formSubmitHandlerElementCard (evt) {
   evt.preventDefault();
   elementsList.prepend(createElementCard(inputPlaceUrl.value, inputPlace.value));
   formAddCard.reset();
-  popupElementCardClouse();
+  clousePopupElementCard();
 }
 
 // добавление карточек из массива в elements
 addElementsFromArrey();
 
 // открытие popup в profile__info
-buttonEdit.addEventListener('click', popupProfileInfoOpened);
+buttonEdit.addEventListener('click', openPopupProfileInfo);
 
 // закрытие popup в profile__info
-buttonClosePopupProfileInfo.addEventListener('click', popupProfileInfoClouse);
+buttonClosePopupProfileInfo.addEventListener('click', clousePopupProfileInfo);
 
 // прикрепляем обработчик к форме в profile__info
 popupProfileInfo.addEventListener('submit', formSubmitHandlerProfileInfo);
 
 // открытие popup для добавления карточки в elements
-buttonAdd.addEventListener('click', popupElementCardOpened);
+buttonAdd.addEventListener('click', openedPopupElementCard);
 
 // закрытие popup для добавления карточки в elements
-buttonClosePopupElementCard.addEventListener('click', popupElementCardClouse);
+buttonClosePopupElementCard.addEventListener('click', clousePopupElementCard);
 
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
 // имя карточки для теста Холмогорский район
