@@ -1,4 +1,4 @@
-const buttonDeleteList = document.querySelectorAll('.button-delete');
+/* const buttonDeleteList = document.querySelectorAll('.button-delete');
 
 // обработчик удаления карточки из elements для кнопки из NodeList, на которой произошло событие
 buttonDeleteList.forEach((button) => {
@@ -7,4 +7,4 @@ buttonDeleteList.forEach((button) => {
     const elementCardDelete = eventTarget.closest('.element');
     elementCardDelete.remove();
   });
-});
+}); */

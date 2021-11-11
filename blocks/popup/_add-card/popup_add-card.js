@@ -30,6 +30,13 @@ function addElements(imageSrc, titleValue) {
     eventTarget.classList.toggle('element__like_active');
   });
 
+  // обработчик удаления карточки
+  elementCard.querySelector('.button-delete').addEventListener('click', (evt) => {
+    const eventTarget = evt.target;
+    const elementCardDelete = eventTarget.closest('.element');
+    elementCardDelete.remove();
+  });
+
   elementsList.prepend(elementCard);
 }
 

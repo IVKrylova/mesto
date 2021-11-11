@@ -21,7 +21,7 @@ elementImageList.forEach((image) => {
     // открытие popup
     image.addEventListener('click', popupElementImageOpened);
 
-    // закрытие popup в profile__info
+    // закрытие popup
     buttonClose.addEventListener('click', popupElementImageClouse);
   });
 });
