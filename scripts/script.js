@@ -106,20 +106,25 @@ function createElementCard(imageSrc, titleValue) {
     openPopup(popupElementImage);
   });
 
-  // закрытие popup для image
-  elementCard.querySelector('.button-close').addEventListener('click', (evt) => {
-    const eventTarget = evt.target;
-    const elementCard = eventTarget.closest('.element');
-    const popupElementImage = elementCard.querySelector('.element__popup');
-
-    clousePopup(popupElementImage);
-  });
-
   return elementCard;
 }
 
+// функция закрытия превью для image
+function closePreviewElementCard(elementCard) {
+  elementCard.forEach( (element) => {
+    const buttonClosePreviewElementCard = element.querySelector('.button-close');
+    buttonClosePreviewElementCard.addEventListener('click', (evt) => {
+      const eventTarget = evt.target;
+      const elementCard = eventTarget.closest('.element');
+      const popupElementImage = elementCard.querySelector('.element__popup');
+
+      clousePopup(popupElementImage);
+    });
+  });
+}
+
 // функция добавления карточек в elements из массива
-function addElementsFromArrey() {
+function addElementsFromArrey(initialCards) {
   initialCards.forEach((card) => {
     elementsList.append(createElementCard(card.link, card.name));
   });
@@ -129,12 +134,13 @@ function addElementsFromArrey() {
 function formSubmitHandlerElementCard (evt) {
   evt.preventDefault();
   elementsList.prepend(createElementCard(inputPlaceUrl.value, inputPlace.value));
+  closePreviewElementCard(document.querySelectorAll('.element'));
   formAddCard.reset();
   clousePopup(popupElementCard);
 }
 
 // добавление карточек из массива в elements
-addElementsFromArrey();
+addElementsFromArrey(initialCards);
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
@@ -164,3 +170,6 @@ buttonClosePopupElementCard.addEventListener('click', () => {
 // имя карточки для теста Холмогорский район
 // ссылка карточки для теста https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg
 popupElementCard.addEventListener('submit', formSubmitHandlerElementCard);
+
+// закрытие превью для image
+closePreviewElementCard(document.querySelectorAll('.element'));
