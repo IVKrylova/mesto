@@ -53,7 +53,7 @@ function openPopup(elementPopup) {
 }
 
 // функция закрытия popup
-function clousePopup(elementPopup) {
+function closePopup(elementPopup) {
   elementPopup.classList.remove('popup_opened');
 }
 
@@ -68,7 +68,7 @@ function formSubmitHandlerProfileInfo (evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileProfession.textContent = inputProfession.value;
-  clousePopup(popupProfileInfo);
+  closePopup(popupProfileInfo);
 }
 
 // функция создания карточек
@@ -118,7 +118,7 @@ function closePreviewElementCard(elementCard) {
       const elementCard = eventTarget.closest('.element');
       const popupElementImage = elementCard.querySelector('.element__popup');
 
-      clousePopup(popupElementImage);
+      closePopup(popupElementImage);
     });
   });
 }
@@ -136,7 +136,7 @@ function formSubmitHandlerElementCard (evt) {
   elementsList.prepend(createElementCard(inputPlaceUrl.value, inputPlace.value));
   closePreviewElementCard(document.querySelectorAll('.element'));
   formAddCard.reset();
-  clousePopup(popupElementCard);
+  closePopup(popupElementCard);
 }
 
 // добавление карточек из массива в elements
@@ -150,7 +150,7 @@ buttonEdit.addEventListener('click', () => {
 
 // закрытие popup в profile__info
 buttonClosePopupProfileInfo.addEventListener('click', () => {
-  clousePopup(popupProfileInfo);
+  closePopup(popupProfileInfo);
 });
 
 // прикрепляем обработчик к форме в profile__info
@@ -163,7 +163,7 @@ buttonAdd.addEventListener('click', () => {
 
 // закрытие popup для добавления карточки в elements
 buttonClosePopupElementCard.addEventListener('click', () => {
-  clousePopup(popupElementCard);
+  closePopup(popupElementCard);
 });
 
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
