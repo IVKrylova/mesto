@@ -46,6 +46,8 @@ const inputPlaceUrl = document.querySelector('#place-url');
 
 // переменные, необходимые для реализации просмотра изображений из elements в popup
 const elementImageList = document.querySelectorAll('.element__image');
+const popupElementImage = document.querySelector('#element-popup');
+const buttonClosePreviewElementCard = document.querySelector('#button-close-element-popup');
 
 // функция открытия popup
 function openPopup(elementPopup) {
@@ -95,32 +97,14 @@ function createElementCard(imageSrc, titleValue) {
 
   // открытие popup для image
   elementCard.querySelector('.element__link-to-popup').addEventListener('click', (evt) => {
-    const eventTarget = evt.target;
-    const elementCard = eventTarget.closest('.element');
-    const popupElementImage = elementCard.querySelector('.element__popup');
-
-    elementCard.querySelector('.popup__image').src = imageSrc;
-    elementCard.querySelector('.popup__image').alt = titleValue;
-    elementCard.querySelector('.popup__description').textContent = titleValue;
+    popupElementImage.querySelector('.popup__image').src = imageSrc;
+    popupElementImage.querySelector('.popup__image').alt = titleValue;
+    popupElementImage.querySelector('.popup__description').textContent = titleValue;
 
     openPopup(popupElementImage);
   });
 
   return elementCard;
-}
-
-// функция закрытия превью для image
-function closePreviewElementCard(elementCard) {
-  elementCard.forEach( (element) => {
-    const buttonClosePreviewElementCard = element.querySelector('.button-close');
-    buttonClosePreviewElementCard.addEventListener('click', (evt) => {
-      const eventTarget = evt.target;
-      const elementCard = eventTarget.closest('.element');
-      const popupElementImage = elementCard.querySelector('.element__popup');
-
-      closePopup(popupElementImage);
-    });
-  });
 }
 
 // функция добавления карточек в elements из массива
@@ -134,7 +118,6 @@ function addElementsFromArrey(initialCards) {
 function formSubmitHandlerElementCard (evt) {
   evt.preventDefault();
   elementsList.prepend(createElementCard(inputPlaceUrl.value, inputPlace.value));
-  closePreviewElementCard(document.querySelectorAll('.element'));
   formAddCard.reset();
   closePopup(popupElementCard);
 }
@@ -172,4 +155,6 @@ buttonClosePopupElementCard.addEventListener('click', () => {
 popupElementCard.addEventListener('submit', formSubmitHandlerElementCard);
 
 // закрытие превью для image
-closePreviewElementCard(document.querySelectorAll('.element'));
+buttonClosePreviewElementCard.addEventListener('click', () => {
+  closePopup(popupElementImage);
+});
