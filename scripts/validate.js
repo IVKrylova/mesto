@@ -13,29 +13,65 @@ enableValidation({
 // переменные, необходимые валидации формы в в profile__info
 const formProfileInfo = document.querySelector('#form-edit-profile');
 const inputFormProfileInfo = formProfileInfo.querySelector('.form__item');
-const errorFormProfileInfo = formProfileInfo.querySelector(`.${inputFormProfileInfo.id}-input-error`);
 
 // функция добавления класса с ошибкой к input
-function showInputError(element, errorMessage) {
-  element.classList.add('form__item_type_error');
-  errorFormProfileInfo.textContent = errorMessage;
-  errorFormProfileInfo.classList.add('form__input-error_active');
-};
+function showInputError(formElement, inputElement, errorMessage) {
+  // выбор элемента ошибки на основе уникального класса
+  const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
+
+  inputElement.classList.add('form__item_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('form__input-error_active');
+}
 
 // функция удаления класса с ошибкой из input
-function hideInputError(element) {
-  element.classList.remove('form__item_type_error');
-  errorFormProfileInfo.classList.remove('form__input-error_active');
-  errorFormProfileInfo.textContent = '';
-};
+function hideInputError(formElement, inputElement) {
+  // выбор элемента ошибки на основе уникального класса
+  const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
+
+  inputElement.classList.remove('form__item_type_error');
+  errorElement.classList.remove('form__input-error_active');
+  errorElement.textContent = '';
+}
 
 // функция проверки валидности поля
-function isValid() {
-  if (!inputFormProfileInfo.validity.valid) {
-    showInputError(inputFormProfileInfo, inputFormProfileInfo.validationMessage);
+function isValid(formElement, inputElement) {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
-    hideInputError(inputFormProfileInfo);
+    hideInputError(formElement, inputElement);
   }
-};
+}
 
-inputFormProfileInfo.addEventListener('input', isValid);
+// функция добавления обработчиков всем полям формы
+function setEventListeners(formElement) {
+  const inputsList = Array.from(formElement.querySelectorAll('.form__item'));
+
+  inputsList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      isValid(formElement, inputElement);
+    });
+  });
+}
+
+/* const enableValidation = () => {
+  // Найдём все формы с указанным классом в DOM,
+  // сделаем из них массив методом Array.from
+  const formList = Array.from(document.querySelectorAll('.form'));
+
+  // Переберём полученную коллекцию
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      // У каждой формы отменим стандартное поведение
+      evt.preventDefault();
+    });
+
+    // Для каждой формы вызовем функцию setEventListeners,
+    // передав ей элемент формы
+    setEventListeners(formElement);
+  });
+}; */
+
+
+
+setEventListeners(formProfileInfo);
