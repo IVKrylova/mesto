@@ -54,24 +54,14 @@ function setEventListeners(formElement) {
   });
 }
 
-/* const enableValidation = () => {
-  // Найдём все формы с указанным классом в DOM,
-  // сделаем из них массив методом Array.from
-  const formList = Array.from(document.querySelectorAll('.form'));
+function enableValidation() {
+  const formsList = Array.from(document.querySelectorAll('.form'));
 
-  // Переберём полученную коллекцию
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      // У каждой формы отменим стандартное поведение
-      evt.preventDefault();
-    });
-
-    // Для каждой формы вызовем функцию setEventListeners,
-    // передав ей элемент формы
+  formsList.forEach((formElement) => {
     setEventListeners(formElement);
   });
-}; */
+}
 
 
 
-setEventListeners(formProfileInfo);
+enableValidation()
