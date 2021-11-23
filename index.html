@@ -27,9 +27,11 @@
         <div class="popup__container">
           <button type="button" class="button-close" id="button-close-popup-profile-info" aria-label="Кнопка закрыть"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <form class="popup__form form" name="form-edit-profile">
-            <input type="text" class="form__item" id="name" name="name" placeholder="Ваше имя" required>
-            <input type="text" class="form__item" id="profession" name="profession" placeholder="Чем вы занимаетесь?" required>
+          <form class="popup__form form" name="form-edit-profile" id="form-edit-profile" novalidate>
+            <input type="text" class="form__item" id="name" name="name" placeholder="Имя" minlength="2" maxlength="40" required>
+            <span class="name-input-error form__input-error"></span>
+            <input type="text" class="form__item" id="profession" name="profession" placeholder="О себе" minlength="2" maxlength="200" required>
+            <span class="profession-input-error form__input-error"></span>
             <button type="submit" class="form__button">Сохранить</button>
           </form>
         </div>
@@ -72,6 +74,7 @@
       </div>
     </li>
   </template>
-  <script src="./scripts/script.js"></script>
+  <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>
