@@ -49,8 +49,8 @@ const elementImageList = document.querySelectorAll('.element__image');
 const popupElementImage = document.querySelector('#element-popup');
 const buttonClosePreviewElementCard = document.querySelector('#button-close-element-popup');
 
-// переменные, необходимые для реализации закрытия popup при клике на overlay
-const popupOverlay = document.querySelector('.popup');
+// переменные, необходимые для реализации закрытия popup при клике на overlay и нажатии на Esc
+const popupElement = document.querySelector('.popup');
 
 // функция открытия popup
 function openPopup(elementPopup) {
@@ -126,10 +126,10 @@ function formSubmitHandlerElementCard(evt) {
 }
 
 // функция закрытия popup при клике на overlay
-function closePopupByClickOverlay(popupOverlay) {
+function closePopupByClickOverlay(popupElement) {
   document.addEventListener('click', (evt) => {
-    if(evt.target === popupOverlay) {
-      closePopup(popupOverlay);
+    if(evt.target === popupElement) {
+      closePopup(popupElement);
     }
   });
 }
@@ -140,6 +140,24 @@ function setClosePopupByClickOverlayToPopups() {
 
   popapsList.forEach((popupElement) => {
     closePopupByClickOverlay(popupElement);
+  });
+}
+
+// функция закрытия popup при нажатии на Esc
+function closePopupByEsc(popupElement) {
+  document.addEventListener('keydown', (evt) => {
+    if ((evt.key === "Escape" && (popupElement.classList.contains('popup_opened')))) {
+      closePopup(popupElement);
+    }
+  });
+}
+
+// функция добавления возможности закрытия popup при нажатии на Esc
+function setClosePopupByEsc() {
+  const popapsList = Array.from(document.querySelectorAll('.popup'));
+
+  popapsList.forEach((popupElement) => {
+    closePopupByEsc(popupElement);
   });
 }
 
@@ -182,3 +200,6 @@ buttonClosePreviewElementCard.addEventListener('click', () => {
 
 // добавлениe возможности закрытия popup при клике на overlay всем popup
 setClosePopupByClickOverlayToPopups();
+
+// добавлениe возможности закрытия popup при нажатии на Esc
+setClosePopupByEsc();
