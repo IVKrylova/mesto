@@ -56,8 +56,10 @@ function enableValidation({ formSelector, inputSelector, submitButtonSelector, i
   function toggleButtonState(inputsList, buttonElement) {
     if (hasInvalidInput(inputsList)) {
       buttonElement.classList.add(inactiveButtonClass);
+      buttonElement.setAttribute('disabled', 'disabled');
     } else {
       buttonElement.classList.remove(inactiveButtonClass);
+      buttonElement.removeAttribute('disabled');
     }
   }
 
