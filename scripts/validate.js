@@ -30,7 +30,7 @@ function enableValidation({ formSelector, inputSelector, submitButtonSelector, i
     }
   }
 
-  // функция проверки по умолчанию заполненных полей при открытии формы
+  // функция добавления неактивного состояния кнопке в форме с учетом проверки по умолчанию заполненных полей при открытии формы
   function checkInputEmpty(formElement) {
     const popupContainer = formElement.parentNode;
     const popupElement = popupContainer.parentNode;
@@ -48,7 +48,7 @@ function enableValidation({ formSelector, inputSelector, submitButtonSelector, i
     }
   }
 
-  // функция добавления проверки заполненных полей при открытии для каждой кнопки, открывающей popup
+  // функция добавления проверки заполненных полей с изменением состояния кнопки при открытии для каждой кнопки, открывающей popup
   function setCheckInputEmptyToButton() {
     const buttonsList = Array.from(document.querySelectorAll('.button'));
 
