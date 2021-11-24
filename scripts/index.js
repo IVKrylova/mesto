@@ -127,9 +127,12 @@ function formSubmitHandlerElementCard(evt) {
 
 // функция закрытия popup при клике на overlay
 function closePopupByClickOverlay(popupElement) {
+  const formElement = popupElement.querySelector('.form');
+
   document.addEventListener('click', (evt) => {
     if(evt.target === popupElement) {
       closePopup(popupElement);
+      formElement.reset();
     }
   });
 }
@@ -145,9 +148,12 @@ function setClosePopupByClickOverlayToPopups() {
 
 // функция закрытия popup при нажатии на Esc
 function closePopupByEsc(popupElement) {
+  const formElement = popupElement.querySelector('.form');
+
   document.addEventListener('keydown', (evt) => {
     if ((evt.key === "Escape" && (popupElement.classList.contains('popup_opened')))) {
       closePopup(popupElement);
+      formElement.reset();
     }
   });
 }
