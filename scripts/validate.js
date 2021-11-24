@@ -30,12 +30,41 @@ function enableValidation({ formSelector, inputSelector, submitButtonSelector, i
     }
   }
 
+  // функция проверки по умолчанию заполненных полей при открытии формы
+  function checkInputEmpty(formElement) {
+    const popupContainer = formElement.parentNode;
+    const popupElement = popupContainer.parentNode;
+
+    if (popupElement.classList.contains('popup_opened')) {
+      const inputsList = Array.from(formElement.querySelectorAll(inputSelector));
+      const resultCheckInput = inputsList.every((inputElement) => {
+        return inputElement.value === '';
+      });
+      const buttonElement = formElement.querySelector(submitButtonSelector);
+
+      if (resultCheckInput) {
+        toggleButtonState(inputsList, buttonElement);
+      }
+    }
+  }
+
+  // функция добавления проверки заполненных полей при открытии для каждой кнопки, открывающей popup
+  function setCheckInputEmptyToButton() {
+    const buttonsList = Array.from(document.querySelectorAll('.button'));
+
+    buttonsList.forEach((buttonElement) => {
+      buttonElement.addEventListener('click', () => {
+        checkInputEmpty(document.querySelector(`[name='form-${buttonElement.id}']`));
+      });
+    });
+  }
+
   // функция добавления обработчиков всем полям формы
   function setEventListenersToInputs(formElement) {
     const inputsList = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
 
-    toggleButtonState(inputsList, buttonElement);
+    setCheckInputEmptyToButton();
 
     inputsList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
