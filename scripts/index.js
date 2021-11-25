@@ -125,6 +125,22 @@ function formSubmitHandlerElementCard(evt) {
   closePopup(popupElementCard);
 }
 
+// функция сброса полей формы при закрытии
+function reserInputForm(formElement) {
+  if(formElement) {
+    const errorElementsList = Array.from(formElement.querySelectorAll('.form__input-error'));
+    const inputElementsList = Array.from(formElement.querySelectorAll('.form__item'));
+
+    formElement.reset();
+    errorElementsList.forEach((errorElement) => {
+      errorElement.textContent = '';
+    });
+    inputElementsList.forEach((inputElement) => {
+      inputElement.classList.remove('form__item_type_error');
+    });
+  }
+}
+
 // функция закрытия popup при клике на overlay
 function closePopupByClickOverlay(popupElement) {
   const formElement = popupElement.querySelector('.form');
@@ -132,9 +148,7 @@ function closePopupByClickOverlay(popupElement) {
   document.addEventListener('click', (evt) => {
     if(evt.target === popupElement) {
       closePopup(popupElement);
-      if(formElement) {
-        formElement.reset();
-      }
+      reserInputForm(formElement);
     }
   });
 }
@@ -155,9 +169,7 @@ function closePopupByEsc(popupElement) {
   document.addEventListener('keydown', (evt) => {
     if ((evt.key === "Escape" && (popupElement.classList.contains('popup_opened')))) {
       closePopup(popupElement);
-      if(formElement) {
-        formElement.reset();
-      }
+      reserInputForm(formElement);
     }
   });
 }
@@ -182,7 +194,10 @@ buttonEdit.addEventListener('click', () => {
 
 // закрытие popup в profile__info
 buttonClosePopupProfileInfo.addEventListener('click', () => {
+  const formElement = popupProfileInfo.querySelector('.form');
+
   closePopup(popupProfileInfo);
+  reserInputForm(formElement);
 });
 
 // прикрепляем обработчик к форме в profile__info
@@ -198,7 +213,7 @@ buttonClosePopupElementCard.addEventListener('click', () => {
   const formElement = popupElementCard.querySelector('.form');
 
   closePopup(popupElementCard);
-  formElement.reset();
+  reserInputForm(formElement);
 });
 
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
