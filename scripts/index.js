@@ -49,6 +49,9 @@ const elementImageList = document.querySelectorAll('.element__image');
 const popupElementImage = document.querySelector('#element-popup');
 const buttonClosePreviewElementCard = document.querySelector('#button-close-element-popup');
 
+// переменные, необходимые для реализации закрытия popup при клике на overlay и нажатии на Esc
+const popupElement = document.querySelector('.popup');
+
 // функция открытия popup
 function openPopup(elementPopup) {
   elementPopup.classList.add('popup_opened');
@@ -66,7 +69,7 @@ function setValuesPopupProfileInfo() {
 }
 
 // oбработчик отправки формы в profile__info
-function formSubmitHandlerProfileInfo (evt) {
+function formSubmitHandlerProfileInfo(evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileProfession.textContent = inputProfession.value;
@@ -115,11 +118,57 @@ function addElementsFromArrey(initialCards) {
 }
 
 // oбработчик отправки формы для добавления карточки в elements
-function formSubmitHandlerElementCard (evt) {
+function formSubmitHandlerElementCard(evt) {
   evt.preventDefault();
   elementsList.prepend(createElementCard(inputPlaceUrl.value, inputPlace.value));
   formAddCard.reset();
   closePopup(popupElementCard);
+}
+
+// функция закрытия popup при клике на overlay
+function closePopupByClickOverlay(popupElement) {
+  const formElement = popupElement.querySelector('.form');
+
+  document.addEventListener('click', (evt) => {
+    if(evt.target === popupElement) {
+      closePopup(popupElement);
+      if(formElement) {
+        formElement.reset();
+      }
+    }
+  });
+}
+
+// функция добавления возможности закрытия popup при клике на overlay всем popup
+function setClosePopupByClickOverlayToPopups() {
+  const popapsList = Array.from(document.querySelectorAll('.popup'));
+
+  popapsList.forEach((popupElement) => {
+    closePopupByClickOverlay(popupElement);
+  });
+}
+
+// функция закрытия popup при нажатии на Esc
+function closePopupByEsc(popupElement) {
+  const formElement = popupElement.querySelector('.form');
+
+  document.addEventListener('keydown', (evt) => {
+    if ((evt.key === "Escape" && (popupElement.classList.contains('popup_opened')))) {
+      closePopup(popupElement);
+      if(formElement) {
+        formElement.reset();
+      }
+    }
+  });
+}
+
+// функция добавления возможности закрытия popup при нажатии на Esc всем popup
+function setClosePopupByEsc() {
+  const popapsList = Array.from(document.querySelectorAll('.popup'));
+
+  popapsList.forEach((popupElement) => {
+    closePopupByEsc(popupElement);
+  });
 }
 
 // добавление карточек из массива в elements
@@ -146,7 +195,10 @@ buttonAdd.addEventListener('click', () => {
 
 // закрытие popup для добавления карточки в elements
 buttonClosePopupElementCard.addEventListener('click', () => {
+  const formElement = popupElementCard.querySelector('.form');
+
   closePopup(popupElementCard);
+  formElement.reset();
 });
 
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
@@ -158,3 +210,9 @@ popupElementCard.addEventListener('submit', formSubmitHandlerElementCard);
 buttonClosePreviewElementCard.addEventListener('click', () => {
   closePopup(popupElementImage);
 });
+
+// добавлениe возможности закрытия popup при клике на overlay всем popup
+setClosePopupByClickOverlayToPopups();
+
+// добавлениe возможности закрытия popup при нажатии на Esc
+setClosePopupByEsc();

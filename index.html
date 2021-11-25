@@ -19,17 +19,19 @@
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__profession">Исследователь океана</p>
           </div>
-          <button class="button-edit" type="button" aria-label="Кнопка редактировать"></button>
+          <button class="button-edit button" type="button" id="edit-profile" aria-label="Кнопка редактировать"></button>
         </div>
-        <button class="button-add" type="button" aria-label="Кнопка добавить"></button>
+        <button class="button-add button" type="button" id="add-card" aria-label="Кнопка добавить"></button>
       </section>
       <section class="popup" id="popup-profile-info">
         <div class="popup__container">
           <button type="button" class="button-close" id="button-close-popup-profile-info" aria-label="Кнопка закрыть"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <form class="popup__form form" name="form-edit-profile">
-            <input type="text" class="form__item" id="name" name="name" placeholder="Ваше имя" required>
-            <input type="text" class="form__item" id="profession" name="profession" placeholder="Чем вы занимаетесь?" required>
+          <form class="popup__form form" name="form-edit-profile" id="form-edit-profile" novalidate>
+            <input type="text" class="form__item" id="name" name="name" placeholder="Имя" minlength="2" maxlength="40" required>
+            <span class="name-input-error form__input-error"></span>
+            <input type="text" class="form__item" id="profession" name="profession" placeholder="О себе" minlength="2" maxlength="200" required>
+            <span class="profession-input-error form__input-error"></span>
             <button type="submit" class="form__button">Сохранить</button>
           </form>
         </div>
@@ -41,9 +43,11 @@
         <div class="popup__container">
           <button type="button" class="button-close" id="button-close-popup-element-card" aria-label="Кнопка закрыть"></button>
           <h3 class="popup__title">Новое место</h3>
-          <form class="popup__form form" name="form-add-card" id="form-add-card">
-            <input type="text" class="form__item" id="place" name="place" placeholder="Название" required>
-            <input type="text" class="form__item" id="place-url" name="place-url" placeholder="Ссылка на картинку" required>
+          <form class="popup__form form" name="form-add-card" id="form-add-card" novalidate>
+            <input type="text" class="form__item" id="place" name="place" placeholder="Название" minlength="2" maxlength="30" required>
+            <span class="place-input-error form__input-error"></span>
+            <input type="url" class="form__item" id="place-url" name="place-url" placeholder="Ссылка на картинку" required>
+            <span class="place-url-input-error form__input-error"></span>
             <button type="submit" class="form__button">Создать</button>
           </form>
         </div>
@@ -51,7 +55,7 @@
       <section class="popup popup_background_opacity" id="element-popup">
         <div class="popup__card">
           <button type="button" class="button-close" id="button-close-element-popup" aria-label="Кнопка закрыть"></button>
-          <img class="popup__image" src="#" alt="Название места">
+          <img class="popup__image" src="#" alt="Фотография места">
           <h2 class="popup__description"></h2>
         </div>
       </section>
@@ -72,6 +76,7 @@
       </div>
     </li>
   </template>
-  <script src="./scripts/script.js"></script>
+  <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>
