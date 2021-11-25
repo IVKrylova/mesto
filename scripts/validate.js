@@ -1,5 +1,17 @@
+// объект с настройками валидации форм
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.form__item',
+  submitButtonSelector: '.form__button',
+  inactiveButtonClass: 'form__button_disabled',
+  inputErrorClass: 'form__item_type_error',
+  errorClass: 'form__input-error_active'
+};
+
 // функция включения валидации
-function enableValidation({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }) {
+function enableValidation(config) {
+// получение параметров из объекта с настройками с помощью деструктуризации
+const { formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass } = config;
 
   // функция добавления класса с ошибкой к input
   function showInputError(formElement, inputElement, errorMessage) {
@@ -96,8 +108,8 @@ function enableValidation({ formSelector, inputSelector, submitButtonSelector, i
   function setEventListenersToForms() {
     const formsList = Array.from(document.querySelectorAll(formSelector));
 
-    formsList.forEach((inputElement) => {
-      setEventListenersToInputs(inputElement);
+    formsList.forEach((formElement) => {
+      setEventListenersToInputs(formElement);
     });
   }
 
@@ -106,11 +118,4 @@ function enableValidation({ formSelector, inputSelector, submitButtonSelector, i
 }
 
 // включение валидации
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.form__item',
-  submitButtonSelector: '.form__button',
-  inactiveButtonClass: 'form__button_disabled',
-  inputErrorClass: 'form__item_type_error',
-  errorClass: 'form__input-error_active'
-});
+enableValidation(config);
