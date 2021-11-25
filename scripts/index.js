@@ -132,7 +132,9 @@ function closePopupByClickOverlay(popupElement) {
   document.addEventListener('click', (evt) => {
     if(evt.target === popupElement) {
       closePopup(popupElement);
-      formElement.reset();
+      if(formElement) {
+        formElement.reset();
+      }
     }
   });
 }
@@ -153,7 +155,9 @@ function closePopupByEsc(popupElement) {
   document.addEventListener('keydown', (evt) => {
     if ((evt.key === "Escape" && (popupElement.classList.contains('popup_opened')))) {
       closePopup(popupElement);
-      formElement.reset();
+      if(formElement) {
+        formElement.reset();
+      }
     }
   });
 }
@@ -191,7 +195,10 @@ buttonAdd.addEventListener('click', () => {
 
 // закрытие popup для добавления карточки в elements
 buttonClosePopupElementCard.addEventListener('click', () => {
+  const formElement = popupElementCard.querySelector('.form');
+
   closePopup(popupElementCard);
+  formElement.reset();
 });
 
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
