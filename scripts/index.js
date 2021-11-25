@@ -162,7 +162,7 @@ function closePopupByEsc(popupElement) {
   });
 }
 
-// функция добавления возможности закрытия popup при нажатии на Esc
+// функция добавления возможности закрытия popup при нажатии на Esc всем popup
 function setClosePopupByEsc() {
   const popapsList = Array.from(document.querySelectorAll('.popup'));
 
