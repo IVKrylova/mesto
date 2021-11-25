@@ -6,6 +6,7 @@ const profileName = document.querySelector('.profile__name');
 const inputName = document.querySelector('#name');
 const profileProfession = document.querySelector('.profile__profession');
 const inputProfession = document.querySelector('#profession');
+const buttonFormSubmitPopupProfileInfo = popupProfileInfo.querySelector('.form__button');
 
 // переменные, необходимые для реализации добавления карточек в elements из массива
 const initialCards = [
@@ -189,7 +190,12 @@ addElementsFromArrey(initialCards);
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
   setValuesPopupProfileInfo();
+  if(buttonFormSubmitPopupProfileInfo.hasAttribute('disabled')) {
+    buttonFormSubmitPopupProfileInfo.removeAttribute('disabled');
+    buttonFormSubmitPopupProfileInfo.classList.remove('form__button_disabled');
+  }
   openPopup(popupProfileInfo);
+
 });
 
 // закрытие popup в profile__info
