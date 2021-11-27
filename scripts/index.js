@@ -2,7 +2,6 @@
 const popupProfileInfo = document.querySelector('#popup-profile-info');
 const formPopupProfileInfo = document.querySelector('#form-edit-profile');
 const buttonEdit = document.querySelector('.button-edit');
-const buttonClosePopupProfileInfo = document.querySelector('#button-close-popup-profile-info');
 const profileName = document.querySelector('.profile__name');
 const inputName = document.querySelector('#name');
 const profileProfession = document.querySelector('.profile__profession');
@@ -42,17 +41,15 @@ const elementsList = document.querySelector('.elements__list');
 const formAddCard = document.querySelector('#form-add-card');
 const buttonAdd = document.querySelector('.button-add');
 const popupElementCard = document.querySelector('#popup-element-card');
-const buttonClosePopupElementCard = document.querySelector('#button-close-popup-element-card');
 const inputPlace = document.querySelector('#place');
 const inputPlaceUrl = document.querySelector('#place-url');
 
 // переменные, необходимые для реализации просмотра изображений из elements в popup
 const elementImageList = document.querySelectorAll('.element__image');
 const popupElementImage = document.querySelector('#element-popup');
-const buttonClosePreviewElementCard = document.querySelector('#button-close-element-popup');
 
-// переменные, необходимые для реализации закрытия popup при клике на overlay и нажатии на Esc
-const popupElement = document.querySelector('.popup');
+// переменные, необходимые для реализации закрытия popup при клике на overlay и крeстик
+const popupsList = document.querySelectorAll('.popup');
 
 // функция открытия popup
 function openPopup(elementPopup) {
@@ -145,24 +142,6 @@ function resetInputForm(formElement) {
   }
 }
 
-// функция закрытия popup при клике на overlay
-function closePopupByClickOverlay(popupElement) {
-  document.addEventListener('click', (evt) => {
-    if(evt.target === popupElement) {
-      closePopup(popupElement);
-    }
-  });
-}
-
-// функция добавления возможности закрытия popup при клике на overlay всем popup
-function setClosePopupByClickOverlayToPopups() {
-  const popapsList = document.querySelectorAll('.popup');
-
-  popapsList.forEach((popupElement) => {
-    closePopupByClickOverlay(popupElement);
-  });
-}
-
 // функция закрытия popup при нажатии на Esc
 function closePopupByEsc(evt) {
   if (evt.key === 'Escape') {
@@ -184,12 +163,6 @@ buttonEdit.addEventListener('click', () => {
     buttonFormSubmitPopupProfileInfo.classList.remove('form__button_disabled');
   }
   openPopup(popupProfileInfo);
-
-});
-
-// закрытие popup в profile__info
-buttonClosePopupProfileInfo.addEventListener('click', () => {
-  closePopup(popupProfileInfo);
 });
 
 // прикрепляем обработчик к форме в profile__info
@@ -201,20 +174,19 @@ buttonAdd.addEventListener('click', () => {
   openPopup(popupElementCard);
 });
 
-// закрытие popup для добавления карточки в elements
-buttonClosePopupElementCard.addEventListener('click', () => {
-  closePopup(popupElementCard);
-});
-
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
 // имя карточки для теста Холмогорский район
 // ссылка карточки для теста https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg
 formAddCard.addEventListener('submit', submitHandlerFormElementCard);
 
-// закрытие превью для image
-buttonClosePreviewElementCard.addEventListener('click', () => {
-  closePopup(popupElementImage);
+// закрытие popup при клике на overlay и крeстик
+popupsList.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+    if (evt.target.classList.contains('button-close')) {
+      closePopup(popup)
+    }
+  });
 });
-
-// добавлениe возможности закрытия popup при клике на overlay всем popup
-setClosePopupByClickOverlayToPopups();
