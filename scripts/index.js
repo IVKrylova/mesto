@@ -144,12 +144,9 @@ function resetInputForm(formElement) {
 
 // функция закрытия popup при клике на overlay
 function closePopupByClickOverlay(popupElement) {
-  const formElement = popupElement.querySelector('.form');
-
   document.addEventListener('click', (evt) => {
     if(evt.target === popupElement) {
       closePopup(popupElement);
-      resetInputForm(formElement);
     }
   });
 }
@@ -165,12 +162,9 @@ function setClosePopupByClickOverlayToPopups() {
 
 // функция закрытия popup при нажатии на Esc
 function closePopupByEsc(popupElement) {
-  const formElement = popupElement.querySelector('.form');
-
   document.addEventListener('keydown', (evt) => {
     if ((evt.key === "Escape" && (popupElement.classList.contains('popup_opened')))) {
       closePopup(popupElement);
-      reserInputForm(formElement);
     }
   });
 }
@@ -189,6 +183,9 @@ addElementsFromArrey(initialCards);
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
+  const formElement = popupProfileInfo.querySelector('.form');
+
+  resetInputForm(formElement);
   setValuesPopupProfileInfo();
   if(buttonFormSubmitPopupProfileInfo.hasAttribute('disabled')) {
     buttonFormSubmitPopupProfileInfo.removeAttribute('disabled');
@@ -200,10 +197,7 @@ buttonEdit.addEventListener('click', () => {
 
 // закрытие popup в profile__info
 buttonClosePopupProfileInfo.addEventListener('click', () => {
-  const formElement = popupProfileInfo.querySelector('.form');
-
   closePopup(popupProfileInfo);
-  resetInputForm(formElement);
 });
 
 // прикрепляем обработчик к форме в profile__info
@@ -211,15 +205,15 @@ popupProfileInfo.addEventListener('submit', submitHandlerFormProfileInfo);
 
 // открытие popup для добавления карточки в elements
 buttonAdd.addEventListener('click', () => {
+  const formElement = popupElementCard.querySelector('.form');
+
+  resetInputForm(formElement);
   openPopup(popupElementCard);
 });
 
 // закрытие popup для добавления карточки в elements
 buttonClosePopupElementCard.addEventListener('click', () => {
-  const formElement = popupElementCard.querySelector('.form');
-
   closePopup(popupElementCard);
-  resetInputForm(formElement);
 });
 
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
