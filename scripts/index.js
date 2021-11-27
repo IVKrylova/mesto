@@ -56,11 +56,13 @@ const popupElement = document.querySelector('.popup');
 // функция открытия popup
 function openPopup(elementPopup) {
   elementPopup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 // функция закрытия popup
 function closePopup(elementPopup) {
   elementPopup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
 // функция установки значений для popup в profile__info
@@ -161,21 +163,12 @@ function setClosePopupByClickOverlayToPopups() {
 }
 
 // функция закрытия popup при нажатии на Esc
-function closePopupByEsc(popupElement) {
-  document.addEventListener('keydown', (evt) => {
-    if ((evt.key === "Escape" && (popupElement.classList.contains('popup_opened')))) {
-      closePopup(popupElement);
-    }
-  });
-}
+function closePopupByEsc(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
 
-// функция добавления возможности закрытия popup при нажатии на Esc всем popup
-function setClosePopupByEsc() {
-  const popapsList = Array.from(document.querySelectorAll('.popup'));
-
-  popapsList.forEach((popupElement) => {
-    closePopupByEsc(popupElement);
-  });
+    closePopup(openedPopup);
+  }
 }
 
 // добавление карточек из массива в elements
@@ -228,6 +221,3 @@ buttonClosePreviewElementCard.addEventListener('click', () => {
 
 // добавлениe возможности закрытия popup при клике на overlay всем popup
 setClosePopupByClickOverlayToPopups();
-
-// добавлениe возможности закрытия popup при нажатии на Esc
-setClosePopupByEsc();
