@@ -10,8 +10,8 @@ const config = {
 
 // функция включения валидации
 function enableValidation(config) {
-// получение параметров из объекта с настройками с помощью деструктуризации
-const { formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass } = config;
+  // получение параметров из объекта с настройками с помощью деструктуризации
+  const { formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass } = config;
 
   // функция добавления класса с ошибкой к input
   function showInputError(formElement, inputElement, errorMessage) {
