@@ -132,8 +132,8 @@ function submitHandlerFormElementCard(evt) {
 // функция сброса полей формы при закрытии
 function resetInputForm(formElement) {
   if(formElement) {
-    const errorElementsList = Array.from(formElement.querySelectorAll('.form__input-error'));
-    const inputElementsList = Array.from(formElement.querySelectorAll('.form__item'));
+    const errorElementsList = formElement.querySelectorAll('.form__input-error');
+    const inputElementsList = formElement.querySelectorAll('.form__item');
 
     formElement.reset();
     errorElementsList.forEach((errorElement) => {
@@ -156,7 +156,7 @@ function closePopupByClickOverlay(popupElement) {
 
 // функция добавления возможности закрытия popup при клике на overlay всем popup
 function setClosePopupByClickOverlayToPopups() {
-  const popapsList = Array.from(document.querySelectorAll('.popup'));
+  const popapsList = document.querySelectorAll('.popup');
 
   popapsList.forEach((popupElement) => {
     closePopupByClickOverlay(popupElement);
