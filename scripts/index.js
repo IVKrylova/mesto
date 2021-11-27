@@ -70,7 +70,7 @@ function setValuesPopupProfileInfo() {
 }
 
 // oбработчик отправки формы в profile__info
-function formSubmitHandlerProfileInfo(evt) {
+function submitHandlerFormProfileInfo(evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileProfession.textContent = inputProfession.value;
@@ -119,7 +119,7 @@ function addElementsFromArrey(initialCards) {
 }
 
 // oбработчик отправки формы для добавления карточки в elements
-function formSubmitHandlerElementCard(evt) {
+function submitHandlerFormElementCard(evt) {
   evt.preventDefault();
   elementsList.prepend(createElementCard(inputPlaceUrl.value, inputPlace.value));
   formAddCard.reset();
@@ -127,7 +127,7 @@ function formSubmitHandlerElementCard(evt) {
 }
 
 // функция сброса полей формы при закрытии
-function reserInputForm(formElement) {
+function resetInputForm(formElement) {
   if(formElement) {
     const errorElementsList = Array.from(formElement.querySelectorAll('.form__input-error'));
     const inputElementsList = Array.from(formElement.querySelectorAll('.form__item'));
@@ -149,7 +149,7 @@ function closePopupByClickOverlay(popupElement) {
   document.addEventListener('click', (evt) => {
     if(evt.target === popupElement) {
       closePopup(popupElement);
-      reserInputForm(formElement);
+      resetInputForm(formElement);
     }
   });
 }
@@ -203,11 +203,11 @@ buttonClosePopupProfileInfo.addEventListener('click', () => {
   const formElement = popupProfileInfo.querySelector('.form');
 
   closePopup(popupProfileInfo);
-  reserInputForm(formElement);
+  resetInputForm(formElement);
 });
 
 // прикрепляем обработчик к форме в profile__info
-popupProfileInfo.addEventListener('submit', formSubmitHandlerProfileInfo);
+popupProfileInfo.addEventListener('submit', submitHandlerFormProfileInfo);
 
 // открытие popup для добавления карточки в elements
 buttonAdd.addEventListener('click', () => {
@@ -219,13 +219,13 @@ buttonClosePopupElementCard.addEventListener('click', () => {
   const formElement = popupElementCard.querySelector('.form');
 
   closePopup(popupElementCard);
-  reserInputForm(formElement);
+  resetInputForm(formElement);
 });
 
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
 // имя карточки для теста Холмогорский район
 // ссылка карточки для теста https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg
-popupElementCard.addEventListener('submit', formSubmitHandlerElementCard);
+popupElementCard.addEventListener('submit', submitHandlerFormElementCard);
 
 // закрытие превью для image
 buttonClosePreviewElementCard.addEventListener('click', () => {
