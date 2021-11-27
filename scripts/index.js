@@ -1,5 +1,6 @@
 // переменные, необходимые для реализации открытия popup в profile__info
 const popupProfileInfo = document.querySelector('#popup-profile-info');
+const formPopupProfileInfo = document.querySelector('#form-edit-profile');
 const buttonEdit = document.querySelector('.button-edit');
 const buttonClosePopupProfileInfo = document.querySelector('#button-close-popup-profile-info');
 const profileName = document.querySelector('.profile__name');
@@ -176,9 +177,7 @@ addElementsFromArrey(initialCards);
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
-  const formElement = popupProfileInfo.querySelector('.form');
-
-  resetInputForm(formElement);
+  resetInputForm(formPopupProfileInfo);
   setValuesPopupProfileInfo();
   if(buttonFormSubmitPopupProfileInfo.hasAttribute('disabled')) {
     buttonFormSubmitPopupProfileInfo.removeAttribute('disabled');
@@ -194,13 +193,11 @@ buttonClosePopupProfileInfo.addEventListener('click', () => {
 });
 
 // прикрепляем обработчик к форме в profile__info
-popupProfileInfo.addEventListener('submit', submitHandlerFormProfileInfo);
+formPopupProfileInfo.addEventListener('submit', submitHandlerFormProfileInfo);
 
 // открытие popup для добавления карточки в elements
 buttonAdd.addEventListener('click', () => {
-  const formElement = popupElementCard.querySelector('.form');
-
-  resetInputForm(formElement);
+  resetInputForm(formAddCard);
   openPopup(popupElementCard);
 });
 
@@ -212,7 +209,7 @@ buttonClosePopupElementCard.addEventListener('click', () => {
 // прикрепляем обработчик к форме в popup для добавления карточки в elements
 // имя карточки для теста Холмогорский район
 // ссылка карточки для теста https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg
-popupElementCard.addEventListener('submit', submitHandlerFormElementCard);
+formAddCard.addEventListener('submit', submitHandlerFormElementCard);
 
 // закрытие превью для image
 buttonClosePreviewElementCard.addEventListener('click', () => {
