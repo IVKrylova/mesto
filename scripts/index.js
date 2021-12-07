@@ -47,10 +47,6 @@ const popupElementCard = document.querySelector('#popup-element-card');
 const inputPlace = document.querySelector('#place');
 const inputPlaceUrl = document.querySelector('#place-url');
 
-// переменные, необходимые для реализации просмотра изображений из elements в popup
-const elementImageList = document.querySelectorAll('.element__image');
-const popupElementImage = document.querySelector('#element-popup');
-
 // переменные, необходимые для реализации закрытия popup при клике на overlay и крeстик
 const popupsList = document.querySelectorAll('.popup');
 
@@ -80,51 +76,19 @@ function submitHandlerFormProfileInfo(evt) {
   closePopup(popupProfileInfo);
 }
 
-// функция создания карточек
-function createElementCard(imageSrc, titleValue) {
-  const elementTemplate = document.querySelector('#element-template').content;
-  const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
-
-  elementCard.querySelector('.element__image').src = imageSrc;
-  elementCard.querySelector('.element__image').alt = titleValue;
-  elementCard.querySelector('.element__title').textContent = titleValue;
-
-  // переключение цвета лайка при клике
-  elementCard.querySelector('.element__like').addEventListener('click', (evt) => {
-    const eventTarget = evt.target;
-    eventTarget.classList.toggle('element__like_active');
-  });
-
-  // обработчик удаления карточки
-  elementCard.querySelector('.button-delete').addEventListener('click', (evt) => {
-    const eventTarget = evt.target;
-    const elementCardDelete = eventTarget.closest('.element');
-    elementCardDelete.remove();
-  });
-
-  // открытие popup для image
-  elementCard.querySelector('.element__link-to-popup').addEventListener('click', (evt) => {
-    popupElementImage.querySelector('.popup__image').src = imageSrc;
-    popupElementImage.querySelector('.popup__image').alt = titleValue;
-    popupElementImage.querySelector('.popup__description').textContent = titleValue;
-
-    openPopup(popupElementImage);
-  });
-
-  return elementCard;
-}
-
 // функция добавления карточек в elements из массива
 function addElementsFromArrey(initialCards) {
   initialCards.forEach((card) => {
-    elementsList.append(createElementCard(card.link, card.name));
+    const elementCard = new Card(card, '.element');
+    elementsList.append(elementCard.generateElementCard());
   });
 }
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard(evt) {
   evt.preventDefault();
-  elementsList.prepend(createElementCard(inputPlaceUrl.value, inputPlace.value));
+  const newElementCard = new Card({link: inputPlaceUrl.value, name: inputPlace.value}, '.element');
+  elementsList.prepend(newElementCard.generateElementCard());
   formAddCard.reset();
   closePopup(popupElementCard);
 }
