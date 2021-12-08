@@ -50,6 +50,15 @@ const inputPlaceUrl = document.querySelector('#place-url');
 // переменные, необходимые для реализации закрытия popup при клике на overlay и крeстик
 const popupsList = document.querySelectorAll('.popup');
 
+// объект с настройками валидации форм
+const config = {
+  inputSelector: '.form__item',
+  submitButtonSelector: '.form__button',
+  inactiveButtonClass: 'form__button_disabled',
+  inputErrorClass: 'form__item_type_error',
+  errorClass: 'form__input-error_active'
+};
+
 // функция открытия popup
 function openPopup(elementPopup) {
   elementPopup.classList.add('popup_opened');
@@ -118,6 +127,16 @@ function closePopupByEsc(evt) {
   }
 }
 
+// функция добавления обработчиков всем формам
+function setEventListenersToForms() {
+  const formsList = Array.from(document.querySelectorAll('.popup__form'));
+
+  formsList.forEach((formElement) => {
+    const formValidator = new FormValidator(config, formElement.id);
+    formValidator.enableValidation();
+  });
+}
+
 // добавление карточек из массива в elements
 addElementsFromArrey(initialCards);
 
@@ -157,3 +176,6 @@ popupsList.forEach((popup) => {
     }
   });
 });
+
+// добавлениe обработчиков всем формам
+setEventListenersToForms();
