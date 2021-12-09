@@ -8,11 +8,24 @@ export default class FormValidator {
     this._errorClass = config.errorClass;
   }
 
+  // метод получения формы
+  _getFormElement() {
+    return document.querySelector(`#${this._formSelector}`);
+  }
+
+  // метод получения списка полей формы
+  _getInputsList() {
+    return Array.from(this._getFormElement().querySelectorAll(this._inputSelector));
+  }
+
+  // метод выборa элемента ошибки на основе уникального класса
+  _getInputElementError(inputElement) {
+    return this._getFormElement().querySelector(`.${inputElement.id}-input-error`);
+  }
+
   // метод добавления класса с ошибкой к input
   _showInputError(inputElement) {
-    const formElement = this._getFormElement();
-    // выбор элемента ошибки на основе уникального класса
-    const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
+    const errorElement = this._getInputElementError(inputElement);
 
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = inputElement.validationMessage;
@@ -21,9 +34,7 @@ export default class FormValidator {
 
   // метод удаления класса с ошибкой из input
   _hideInputError(inputElement) {
-    const formElement = this._getFormElement();
-    // выбор элемента ошибки на основе уникального класса
-    const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
+    const errorElement = this._getInputElementError(inputElement);
 
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
@@ -41,16 +52,15 @@ export default class FormValidator {
 
   // метод добавления неактивного состояния кнопке в форме с учетом проверки по умолчанию заполненных полей при открытии формы
   _checkInputEmpty() {
-    const formElement = this._getFormElement();
-    const popupContainer = formElement.parentNode;
+    const popupContainer = this._getFormElement().parentNode;
     const popupElement = popupContainer.parentNode;
 
     if (popupElement.classList.contains('popup_opened')) {
-      const inputsList = Array.from(formElement.querySelectorAll(this._inputSelector));
+      const inputsList = Array.from(this._getFormElement().querySelectorAll(this._inputSelector));
       const resultCheckInput = inputsList.every((inputElement) => {
         return inputElement.value === '';
       });
-      const buttonElement = formElement.querySelector('.form__button');
+      const buttonElement = this._getFormElement().querySelector('.form__button');
 
       if (resultCheckInput) {
         this._toggleButtonState(inputsList, buttonElement);
@@ -71,12 +81,9 @@ export default class FormValidator {
 
   // метод добавления обработчиков всем полям формы
   _setEventListenersToInputs() {
-    const inputsList = this._getInputsList();
-    const buttonElement = document.querySelector(`#${this._formSelector}`).querySelector(this._submitButtonSelector);
-
     this._setCheckInputEmptyToButton();
 
-    inputsList.forEach((inputElement) => {
+    this._getInputsList().forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
         this._toggleButtonState();
@@ -86,16 +93,15 @@ export default class FormValidator {
 
   // метод проверки валидности всех полей формы
   _hasInvalidInput() {
-    const inputsList = this._getInputsList();
-    return inputsList.some((inputElement) => {
+    return this._getInputsList().some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
   // метод переключения кнопки
   _toggleButtonState() {
-    const formElement = this._getFormElement();
-    const buttonElement = formElement.querySelector(this._submitButtonSelector);
+    const buttonElement = this._getFormElement().querySelector(this._submitButtonSelector);
+
     if (this._hasInvalidInput()) {
       buttonElement.classList.add(this._inactiveButtonClass);
       buttonElement.setAttribute('disabled', 'disabled');
@@ -103,21 +109,6 @@ export default class FormValidator {
       buttonElement.classList.remove(this._inactiveButtonClass);
       buttonElement.removeAttribute('disabled');
     }
-  }
-
-  // метод получения формы
-  _getFormElement() {
-    const formElement = document.querySelector(`#${this._formSelector}`);
-
-    return formElement;
-  }
-
-  // метод получения списка полей формы
-  _getInputsList() {
-    const formElement = this._getFormElement();
-    const inputsList = Array.from(formElement.querySelectorAll(this._inputSelector));
-
-    return inputsList;
   }
 
   // метод включения валидации
