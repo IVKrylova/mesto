@@ -10,7 +10,7 @@ export default class FormValidator {
 
   // метод добавления класса с ошибкой к input
   _showInputError(inputElement) {
-    const formElement = document.querySelector(`#${this._formSelector}`);
+    const formElement = this._getFormElement();
     // выбор элемента ошибки на основе уникального класса
     const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
 
@@ -21,7 +21,7 @@ export default class FormValidator {
 
   // метод удаления класса с ошибкой из input
   _hideInputError(inputElement) {
-    const formElement = document.querySelector(`#${this._formSelector}`);
+    const formElement = this._getFormElement();
     // выбор элемента ошибки на основе уникального класса
     const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
 
@@ -41,7 +41,7 @@ export default class FormValidator {
 
   // метод добавления неактивного состояния кнопке в форме с учетом проверки по умолчанию заполненных полей при открытии формы
   _checkInputEmpty() {
-    const formElement = document.querySelector(`#${this._formSelector}`);
+    const formElement = this._getFormElement();
     const popupContainer = formElement.parentNode;
     const popupElement = popupContainer.parentNode;
 
@@ -71,36 +71,53 @@ export default class FormValidator {
 
   // метод добавления обработчиков всем полям формы
   _setEventListenersToInputs() {
-    const formElement = document.querySelector(`#${this._formSelector}`);
-    const inputsList = Array.from(formElement.querySelectorAll(this._inputSelector));
-    const buttonElement = formElement.querySelector(this._submitButtonSelector);
+    const inputsList = this._getInputsList();
+    const buttonElement = document.querySelector(`#${this._formSelector}`).querySelector(this._submitButtonSelector);
 
     this._setCheckInputEmptyToButton();
 
     inputsList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
-        this._toggleButtonState(inputsList, buttonElement);
+        this._toggleButtonState();
       });
     });
   }
 
   // метод проверки валидности всех полей формы
-  _hasInvalidInput (inputsList) {
+  _hasInvalidInput() {
+    const inputsList = this._getInputsList();
     return inputsList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
   // метод переключения кнопки
-  _toggleButtonState(inputsList, buttonElement) {
-    if (this._hasInvalidInput(inputsList)) {
+  _toggleButtonState() {
+    const formElement = this._getFormElement();
+    const buttonElement = formElement.querySelector(this._submitButtonSelector);
+    if (this._hasInvalidInput()) {
       buttonElement.classList.add(this._inactiveButtonClass);
       buttonElement.setAttribute('disabled', 'disabled');
     } else {
       buttonElement.classList.remove(this._inactiveButtonClass);
       buttonElement.removeAttribute('disabled');
     }
+  }
+
+  // метод получения формы
+  _getFormElement() {
+    const formElement = document.querySelector(`#${this._formSelector}`);
+
+    return formElement;
+  }
+
+  // метод получения списка полей формы
+  _getInputsList() {
+    const formElement = this._getFormElement();
+    const inputsList = Array.from(formElement.querySelectorAll(this._inputSelector));
+
+    return inputsList;
   }
 
   // метод включения валидации
