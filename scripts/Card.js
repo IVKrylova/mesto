@@ -1,7 +1,9 @@
 export default class Card {
-  constructor(data, cardSelector) {
+  constructor(data, openPopup, closePopup, cardSelector) {
     this._name = data.name;
     this._link = data.link;
+    this._openPopup = openPopup;
+    this._closePopup = closePopup;
     this._cardSelector = cardSelector;
   }
 
@@ -24,19 +26,24 @@ export default class Card {
     elementCardDelete.remove();
   }
 
+  // метод выбора элемента popup для image
+  _getPopupElementImage() {
+    return document.querySelector('#element-popup');
+  }
+
   // обработчик открытия popup для image
   _handleOpenpopupElementImage() {
-    const popupElementImage = document.querySelector('#element-popup');
+    const popupElementImage = this._getPopupElementImage();
     popupElementImage.querySelector('.popup__image').src = this._link;
     popupElementImage.querySelector('.popup__image').alt = this._name;
     popupElementImage.querySelector('.popup__description').textContent = this._name;
-    popupElementImage.classList.add('popup_opened');
+    this._openPopup(popupElementImage);
   }
 
-  // обработчик закрытия popup для image при нажатии на Esc
-  _handleClosePopupByEsc() {
-    const popupElementImage = document.querySelector('#element-popup');
-    popupElementImage.classList.remove('popup_opened');
+  // обработчик закрытия popup для image
+  _handleClosePopup() {
+    const popupElementImage = this._getPopupElementImage();
+    this._closePopup(popupElementImage);
   }
 
   // установка слушателей событий
@@ -51,12 +58,6 @@ export default class Card {
 
     this._element.querySelector('.element__link-to-popup').addEventListener('click', (evt) => {
       this._handleOpenpopupElementImage();
-    });
-
-    document.addEventListener('keydown', (evt) =>{
-      if (evt.key === 'Escape') {
-        this._handleClosePopupByEsc();
-      }
     });
   }
 

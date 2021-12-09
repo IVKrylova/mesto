@@ -88,7 +88,7 @@ function submitHandlerFormProfileInfo(evt) {
 // функция добавления карточек в elements из массива
 function addElementsFromArrey(initialCards) {
   initialCards.forEach((card) => {
-    const elementCard = new Card(card, '.element');
+    const elementCard = new Card(card, openPopup, closePopup, '.element');
     elementsList.append(elementCard.generateElementCard());
   });
 }
@@ -96,7 +96,7 @@ function addElementsFromArrey(initialCards) {
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard(evt) {
   evt.preventDefault();
-  const newElementCard = new Card({link: inputPlaceUrl.value, name: inputPlace.value}, '.element');
+  const newElementCard = new Card({link: inputPlaceUrl.value, name: inputPlace.value}, openPopup, closePopup, '.element');
   elementsList.prepend(newElementCard.generateElementCard());
   formAddCard.reset();
   closePopup(popupElementCard);
