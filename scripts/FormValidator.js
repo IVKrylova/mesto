@@ -49,9 +49,7 @@ export default class FormValidator {
   // метод добавления неактивного состояния кнопке в форме с учетом проверки по умолчанию заполненных полей при открытии формы
   _checkInputEmpty() {
     if (this._popupElement.classList.contains('popup_opened')) {
-      const resultCheckInput = this._inputsList.every((inputElement) => {
-        return inputElement.value === '';
-      });
+      const resultCheckInput = this._inputsList.every(inputElement => inputElement.value === '');
       if (resultCheckInput) {
         this._toggleButtonState();
       }
@@ -60,7 +58,7 @@ export default class FormValidator {
 
   // метод добавления проверки заполненных полей с изменением состояния кнопки при открытии для каждой кнопки, открывающей popup
   _setCheckInputEmptyToButton() {
-    this._buttonsList.forEach((buttonElement) => {
+    this._buttonsList.forEach(buttonElement => {
       buttonElement.addEventListener('click', () => {
         this._checkInputEmpty();
       });
@@ -71,7 +69,7 @@ export default class FormValidator {
   _setEventListenersToInputs() {
     this._setCheckInputEmptyToButton();
 
-    this._inputsList.forEach((inputElement) => {
+    this._inputsList.forEach(inputElement => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
         this._toggleButtonState();
@@ -81,7 +79,7 @@ export default class FormValidator {
 
   // метод проверки валидности всех полей формы
   _hasInvalidInput() {
-    return this._inputsList.some((inputElement) => {
+    return this._inputsList.some(inputElement => {
       return !inputElement.validity.valid;
     });
   }
@@ -100,9 +98,7 @@ export default class FormValidator {
   // метод для очистки ошибок и управления кнопкой
   resetValidation() {
     this._toggleButtonState();
-    this._inputsList.forEach((inputElement) => {
-      this._hideError(inputElement);
-    });
+    this._inputsList.forEach(inputElement => this._hideError(inputElement));
   }
 
   // метод включения валидации

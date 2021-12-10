@@ -36,15 +36,15 @@ export default class Card {
 
   // установка слушателей событий
   _setEventListeners() {
-    this._element.querySelector('.element__like').addEventListener('click', (evt) => {
+    this._element.querySelector('.element__like').addEventListener('click', evt => {
       this._handleToggleLike();
     });
 
-    this._element.querySelector('.button-delete').addEventListener('click', (evt) => {
+    this._element.querySelector('.button-delete').addEventListener('click', evt => {
       this._handleDeleteElementCard();
     });
 
-    this._element.querySelector('.element__link-to-popup').addEventListener('click', (evt) => {
+    this._element.querySelector('.element__link-to-popup').addEventListener('click', evt => {
       this._handleOpenpopupElementImage();
     });
   }

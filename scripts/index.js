@@ -92,7 +92,7 @@ function createCard(dataCard, selectorCard) {
 
 // функция добавления карточек в elements из массива
 function addElementsFromArrey(initialCards) {
-  initialCards.forEach((card) => {
+  initialCards.forEach(card => {
     const elementCard = createCard(card, '.element');
     elementsList.append(elementCard.generateElementCard());
   });
@@ -153,7 +153,7 @@ buttonAdd.addEventListener('click', () => {
 formAddCard.addEventListener('submit', submitHandlerFormElementCard);
 
 // закрытие popup при клике на overlay и крeстик
-popupsList.forEach((popup) => {
+popupsList.forEach(popup => {
   popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(popup)
