@@ -8,9 +8,10 @@ export default class FormValidator {
     this._errorClass = config.errorClass;
     this._formElement = document.querySelector(this._formSelector);
     this._inputsList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._buttonElement = this._formElement.querySelector('.form__button');
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     this._popupElement = this._formElement.parentNode.parentNode;
     this._buttonsList = Array.from(document.querySelectorAll('.button'));
+    this._errorElementsList = this._formElement.querySelectorAll('.form__input-error');
   }
 
   // метод выборa элемента ошибки на основе уникального класса
@@ -44,6 +45,20 @@ export default class FormValidator {
   // метод очистки сообщений об ошибки из input
   _hideError(inputElement) {
     this._getInputElementError(inputElement).textContent = '';
+    this._resetInputForm();
+  }
+
+  // метод очистки полей формы
+  _resetInputForm() {
+    if(this._formElement) {
+      this._formElement.reset();
+      this._errorElementsList.forEach((errorElement) => {
+        errorElement.textContent = '';
+      });
+      this._inputsList.forEach((inputElement) => {
+        inputElement.classList.remove('form__item_type_error');
+      });
+    }
   }
 
   // метод добавления неактивного состояния кнопке в форме с учетом проверки по умолчанию заполненных полей при открытии формы
