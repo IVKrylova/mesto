@@ -1,9 +1,8 @@
 export default class Card {
-  constructor(data, openPopup, closePopup, cardSelector) {
+  constructor(data, openPopup, cardSelector) {
     this._name = data.name;
     this._link = data.link;
     this._openPopup = openPopup;
-    this._closePopup = closePopup;
     this._cardSelector = cardSelector;
   }
 
@@ -38,12 +37,6 @@ export default class Card {
     popupElementImage.querySelector('.popup__image').alt = this._name;
     popupElementImage.querySelector('.popup__description').textContent = this._name;
     this._openPopup(popupElementImage);
-  }
-
-  // обработчик закрытия popup для image
-  _handleClosePopup() {
-    const popupElementImage = this._getPopupElementImage();
-    this._closePopup(popupElementImage);
   }
 
   // установка слушателей событий

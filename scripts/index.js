@@ -87,7 +87,7 @@ function submitHandlerFormProfileInfo(evt) {
 
 // функция создания карточки
 function createCard(dataCard, selectorCard) {
-  return new Card(dataCard, openPopup, closePopup, selectorCard);
+  return new Card(dataCard, openPopup, selectorCard);
 }
 
 // функция добавления карточек в elements из массива
