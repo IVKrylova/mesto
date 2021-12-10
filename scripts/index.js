@@ -107,22 +107,6 @@ function submitHandlerFormElementCard(evt) {
   closePopup(popupElementCard);
 }
 
-// функция сброса полей формы при закрытии
-function resetInputForm(formElement) {
-  if(formElement) {
-    const errorElementsList = formElement.querySelectorAll('.form__input-error');
-    const inputElementsList = formElement.querySelectorAll('.form__item');
-
-    formElement.reset();
-    errorElementsList.forEach((errorElement) => {
-      errorElement.textContent = '';
-    });
-    inputElementsList.forEach((inputElement) => {
-      inputElement.classList.remove('form__item_type_error');
-    });
-  }
-}
-
 // функция закрытия popup при нажатии на Esc
 function closePopupByEsc(evt) {
   if (evt.key === 'Escape') {
@@ -132,22 +116,20 @@ function closePopupByEsc(evt) {
   }
 }
 
-// функция добавления обработчиков всем формам
-function setEventListenersToForms() {
-  const formsList = Array.from(document.querySelectorAll('.popup__form'));
+// создание экземпляра класса FormValidator для формы в profile__info
+const editFormValidator = new FormValidator(config, '#form-edit-profile');
+editFormValidator.enableValidation();
 
-  formsList.forEach((formElement) => {
-    const formValidator = new FormValidator(config, formElement.id);
-    formValidator.enableValidation();
-  });
-}
+// создание экземпляра класса FormValidator для формы для добавления карточки в elements
+const cardFormValidator = new FormValidator(config, '#form-add-card');
+cardFormValidator.enableValidation();
 
 // добавление карточек из массива в elements
 addElementsFromArrey(initialCards);
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
-  resetInputForm(formPopupProfileInfo);
+  editFormValidator.resetValidation();
   setValuesPopupProfileInfo();
   if(buttonFormSubmitPopupProfileInfo.hasAttribute('disabled')) {
     buttonFormSubmitPopupProfileInfo.removeAttribute('disabled');
@@ -161,7 +143,7 @@ formPopupProfileInfo.addEventListener('submit', submitHandlerFormProfileInfo);
 
 // открытие popup для добавления карточки в elements
 buttonAdd.addEventListener('click', () => {
-  resetInputForm(formAddCard);
+  cardFormValidator.resetValidation();
   openPopup(popupElementCard);
 });
 
@@ -181,6 +163,3 @@ popupsList.forEach((popup) => {
     }
   });
 });
-
-// добавлениe обработчиков всем формам
-setEventListenersToForms();
