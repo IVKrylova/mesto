@@ -85,10 +85,15 @@ function submitHandlerFormProfileInfo(evt) {
   closePopup(popupProfileInfo);
 }
 
+// функция создания карточки
+function createCard(dataCard, selectorCard) {
+  return new Card(dataCard, openPopup, closePopup, selectorCard);
+}
+
 // функция добавления карточек в elements из массива
 function addElementsFromArrey(initialCards) {
   initialCards.forEach((card) => {
-    const elementCard = new Card(card, openPopup, closePopup, '.element');
+    const elementCard = createCard(card, '.element');
     elementsList.append(elementCard.generateElementCard());
   });
 }
@@ -96,7 +101,7 @@ function addElementsFromArrey(initialCards) {
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard(evt) {
   evt.preventDefault();
-  const newElementCard = new Card({link: inputPlaceUrl.value, name: inputPlace.value}, openPopup, closePopup, '.element');
+  const newElementCard = createCard({link: inputPlaceUrl.value, name: inputPlace.value}, '.element');
   elementsList.prepend(newElementCard.generateElementCard());
   formAddCard.reset();
   closePopup(popupElementCard);
