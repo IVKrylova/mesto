@@ -6,21 +6,16 @@ export default class FormValidator {
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
-  }
-
-  // метод получения формы
-  _getFormElement() {
-    return document.querySelector(`#${this._formSelector}`);
-  }
-
-  // метод получения списка полей формы
-  _getInputsList() {
-    return Array.from(this._getFormElement().querySelectorAll(this._inputSelector));
+    this._formElement = document.querySelector(`#${this._formSelector}`);
+    this._inputsList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._buttonElement = this._formElement.querySelector('.form__button');
+    this._popupElement = this._formElement.parentNode.parentNode;
+    this._buttonsList = Array.from(document.querySelectorAll('.button'));
   }
 
   // метод выборa элемента ошибки на основе уникального класса
   _getInputElementError(inputElement) {
-    return this._getFormElement().querySelector(`.${inputElement.id}-input-error`);
+    return this._formElement.querySelector(`.${inputElement.id}-input-error`);
   }
 
   // метод добавления класса с ошибкой к input
@@ -52,27 +47,19 @@ export default class FormValidator {
 
   // метод добавления неактивного состояния кнопке в форме с учетом проверки по умолчанию заполненных полей при открытии формы
   _checkInputEmpty() {
-    const popupContainer = this._getFormElement().parentNode;
-    const popupElement = popupContainer.parentNode;
-
-    if (popupElement.classList.contains('popup_opened')) {
-      const inputsList = Array.from(this._getFormElement().querySelectorAll(this._inputSelector));
-      const resultCheckInput = inputsList.every((inputElement) => {
+    if (this._popupElement.classList.contains('popup_opened')) {
+      const resultCheckInput = this._inputsList.every((inputElement) => {
         return inputElement.value === '';
       });
-      const buttonElement = this._getFormElement().querySelector('.form__button');
-
       if (resultCheckInput) {
-        this._toggleButtonState(inputsList, buttonElement);
+        this._toggleButtonState(this._inputsList, this._buttonElement);
       }
     }
   }
 
   // метод добавления проверки заполненных полей с изменением состояния кнопки при открытии для каждой кнопки, открывающей popup
   _setCheckInputEmptyToButton() {
-    const buttonsList = Array.from(document.querySelectorAll('.button'));
-
-    buttonsList.forEach((buttonElement) => {
+    this._buttonsList.forEach((buttonElement) => {
       buttonElement.addEventListener('click', () => {
         this._checkInputEmpty();
       });
@@ -83,7 +70,7 @@ export default class FormValidator {
   _setEventListenersToInputs() {
     this._setCheckInputEmptyToButton();
 
-    this._getInputsList().forEach((inputElement) => {
+    this._inputsList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
         this._toggleButtonState();
@@ -93,21 +80,19 @@ export default class FormValidator {
 
   // метод проверки валидности всех полей формы
   _hasInvalidInput() {
-    return this._getInputsList().some((inputElement) => {
+    return this._inputsList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
   // метод переключения кнопки
   _toggleButtonState() {
-    const buttonElement = this._getFormElement().querySelector(this._submitButtonSelector);
-
     if (this._hasInvalidInput()) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.setAttribute('disabled', 'disabled');
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.setAttribute('disabled', 'disabled');
     } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.removeAttribute('disabled');
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.removeAttribute('disabled');
     }
   }
 

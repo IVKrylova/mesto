@@ -4,6 +4,7 @@ export default class Card {
     this._link = data.link;
     this._openPopup = openPopup;
     this._cardSelector = cardSelector;
+    this._popupElementImage = document.querySelector('#element-popup');
   }
 
   // метод, который получает элемент карточки из разметки
@@ -25,18 +26,12 @@ export default class Card {
     elementCardDelete.remove();
   }
 
-  // метод выбора элемента popup для image
-  _getPopupElementImage() {
-    return document.querySelector('#element-popup');
-  }
-
   // обработчик открытия popup для image
   _handleOpenpopupElementImage() {
-    const popupElementImage = this._getPopupElementImage();
-    popupElementImage.querySelector('.popup__image').src = this._link;
-    popupElementImage.querySelector('.popup__image').alt = this._name;
-    popupElementImage.querySelector('.popup__description').textContent = this._name;
-    this._openPopup(popupElementImage);
+    this._popupElementImage.querySelector('.popup__image').src = this._link;
+    this._popupElementImage.querySelector('.popup__image').alt = this._name;
+    this._popupElementImage.querySelector('.popup__description').textContent = this._name;
+    this._openPopup(this._popupElementImage);
   }
 
   // установка слушателей событий
