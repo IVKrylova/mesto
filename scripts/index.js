@@ -87,22 +87,21 @@ function submitHandlerFormProfileInfo(evt) {
 
 // функция создания карточки
 function createCard(dataCard, selectorCard) {
-  return new Card(dataCard, openPopup, selectorCard);
+  const elementCard = new Card(dataCard, openPopup, selectorCard);
+  return elementCard.generateElementCard();
 }
 
 // функция добавления карточек в elements из массива
 function addElementsFromArrey(initialCards) {
   initialCards.forEach(card => {
-    const elementCard = createCard(card, '.element');
-    elementsList.append(elementCard.generateElementCard());
+    elementsList.append(createCard(card, '.element'));
   });
 }
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard(evt) {
   evt.preventDefault();
-  const newElementCard = createCard({link: inputPlaceUrl.value, name: inputPlace.value}, '.element');
-  elementsList.prepend(newElementCard.generateElementCard());
+  elementsList.prepend(createCard({link: inputPlaceUrl.value, name: inputPlace.value}, '.element'));
   formAddCard.reset();
   closePopup(popupElementCard);
 }
