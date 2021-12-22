@@ -1,6 +1,7 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
 
 // переменные, необходимые для реализации открытия popup в profile__info
 const popupProfileInfo = document.querySelector('#popup-profile-info');
@@ -60,17 +61,17 @@ const config = {
   errorClass: 'form__input-error_active'
 };
 
-// функция открытия popup
+/* // функция открытия popup
 function openPopup(elementPopup) {
   elementPopup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupByEsc);
-}
+} */
 
-// функция закрытия popup
+/* // функция закрытия popup
 function closePopup(elementPopup) {
   elementPopup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupByEsc);
-}
+} */
 
 // функция установки значений для popup в profile__info
 function setValuesPopupProfileInfo() {
@@ -108,14 +109,14 @@ function submitHandlerFormElementCard(evt) {
   closePopup(popupElementCard);
 }
 
-// функция закрытия popup при нажатии на Esc
+/* // функция закрытия popup при нажатии на Esc
 function closePopupByEsc(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened');
 
     closePopup(openedPopup);
   }
-}
+} */
 
 // создание экземпляра класса FormValidator для формы в profile__info
 const editFormValidator = new FormValidator(config, '#form-edit-profile');
@@ -148,7 +149,7 @@ buttonAdd.addEventListener('click', () => {
 formAddCard.addEventListener('submit', submitHandlerFormElementCard);
 
 // закрытие popup при клике на overlay и крeстик
-popupsList.forEach(popup => {
+/* popupsList.forEach(popup => {
   popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(popup)
@@ -157,7 +158,7 @@ popupsList.forEach(popup => {
       closePopup(popup)
     }
   });
-});
+}); */
 
 // добавление карточек из массива в elements
 const cardsList = new Section({
