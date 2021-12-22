@@ -1,5 +1,5 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
 
 // переменные, необходимые для реализации открытия popup в profile__info
 const popupProfileInfo = document.querySelector('#popup-profile-info');
