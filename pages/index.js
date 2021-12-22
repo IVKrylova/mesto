@@ -1,5 +1,6 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 
 // переменные, необходимые для реализации открытия popup в profile__info
 const popupProfileInfo = document.querySelector('#popup-profile-info');
@@ -37,7 +38,8 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-const elementsList = document.querySelector('.elements__list');
+const elementsListSelector = '.elements__list';
+/* const elementsList = document.querySelector('.elements__list'); */
 
 // переменные, необходимые для реализации добавления карточек в elements через форму
 const formAddCard = document.querySelector('#form-add-card');
@@ -84,18 +86,18 @@ function submitHandlerFormProfileInfo(evt) {
   closePopup(popupProfileInfo);
 }
 
-// функция создания карточки
+/* // функция создания карточки
 function createCard(dataCard, selectorCard) {
   const elementCard = new Card(dataCard, openPopup, selectorCard);
   return elementCard.generateElementCard();
-}
+} */
 
-// функция добавления карточек в elements из массива
+/* // функция добавления карточек в elements из массива
 function addElementsFromArrey(initialCards) {
   initialCards.forEach(card => {
     elementsList.append(createCard(card, '.element'));
   });
-}
+} */
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard(evt) {
@@ -122,8 +124,8 @@ editFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(config, '#form-add-card');
 cardFormValidator.enableValidation();
 
-// добавление карточек из массива в elements
-addElementsFromArrey(initialCards);
+/* // добавление карточек из массива в elements
+addElementsFromArrey(initialCards); */
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
@@ -158,3 +160,40 @@ popupsList.forEach(popup => {
     }
   });
 });
+
+// добавление карточек из массива в elements
+const cardsList = new Section({
+  items: initialCards,
+  renderer: item => {
+    const elementCard = new Card(item, openPopup, '.element');
+     const itemCard = elementCard.generateElementCard();
+     cardsList.addItem(itemCard);
+    }
+  },
+  elementsListSelector
+);
+cardsList.renderItems();
+
+
+
+
+/* // функция создания карточки
+function createCard(dataCard, selectorCard) {
+  const elementCard = new Card(dataCard, openPopup, selectorCard);
+  return elementCard.generateElementCard();
+} */
+
+/* const cardsList = new Section({
+  data: messageList,
+  renderer: (item) => {
+    const message = item.isOwner
+      ? new UserMessage(item, '.message-template_type_user')
+      : new DefaultMessage(item, '.message-template_type_default');
+
+    const messageElement = message.generate();
+
+    cardsList.setItem(messageElement);
+    },
+  },
+  cardListSection
+); */
