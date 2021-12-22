@@ -39,7 +39,7 @@ const initialCards = [
   }
 ];
 const elementsListSelector = '.elements__list';
-/* const elementsList = document.querySelector('.elements__list'); */
+const elementsList = document.querySelector('.elements__list');
 
 // переменные, необходимые для реализации добавления карточек в elements через форму
 const formAddCard = document.querySelector('#form-add-card');
@@ -86,23 +86,24 @@ function submitHandlerFormProfileInfo(evt) {
   closePopup(popupProfileInfo);
 }
 
-/* // функция создания карточки
+// функция создания карточки
 function createCard(dataCard, selectorCard) {
   const elementCard = new Card(dataCard, openPopup, selectorCard);
   return elementCard.generateElementCard();
-} */
-
-/* // функция добавления карточек в elements из массива
-function addElementsFromArrey(initialCards) {
-  initialCards.forEach(card => {
-    elementsList.append(createCard(card, '.element'));
-  });
-} */
+}
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard(evt) {
   evt.preventDefault();
-  elementsList.prepend(createCard({link: inputPlaceUrl.value, name: inputPlace.value}, '.element'));
+
+  const cardFromForm = new Section({
+    items: [{ link: inputPlaceUrl.value, name: inputPlace.value }],
+    renderer: item => elementsList.prepend(createCard(item, '.element'))
+    },
+    elementsListSelector
+  );
+
+  cardFromForm.renderItems();
   formAddCard.reset();
   closePopup(popupElementCard);
 }
@@ -123,9 +124,6 @@ editFormValidator.enableValidation();
 // создание экземпляра класса FormValidator для формы для добавления карточки в elements
 const cardFormValidator = new FormValidator(config, '#form-add-card');
 cardFormValidator.enableValidation();
-
-/* // добавление карточек из массива в elements
-addElementsFromArrey(initialCards); */
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
@@ -165,35 +163,10 @@ popupsList.forEach(popup => {
 const cardsList = new Section({
   items: initialCards,
   renderer: item => {
-    const elementCard = new Card(item, openPopup, '.element');
-     const itemCard = elementCard.generateElementCard();
-     cardsList.addItem(itemCard);
+    const elementCard = createCard(item, openPopup, '.element');
+      cardsList.addItem(elementCard);
     }
   },
   elementsListSelector
 );
 cardsList.renderItems();
-
-
-
-
-/* // функция создания карточки
-function createCard(dataCard, selectorCard) {
-  const elementCard = new Card(dataCard, openPopup, selectorCard);
-  return elementCard.generateElementCard();
-} */
-
-/* const cardsList = new Section({
-  data: messageList,
-  renderer: (item) => {
-    const message = item.isOwner
-      ? new UserMessage(item, '.message-template_type_user')
-      : new DefaultMessage(item, '.message-template_type_default');
-
-    const messageElement = message.generate();
-
-    cardsList.setItem(messageElement);
-    },
-  },
-  cardListSection
-); */
