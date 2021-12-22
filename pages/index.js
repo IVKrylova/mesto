@@ -2,6 +2,7 @@ import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 
 // переменные, необходимые для реализации открытия popup в profile__info
 const popupProfileInfo = document.querySelector('#popup-profile-info');
