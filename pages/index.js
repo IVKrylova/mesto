@@ -1,18 +1,20 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
-import PopupWithImage from '../components/PopupWithImage.js';
+/* import PopupWithImage from '../components/PopupWithImage.js'; */
 import PopupWithForm from '../components/PopupWithForm.js';
 
 // переменные, необходимые для реализации открытия popup в profile__info
-const popupProfileInfo = document.querySelector('#popup-profile-info');
-const formPopupProfileInfo = document.querySelector('#form-edit-profile');
+/* const popupProfileInfo = document.querySelector('#popup-profile-info'); */
+/* const formPopupProfileInfo = document.querySelector('#form-edit-profile'); */
 const buttonEdit = document.querySelector('.button-edit');
 const profileName = document.querySelector('.profile__name');
 const inputName = document.querySelector('#name');
 const profileProfession = document.querySelector('.profile__profession');
 const inputProfession = document.querySelector('#profession');
+
+const popupProfileInfoSelector = '#popup-profile-info';
+const formPopupProfileInfoSelector = '#form-edit-profile';
 
 // переменные, необходимые для реализации добавления карточек в elements из массива
 const initialCards = [
@@ -45,14 +47,17 @@ const elementsListSelector = '.elements__list';
 const elementsList = document.querySelector('.elements__list');
 
 // переменные, необходимые для реализации добавления карточек в elements через форму
-const formAddCard = document.querySelector('#form-add-card');
+/* const formAddCard = document.querySelector('#form-add-card'); */
 const buttonAdd = document.querySelector('.button-add');
-const popupElementCard = document.querySelector('#popup-element-card');
+/* const popupElementCard = document.querySelector('#popup-element-card'); */
 const inputPlace = document.querySelector('#place');
 const inputPlaceUrl = document.querySelector('#place-url');
 
-// переменные, необходимые для реализации закрытия popup при клике на overlay и крeстик
-const popupsList = document.querySelectorAll('.popup');
+const popupElementCardSelector = '#popup-element-card';
+const formAddCardSelector = '#form-add-card';
+
+/* // переменные, необходимые для реализации закрытия popup при клике на overlay и крeстик
+const popupsList = document.querySelectorAll('.popup'); */
 
 // объект с настройками валидации форм
 const config = {
@@ -82,11 +87,11 @@ function setValuesPopupProfileInfo() {
 }
 
 // oбработчик отправки формы в profile__info
-function submitHandlerFormProfileInfo(evt) {
-  evt.preventDefault();
+function submitHandlerFormProfileInfo(/* evt */) {
+  /* evt.preventDefault(); */
   profileName.textContent = inputName.value;
   profileProfession.textContent = inputProfession.value;
-  closePopup(popupProfileInfo);
+  /* closePopup(popupProfileInfo); */
 }
 
 // функция создания карточки
@@ -96,8 +101,8 @@ function createCard(dataCard, selectorCard) {
 }
 
 // oбработчик отправки формы для добавления карточки в elements
-function submitHandlerFormElementCard(evt) {
-  evt.preventDefault();
+function submitHandlerFormElementCard(/* evt */) {
+  /* evt.preventDefault(); */
 
   const cardFromForm = new Section({
     items: [{ link: inputPlaceUrl.value, name: inputPlace.value }],
@@ -107,8 +112,8 @@ function submitHandlerFormElementCard(evt) {
   );
 
   cardFromForm.renderItems();
-  formAddCard.reset();
-  closePopup(popupElementCard);
+  /* formAddCard.reset();
+  closePopup(popupElementCard); */
 }
 
 /* // функция закрытия popup при нажатии на Esc
@@ -128,27 +133,34 @@ editFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(config, '#form-add-card');
 cardFormValidator.enableValidation();
 
+// создание экземпляра класса PopupWithForm для profile__info
+const popupProfileInfo = new PopupWithForm(popupProfileInfoSelector, submitHandlerFormProfileInfo, formPopupProfileInfoSelector);
+
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
   editFormValidator.resetValidation();
   setValuesPopupProfileInfo();
   editFormValidator.removeInactiveStateOfButton();
-  openPopup(popupProfileInfo);
+  popupProfileInfo.open();
 });
 
-// прикрепляем обработчик к форме в profile__info
+// создание экземпляра класса PopupWithForm для elements
+const popupElementCard = new PopupWithForm(popupElementCardSelector, submitHandlerFormElementCard, formAddCardSelector);
+
+/* // прикрепляем обработчик к форме в profile__info
 formPopupProfileInfo.addEventListener('submit', submitHandlerFormProfileInfo);
+ */
 
 // открытие popup для добавления карточки в elements
 buttonAdd.addEventListener('click', () => {
   cardFormValidator.resetValidation();
-  openPopup(popupElementCard);
+  popupElementCard.open();
 });
 
-// прикрепляем обработчик к форме в popup для добавления карточки в elements
+/* // прикрепляем обработчик к форме в popup для добавления карточки в elements
 // имя карточки для теста Холмогорский район
 // ссылка карточки для теста https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg
-formAddCard.addEventListener('submit', submitHandlerFormElementCard);
+formAddCard.addEventListener('submit', submitHandlerFormElementCard); */
 
 // закрытие popup при клике на overlay и крeстик
 /* popupsList.forEach(popup => {
