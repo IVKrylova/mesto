@@ -1,7 +1,6 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-/* import PopupWithImage from '../components/PopupWithImage.js'; */
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 
@@ -100,6 +99,7 @@ function submitHandlerFormProfileInfo(/* evt */) {
 function createCard(dataCard, selectorCard) {
   // создание экземпляра класса PopupWithImage
   const popupElementImage = new PopupWithImage(popupElementImageSelector, dataCard);
+  popupElementImage.setEventListeners();
   const handleCardClick = popupElementImage.open.bind(popupElementImage);
 
   // создание экземпляра класса карточки
@@ -142,6 +142,7 @@ cardFormValidator.enableValidation();
 
 // создание экземпляра класса PopupWithForm для profile__info
 const popupProfileInfo = new PopupWithForm(popupProfileInfoSelector, submitHandlerFormProfileInfo, formPopupProfileInfoSelector);
+popupProfileInfo.setEventListeners();
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
@@ -153,6 +154,8 @@ buttonEdit.addEventListener('click', () => {
 
 // создание экземпляра класса PopupWithForm для elements
 const popupElementCard = new PopupWithForm(popupElementCardSelector, submitHandlerFormElementCard, formAddCardSelector);
+popupElementCard.setEventListeners();
+
 
 /* // прикрепляем обработчик к форме в profile__info
 formPopupProfileInfo.addEventListener('submit', submitHandlerFormProfileInfo);

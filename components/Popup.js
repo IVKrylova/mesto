@@ -4,13 +4,16 @@ export default class Popup {
     this._elementPopup = document.querySelector(this._popupSelector); */
 
     this._elementPopup = document.querySelector(popupSelector);
-    this._openedPopup = document.querySelector('.popup_opened');
+    //this._openedPopup = document.querySelector('.popup_opened');
+
+
   }
 
   // метод закрытия popup при нажатии на Esc
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {
-      this.close(this._openedPopup);
+      this._openedPopup = document.querySelector('.popup_opened');
+      this._openedPopup.classList.remove('popup_opened');
     }
   }
 
@@ -29,9 +32,9 @@ export default class Popup {
   // установка слушателей событий
   setEventListeners() {
     // закрытие popup при клике на overlay и крeстик
-    this._elementPopup.addEventListener('click', (evt) => {
+    this._elementPopup.addEventListener('click', evt => {
 
-//console.log(this)
+//console.log(this._elementPopup)
 
       if (evt.target.classList.contains('popup_opened')) {
         this.close();
