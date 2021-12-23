@@ -1,12 +1,6 @@
 export default class Popup {
   constructor(popupSelector) {
-    /* this._popupSelector = popupSelector;
-    this._elementPopup = document.querySelector(this._popupSelector); */
-
     this._elementPopup = document.querySelector(popupSelector);
-    //this._openedPopup = document.querySelector('.popup_opened');
-
-
   }
 
   // метод закрытия popup при нажатии на Esc
@@ -33,9 +27,6 @@ export default class Popup {
   setEventListeners() {
     // закрытие popup при клике на overlay и крeстик
     this._elementPopup.addEventListener('click', evt => {
-
-//console.log(this._elementPopup)
-
       if (evt.target.classList.contains('popup_opened')) {
         this.close();
       }
