@@ -3,6 +3,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 /* import PopupWithImage from '../components/PopupWithImage.js'; */
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 
 // переменные, необходимые для реализации открытия popup в profile__info
 /* const popupProfileInfo = document.querySelector('#popup-profile-info'); */
@@ -55,6 +56,7 @@ const inputPlaceUrl = document.querySelector('#place-url');
 
 const popupElementCardSelector = '#popup-element-card';
 const formAddCardSelector = '#form-add-card';
+const popupElementImageSelector = '#element-popup';
 
 /* // переменные, необходимые для реализации закрытия popup при клике на overlay и крeстик
 const popupsList = document.querySelectorAll('.popup'); */
@@ -96,7 +98,12 @@ function submitHandlerFormProfileInfo(/* evt */) {
 
 // функция создания карточки
 function createCard(dataCard, selectorCard) {
-  const elementCard = new Card(dataCard, openPopup, selectorCard);
+  // создание экземпляра класса PopupWithImage
+  const popupElementImage = new PopupWithImage(popupElementImageSelector, dataCard);
+  const handleCardClick = popupElementImage.open.bind(popupElementImage);
+
+  // создание экземпляра класса карточки
+  const elementCard = new Card(dataCard, selectorCard, handleCardClick);
   return elementCard.generateElementCard();
 }
 
@@ -174,11 +181,23 @@ formAddCard.addEventListener('submit', submitHandlerFormElementCard); */
   });
 }); */
 
+// обработчик открытия popup для image
+/* function handleCardClick(popupElementImage) {
+  popupElementImage.querySelector('.popup__image').src = link;
+  popupElementImage.querySelector('.popup__image').alt = name;
+  popupElementImage.querySelector('.popup__description').textContent = name;
+} */
+
 // добавление карточек из массива в elements
 const cardsList = new Section({
   items: initialCards,
   renderer: item => {
-    const elementCard = createCard(item, openPopup, '.element');
+
+    const elementCard = createCard(item, '.element');
+
+
+
+
       cardsList.addItem(elementCard);
     }
   },

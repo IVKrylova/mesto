@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, openPopup, cardSelector) {
+  constructor(data, cardSelector, /* openPopup */handleCardClick) {
     this._name = data.name;
     this._link = data.link;
-    this._openPopup = openPopup;
     this._cardSelector = cardSelector;
+    /* this._openPopup = openPopup; */
+    this._handleCardClick = handleCardClick;
     this._popupElementImage = document.querySelector('#element-popup');
   }
 
@@ -27,12 +28,15 @@ export default class Card {
   }
 
   // обработчик открытия popup для image
-  _handleOpenpopupElementImage() {
-    this._popupElementImage.querySelector('.popup__image').src = this._link;
+ /*  _handleOpenpopupElementImage() {
+    /* this._popupElementImage.querySelector('.popup__image').src = this._link;
     this._popupElementImage.querySelector('.popup__image').alt = this._name;
     this._popupElementImage.querySelector('.popup__description').textContent = this._name;
-    this._openPopup(this._popupElementImage);
-  }
+    this._openPopup(this._popupElementImage); */
+    /* this._handleCardClick(); */
+    /* this._openPopup(this._popupElementImage);
+ */
+ //}
 
   // установка слушателей событий
   _setEventListeners() {
@@ -45,7 +49,7 @@ export default class Card {
     });
 
     this._element.querySelector('.element__link-to-popup').addEventListener('click', evt => {
-      this._handleOpenpopupElementImage();
+      this._handleCardClick();
     });
   }
 

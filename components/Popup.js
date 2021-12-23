@@ -8,15 +8,15 @@ export default class Popup {
   }
 
   // метод закрытия popup при нажатии на Esc
-  _handleEscClose() {
+  _handleEscClose(evt) {
     if (evt.key === 'Escape') {
-      this._close(this._openedPopup);
+      this.close(this._openedPopup);
     }
   }
 
   // метод открытия popup
   open() {
-    this.elementPopup.classList.add('popup_opened');
+    this._elementPopup.classList.add('popup_opened');
     document.addEventListener('keydown', this._handleEscClose);
   }
 
@@ -30,6 +30,9 @@ export default class Popup {
   setEventListeners() {
     // закрытие popup при клике на overlay и крeстик
     this._elementPopup.addEventListener('click', (evt) => {
+
+//console.log(this)
+
       if (evt.target.classList.contains('popup_opened')) {
         this.close();
       }
