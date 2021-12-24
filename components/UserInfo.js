@@ -15,20 +15,8 @@ export default class UserInfo {
   }
 
   // метод, который принимает новые данные пользователя и добавляет их на страницу
-  setUserInfo(profileNameSelector, profileProfessionSelector) {
-    console.log(this._inputName)
-
-    const profileName = document.querySelector(profileNameSelector);
-    const profileProfession = document.querySelector(profileProfessionSelector);
-
-    profileName.textContent = this._inputName.value;
-    profileProfession.textContent = this._inputProfession.value;
+  setUserInfo() {
+    this._profileName.textContent = this._inputName.value;
+    this._profileProfession.textContent = this._inputProfession.value;
   }
 }
-
-
-/* // функция установки значений для popup в profile__info
-function setValuesPopupProfileInfo() {
-  inputName.value = profileName.textContent;
-  inputProfession.value = profileProfession.textContent;
-} */
