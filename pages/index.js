@@ -3,15 +3,19 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
 
 // переменные, необходимые для реализации открытия popup в profile__info
 const buttonEdit = document.querySelector('.button-edit');
-const profileName = document.querySelector('.profile__name');
+/* const profileName = document.querySelector('.profile__name'); */
 const inputName = document.querySelector('#name');
-const profileProfession = document.querySelector('.profile__profession');
+/* const profileProfession = document.querySelector('.profile__profession'); */
 const inputProfession = document.querySelector('#profession');
 const popupProfileInfoSelector = '#popup-profile-info';
 const formPopupProfileInfoSelector = '#form-edit-profile';
+
+const profileNameSelector = '.profile__name';
+const profileProfessionSelector = '.profile__profession';
 
 // переменные, необходимые для реализации добавления карточек в elements из массива
 const initialCards = [
@@ -60,17 +64,35 @@ const config = {
   errorClass: 'form__input-error_active'
 };
 
-// функция установки значений для popup в profile__info
+/* // функция установки значений для popup в profile__info
 function setValuesPopupProfileInfo() {
   inputName.value = profileName.textContent;
   inputProfession.value = profileProfession.textContent;
+} */
+
+// функция установки значений для popup в profile__info
+function setValuesPopupProfileInfo() {
+  // создание экземпляра класса UserInfo
+  const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
+  const userData = userInfo.getUserInfo();
+
+  inputName.value = userData.name;
+  inputProfession.value = userData.profession;
 }
+
+
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo() {
-  profileName.textContent = inputName.value;
-  profileProfession.textContent = inputProfession.value;
+  // создание экземпляра класса UserInfo
+  const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
+  console.log(userInfo)
+  userInfo.setUserInfo(profileNameSelector, profileProfessionSelector);
 }
+
+
+
+
 
 // функция создания карточки
 function createCard(dataCard, selectorCard) {
@@ -97,6 +119,22 @@ function submitHandlerFormElementCard() {
   cardFromForm.renderItems();
 }
 
+
+
+
+
+// открытие popup в profile__info
+buttonEdit.addEventListener('click', () => {
+  editFormValidator.resetValidation();
+  setValuesPopupProfileInfo();
+  editFormValidator.removeInactiveStateOfButton();
+  popupProfileInfo.open();
+});
+
+
+
+
+
 // создание экземпляра класса FormValidator для формы в profile__info
 const editFormValidator = new FormValidator(config, '#form-edit-profile');
 editFormValidator.enableValidation();
@@ -109,13 +147,7 @@ cardFormValidator.enableValidation();
 const popupProfileInfo = new PopupWithForm(popupProfileInfoSelector, submitHandlerFormProfileInfo, formPopupProfileInfoSelector);
 popupProfileInfo.setEventListeners();
 
-// открытие popup в profile__info
-buttonEdit.addEventListener('click', () => {
-  editFormValidator.resetValidation();
-  setValuesPopupProfileInfo();
-  editFormValidator.removeInactiveStateOfButton();
-  popupProfileInfo.open();
-});
+
 
 // создание экземпляра класса PopupWithForm для elements
 const popupElementCard = new PopupWithForm(popupElementCardSelector, submitHandlerFormElementCard, formAddCardSelector);
