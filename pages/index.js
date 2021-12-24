@@ -25,14 +25,8 @@ import {
   config
 } from '../utils/constants.js';
 
-// функция создания экземпляра класса UserInfo
-function createUserInfo({ profileNameSelector, profileProfessionSelector }) {
-  return new UserInfo({ profileNameSelector, profileProfessionSelector });
-}
-
 // функция установки значений для popup в profile__info
 function setValuesPopupProfileInfo() {
-  const userInfo = createUserInfo({ profileNameSelector, profileProfessionSelector });
   const userData = userInfo.getUserInfo();
 
   inputName.value = userData.name;
@@ -41,8 +35,6 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo() {
-  const userInfo = createUserInfo({ profileNameSelector, profileProfessionSelector });
-
   userInfo.setUserInfo();
 }
 
@@ -70,6 +62,9 @@ function submitHandlerFormElementCard() {
 
   cardFromForm.renderItems();
 }
+
+// созданиe экземпляра класса UserInfo
+  const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
