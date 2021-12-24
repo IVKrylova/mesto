@@ -64,7 +64,7 @@ function submitHandlerFormElementCard() {
 }
 
 // созданиe экземпляра класса UserInfo
-  const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
+const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
