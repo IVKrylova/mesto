@@ -5,61 +5,25 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 
-// переменные, необходимые для реализации открытия popup в profile__info
-const buttonEdit = document.querySelector('.button-edit');
-const inputName = document.querySelector('#name');
-const inputProfession = document.querySelector('#profession');
-const popupProfileInfoSelector = '#popup-profile-info';
-const formPopupProfileInfoSelector = '#form-edit-profile';
-const profileNameSelector = '.profile__name';
-const profileProfessionSelector = '.profile__profession';
-
-// переменные, необходимые для реализации добавления карточек в elements из массива
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-const elementsListSelector = '.elements__list';
-const elementsList = document.querySelector('.elements__list');
-
-// переменные, необходимые для реализации добавления карточек в elements через форму
-const buttonAdd = document.querySelector('.button-add');
-const inputPlace = document.querySelector('#place');
-const inputPlaceUrl = document.querySelector('#place-url');
-const popupElementCardSelector = '#popup-element-card';
-const formAddCardSelector = '#form-add-card';
-const popupElementImageSelector = '#element-popup';
-
-// объект с настройками валидации форм
-const config = {
-  inputSelector: '.form__item',
-  submitButtonSelector: '.form__button',
-  inactiveButtonClass: 'form__button_disabled',
-  inputErrorClass: 'form__item_type_error',
-  errorClass: 'form__input-error_active'
-};
+import {
+  buttonEdit,
+  inputName,
+  inputProfession,
+  popupProfileInfoSelector,
+  formPopupProfileInfoSelector,
+  profileNameSelector,
+  profileProfessionSelector,
+  initialCards,
+  elementsListSelector,
+  elementsList,
+  buttonAdd,
+  inputPlace,
+  inputPlaceUrl,
+  popupElementCardSelector,
+  formAddCardSelector,
+  popupElementImageSelector,
+  config
+} from '../utils/constants.js';
 
 // функция создания экземпляра класса UserInfo
 function createUserInfo({ profileNameSelector, profileProfessionSelector }) {
