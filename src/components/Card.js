@@ -17,26 +17,26 @@ export default class Card {
 
   // обработчик переключения цвета лайка при клике
   _handleToggleLike() {
-    this._element.querySelector('.element__like').classList.toggle('element__like_active');
+    this._elementLike.classList.toggle('element__like_active');
   }
 
   // обработчик удаления карточки
   _handleDeleteElementCard() {
-    const elementCardDelete = this._element.querySelector('.button-delete').closest(this._cardSelector);
+    const elementCardDelete = this._buttonDelete.closest(this._cardSelector);
     elementCardDelete.remove();
   }
 
   // установка слушателей событий
   _setEventListeners() {
-    this._element.querySelector('.element__like').addEventListener('click', evt => {
+    this._elementLike.addEventListener('click', evt => {
       this._handleToggleLike();
     });
 
-    this._element.querySelector('.button-delete').addEventListener('click', evt => {
+    this._buttonDelete.addEventListener('click', evt => {
       this._handleDeleteElementCard();
     });
 
-    this._element.querySelector('.element__link-to-popup').addEventListener('click', evt => {
+    this._elementLinkToPopup.addEventListener('click', evt => {
       this._handleCardClick();
     });
   }
@@ -44,10 +44,16 @@ export default class Card {
   // метод, который генерирует карточку
   generateElementCard() {
     this._element = this._getElementCard();
+    this._elementLike = this._element.querySelector('.element__like');
+    this._buttonDelete = this._element.querySelector('.button-delete');
+    this._elementImage = this._element.querySelector('.element__image');
+    this._elementTitle = this._element.querySelector('.element__title');
+    this._elementLinkToPopup = this._element.querySelector('.element__link-to-popup');
+
     this._setEventListeners();
-    this._element.querySelector('.element__image').src = this._link;
-    this._element.querySelector('.element__image').alt = this._name;
-    this._element.querySelector('.element__title').textContent = this._name;
+    this._elementImage.src = this._link;
+    this._elementImage.alt = this._name;
+    this._elementTitle.textContent = this._name;
 
     return this._element;
   }
