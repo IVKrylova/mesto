@@ -1,15 +1,16 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardSelector, handleCardClick, elementTemplateSelector) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._elementTemplateSelector = elementTemplateSelector;
   }
 
   // метод, который получает элемент карточки из разметки
   _getElementCard() {
-  	const elementTemplate = document.querySelector('#element-template').content;
-    const elementCard = elementTemplate.querySelector('.element').cloneNode(true);
+  	const elementTemplate = document.querySelector(this._elementTemplateSelector).content;
+    const elementCard = elementTemplate.querySelector(this._cardSelector).cloneNode(true);
 
     return elementCard;
   }
@@ -21,7 +22,7 @@ export default class Card {
 
   // обработчик удаления карточки
   _handleDeleteElementCard() {
-    const elementCardDelete = this._element.querySelector('.button-delete').closest('.element');
+    const elementCardDelete = this._element.querySelector('.button-delete').closest(this._cardSelector);
     elementCardDelete.remove();
   }
 

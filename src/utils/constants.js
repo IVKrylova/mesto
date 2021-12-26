@@ -36,6 +36,8 @@ export const initialCards = [
 ];
 export const elementsListSelector = '.elements__list';
 export const elementsList = document.querySelector('.elements__list');
+export const elementTemplateSelector = '#element-template';
+export const cardSelector = '.element';
 
 // переменные, необходимые для реализации добавления карточек в elements через форму
 export const buttonAdd = document.querySelector('.button-add');

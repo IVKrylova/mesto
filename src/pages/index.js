@@ -18,6 +18,8 @@ import {
   initialCards,
   elementsListSelector,
   elementsList,
+  elementTemplateSelector,
+  cardSelector,
   buttonAdd,
   inputPlace,
   inputPlaceUrl,
@@ -40,15 +42,15 @@ function submitHandlerFormProfileInfo() {
   userInfo.setUserInfo();
 }
 
-// функция создания карточки
-function createCard(dataCard, selectorCard) {
+// функция создания карточки   TODO handleCardClick?
+function createCard(dataCard, cardSelector, elementTemplateSelector) {
   // создание экземпляра класса PopupWithImage
   const popupElementImage = new PopupWithImage(popupElementImageSelector, dataCard);
   popupElementImage.setEventListeners();
 
   // создание экземпляра класса карточки
   const handleCardClick = popupElementImage.open.bind(popupElementImage);
-  const elementCard = new Card(dataCard, selectorCard, handleCardClick);
+  const elementCard = new Card(dataCard, cardSelector, handleCardClick, elementTemplateSelector);
 
   return elementCard.generateElementCard();
 }
@@ -57,7 +59,7 @@ function createCard(dataCard, selectorCard) {
 function submitHandlerFormElementCard() {
   const cardFromForm = new Section({
     items: [{ link: inputPlaceUrl.value, name: inputPlace.value }],
-    renderer: item => elementsList.prepend(createCard(item, '.element'))
+    renderer: item => elementsList.prepend(createCard(item, cardSelector, elementTemplateSelector))
     },
     elementsListSelector
   );
@@ -102,7 +104,7 @@ buttonAdd.addEventListener('click', () => {
 const cardsList = new Section({
   items: initialCards,
   renderer: item => {
-    const elementCard = createCard(item, '.element');
+    const elementCard = createCard(item, cardSelector, elementTemplateSelector);
 
     cardsList.addItem(elementCard);
     }
