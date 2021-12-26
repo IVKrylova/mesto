@@ -4,7 +4,6 @@ export default class Card {
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    this._popupElementImage = document.querySelector('#element-popup');
   }
 
   // метод, который получает элемент карточки из разметки
