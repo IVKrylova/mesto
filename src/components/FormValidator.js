@@ -19,19 +19,21 @@ export default class FormValidator {
   // метод добавления класса с ошибкой к input
   _showInputError(inputElement) {
     inputElement.classList.add(this._inputErrorClass);
-    this._getInputElementError(inputElement).textContent = inputElement.validationMessage;
-    this._getInputElementError(inputElement).classList.add(this._errorClass);
+    this._inputElement.textContent = inputElement.validationMessage;
+    this._inputElement.classList.add(this._errorClass);
   }
 
   // метод удаления класса с ошибкой из input
   _hideInputError(inputElement) {
     inputElement.classList.remove(this._inputErrorClass);
-    this._getInputElementError(inputElement).classList.remove(this._errorClass);
-    this._getInputElementError(inputElement).textContent = '';
+    this._inputElement.classList.remove(this._errorClass);
+    this._inputElement.textContent = '';
   }
 
   // метод проверки валидности поля
   _isValid(inputElement) {
+    this._inputElement = this._getInputElementError(inputElement);
+
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement);
     } else {
