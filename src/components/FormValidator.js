@@ -6,6 +6,7 @@ export default class FormValidator {
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
+
     this._formElement = document.querySelector(this._formSelector);
     this._inputsList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
@@ -51,7 +52,7 @@ export default class FormValidator {
     if(this._formElement) {
       this._formElement.reset();
       this._inputsList.forEach((inputElement) => {
-        inputElement.classList.remove('form__item_type_error');
+        inputElement.classList.remove(this._inputErrorClass);
       });
     }
   }
@@ -89,7 +90,7 @@ export default class FormValidator {
     const resultCheckInput = this._inputsList.every(inputElement => inputElement.validity.valid);
     if(resultCheckInput && this._buttonElement.hasAttribute('disabled')) {
       this._buttonElement.removeAttribute('disabled');
-      this._buttonElement.classList.remove('form__button_disabled');
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
     }
   }
 
