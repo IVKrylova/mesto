@@ -42,12 +42,8 @@ function submitHandlerFormProfileInfo() {
 
 // функция создания карточки   TODO handleCardClick?
 function createCard(dataCard, cardSelector, elementTemplateSelector) {
-  // создание экземпляра класса PopupWithImage
-  const popupElementImage = new PopupWithImage(popupElementImageSelector, dataCard);
-  popupElementImage.setEventListeners();
-
   // создание экземпляра класса карточки
-  const handleCardClick = popupElementImage.open.bind(popupElementImage);
+  const handleCardClick = popupElementImage.open.bind(popupElementImage, dataCard);
   const elementCard = new Card(dataCard, cardSelector, handleCardClick, elementTemplateSelector);
 
   return elementCard.generateElementCard();
@@ -64,6 +60,10 @@ function submitHandlerFormElementCard() {
 
   cardFromForm.renderItems();
 }
+
+// создание экземпляра класса PopupWithImage
+const popupElementImage = new PopupWithImage(popupElementImageSelector);
+popupElementImage.setEventListeners();
 
 // созданиe экземпляра класса UserInfo
 const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
