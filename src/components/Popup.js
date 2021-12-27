@@ -4,10 +4,9 @@ export default class Popup {
   }
 
   // метод закрытия popup при нажатии на Esc
-  _handleEscClose(evt) {
+  _handleEscClose = (evt) => {
     if (evt.key === 'Escape') {
-      this._openedPopup = document.querySelector('.popup_opened');
-      this._openedPopup.classList.remove('popup_opened');
+      this.close();
     }
   }
 

@@ -72,9 +72,8 @@ const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector }
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
-  editFormValidator.resetValidation();
   setValuesPopupProfileInfo();
-  editFormValidator.removeInactiveStateOfButton();
+  editFormValidator.resetValidation();
   popupProfileInfo.open();
 });
 

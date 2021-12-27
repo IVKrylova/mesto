@@ -85,20 +85,13 @@ export default class FormValidator {
     }
   }
 
-  // метод удаления неактивного состояния кнопки при валидных Input
-  removeInactiveStateOfButton() {
-    const resultCheckInput = this._inputsList.every(inputElement => inputElement.validity.valid);
-    if(resultCheckInput && this._buttonElement.hasAttribute('disabled')) {
-      this._buttonElement.removeAttribute('disabled');
-      this._buttonElement.classList.remove(this._inactiveButtonClass);
-    }
-  }
-
   // метод для очистки ошибок и управления кнопкой
   resetValidation() {
     this._toggleButtonState();
-    this._resetInputForm();
-    this._inputsList.forEach(inputElement => this._hideError(inputElement));
+    this._inputsList.forEach((inputElement) => {
+      this._hideError(inputElement);
+      inputElement.classList.remove(this._inputErrorClass);
+    });
   }
 
   // метод включения валидации
