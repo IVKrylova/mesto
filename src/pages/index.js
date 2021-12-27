@@ -12,7 +12,6 @@ import {
   inputName,
   inputProfession,
   popupProfileInfoSelector,
-  formPopupProfileInfoSelector,
   profileNameSelector,
   profileProfessionSelector,
   initialCards,
@@ -24,7 +23,6 @@ import {
   inputPlace,
   inputPlaceUrl,
   popupElementCardSelector,
-  formAddCardSelector,
   popupElementImageSelector,
   config
 } from '../utils/constants.js';
@@ -86,11 +84,11 @@ const cardFormValidator = new FormValidator(config, '#form-add-card');
 cardFormValidator.enableValidation();
 
 // создание экземпляра класса PopupWithForm для profile__info
-const popupProfileInfo = new PopupWithForm(popupProfileInfoSelector, submitHandlerFormProfileInfo, formPopupProfileInfoSelector);
+const popupProfileInfo = new PopupWithForm(popupProfileInfoSelector, submitHandlerFormProfileInfo);
 popupProfileInfo.setEventListeners();
 
 // создание экземпляра класса PopupWithForm для elements
-const popupElementCard = new PopupWithForm(popupElementCardSelector, submitHandlerFormElementCard, formAddCardSelector);
+const popupElementCard = new PopupWithForm(popupElementCardSelector, submitHandlerFormElementCard);
 popupElementCard.setEventListeners();
 
 // открытие popup для добавления карточки в elements

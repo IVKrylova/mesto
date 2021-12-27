@@ -3,7 +3,6 @@ export const buttonEdit = document.querySelector('.button-edit');
 export const inputName = document.querySelector('#name');
 export const inputProfession = document.querySelector('#profession');
 export const popupProfileInfoSelector = '#popup-profile-info';
-export const formPopupProfileInfoSelector = '#form-edit-profile';
 export const profileNameSelector = '.profile__name';
 export const profileProfessionSelector = '.profile__profession';
 
@@ -44,7 +43,6 @@ export const buttonAdd = document.querySelector('.button-add');
 export const inputPlace = document.querySelector('#place');
 export const inputPlaceUrl = document.querySelector('#place-url');
 export const popupElementCardSelector = '#popup-element-card';
-export const formAddCardSelector = '#form-add-card';
 export const popupElementImageSelector = '#element-popup';
 
 // объект с настройками валидации форм
@@ -55,3 +53,6 @@ export const config = {
   inputErrorClass: 'form__item_type_error',
   errorClass: 'form__input-error_active'
 };
+
+// универсальный селектор формы
+export const formSelector = '.form';
