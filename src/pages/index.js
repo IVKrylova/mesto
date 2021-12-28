@@ -50,9 +50,9 @@ function createCard(dataCard, cardSelector, elementTemplateSelector) {
 }
 
 // oбработчик отправки формы для добавления карточки в elements
-function submitHandlerFormElementCard() {
+function submitHandlerFormElementCard({ link, name }) {
   const cardFromForm = new Section({
-    items: [{ link: inputPlaceUrl.value, name: inputPlace.value }],
+    items: [/* { link: inputPlaceUrl.value, name: inputPlace.value } */ { link, name }],
     renderer: item => elementsList.prepend(createCard(item, cardSelector, elementTemplateSelector))
     },
     elementsListSelector
@@ -60,6 +60,20 @@ function submitHandlerFormElementCard() {
 
   cardFromForm.renderItems();
 }
+
+ /*  link: inputPlaceUrl.value, name: inputPlace.value
+  Все данные инпутов собирает метод _getInputValues из класса PopupWithForm и
+  передает их в функцию сабмита  submitHandler. Вот их нужно использовать в
+  index.js. */
+
+/* // создание экземпляра класса Section
+const elementCard = new Section({
+  items: [{ link: inputPlaceUrl.value, name: inputPlace.value }],
+  renderer: item => elementsList.prepend(createCard(item, cardSelector, elementTemplateSelector))
+  },
+  elementsListSelector
+); */
+
 
 // создание экземпляра класса PopupWithImage
 const popupElementImage = new PopupWithImage(popupElementImageSelector);
