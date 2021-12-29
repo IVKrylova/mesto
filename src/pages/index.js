@@ -16,7 +16,6 @@ import {
   profileProfessionSelector,
   initialCards,
   elementsListSelector,
-  elementsList,
   elementTemplateSelector,
   cardSelector,
   buttonAdd,
@@ -38,25 +37,9 @@ function submitHandlerFormProfileInfo() {
   userInfo.setUserInfo();
 }
 
-// функция создания карточки   TODO handleCardClick?
-function createCard(dataCard, cardSelector, elementTemplateSelector) {
-  // создание экземпляра класса карточки
-  const handleCardClick = popupElementImage.open.bind(popupElementImage, dataCard);
-  const elementCard = new Card(dataCard, cardSelector, handleCardClick, elementTemplateSelector);
-
-  return elementCard.generateElementCard();
-}
-
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  const cardFromForm = new Section({
-    items: [{ link, name }],
-    renderer: item => elementsList.prepend(createCard(item, cardSelector, elementTemplateSelector))
-    },
-    elementsListSelector
-  );
-
-  cardFromForm.renderItems();
+  cardsList.prependItem({ link, name });
 }
 
 // создание экземпляра класса PopupWithImage
@@ -95,13 +78,15 @@ buttonAdd.addEventListener('click', () => {
   popupElementCard.open();
 });
 
-// добавление карточек из массива в elements
+// создание экземпляра класса Section
 const cardsList = new Section({
   items: initialCards,
   renderer: item => {
-    const elementCard = createCard(item, cardSelector, elementTemplateSelector);
+    // создание экземпляра класса карточки
+    const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
+    const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector);
 
-    cardsList.addItem(elementCard);
+    return elementCard.generateElementCard();
     }
   },
   elementsListSelector
