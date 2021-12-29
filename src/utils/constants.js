@@ -40,8 +40,6 @@ export const cardSelector = '.element';
 
 // переменные, необходимые для реализации добавления карточек в elements через форму
 export const buttonAdd = document.querySelector('.button-add');
-export const inputPlace = document.querySelector('#place');
-export const inputPlaceUrl = document.querySelector('#place-url');
 export const popupElementCardSelector = '#popup-element-card';
 export const popupElementImageSelector = '#element-popup';
 
