@@ -2,8 +2,6 @@ export default class UserInfo {
   constructor({ profileNameSelector, profileProfessionSelector }) {
     this._profileName = document.querySelector(profileNameSelector);
     this._profileProfession = document.querySelector(profileProfessionSelector);
-    this._inputName = document.querySelector('#name');
-    this._inputProfession = document.querySelector('#profession');
   }
 
   // метод, который возвращает объект с данными пользователя
@@ -15,8 +13,8 @@ export default class UserInfo {
   }
 
   // метод, который принимает новые данные пользователя и добавляет их на страницу
-  setUserInfo() {
-    this._profileName.textContent = this._inputName.value;
-    this._profileProfession.textContent = this._inputProfession.value;
+  setUserInfo({ name, profession }) {
+    this._profileName.textContent = name;
+    this._profileProfession.textContent = profession;
   }
 }

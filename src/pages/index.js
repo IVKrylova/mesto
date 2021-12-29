@@ -33,8 +33,8 @@ function setValuesPopupProfileInfo() {
 }
 
 // oбработчик отправки формы в profile__info
-function submitHandlerFormProfileInfo() {
-  userInfo.setUserInfo();
+function submitHandlerFormProfileInfo({ name, profession }) {
+  userInfo.setUserInfo({ name, profession });
 }
 
 // oбработчик отправки формы для добавления карточки в elements
