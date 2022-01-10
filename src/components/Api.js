@@ -5,9 +5,11 @@ export default class Api {
   }
 
   getIdUser() {
-    return fetch('https://nomoreparties.co/v1/cohort-34/users/me',
-    this.headers
-    )
+    return fetch('https://nomoreparties.co/v1/cohort-34/users/me', {
+      headers: {
+        authorization: 'e8b623b1-ae65-4d07-9972-4d21425b16b6'
+      }
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
