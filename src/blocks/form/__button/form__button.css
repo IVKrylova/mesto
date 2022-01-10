@@ -13,7 +13,6 @@
   font-size: 18px;
   line-height: 1.22;
   text-align: center;
-  margin-top: 48px;
 }
 
 .form__button:hover {
@@ -24,7 +23,6 @@
 
 @media screen and (max-width: 640px) {
   .form__button {
-    margin-top: 45px;
     font-size: 14px;
     line-height: 1.21;
     padding-bottom: 14px;
