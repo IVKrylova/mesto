@@ -97,3 +97,6 @@ cardsList.renderItems();
 
 // создание экземпляра класса Api
 const api = new Api(options);
+
+
+api.getIdUser();
