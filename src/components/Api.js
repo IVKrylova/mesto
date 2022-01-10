@@ -4,7 +4,7 @@ export default class Api {
     this.headers = options.headers;
   }
 
-  getIdUser() {
+  getUserInfo() {
     return fetch('https://nomoreparties.co/v1/cohort-34/users/me', {
       headers: {
         authorization: 'e8b623b1-ae65-4d07-9972-4d21425b16b6'

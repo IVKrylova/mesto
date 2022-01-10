@@ -23,7 +23,8 @@ import {
   popupElementCardSelector,
   popupElementImageSelector,
   config,
-  options
+  options,
+  profileAvatar
 } from '../utils/constants.js';
 
 // функция установки значений для popup в profile__info
@@ -43,6 +44,17 @@ function submitHandlerFormProfileInfo({ name, profession }) {
 function submitHandlerFormElementCard({ link, name }) {
   cardsList.prependItem({ link, name });
 }
+
+// создание экземпляра класса Api
+const api = new Api(options);
+
+// загрузка информации о пользователе с сервера
+const userInfoFromServer = api.getUserInfo();
+
+// установка данных о пользователе
+document.querySelector(profileNameSelector).textContent = userInfoFromServer.name;
+document.querySelector(profileProfessionSelector).textContent = userInfoFromServer.about;
+profileAvatar.src = userInfoFromServer.avatar;
 
 // создание экземпляра класса PopupWithImage
 const popupElementImage = new PopupWithImage(popupElementImageSelector);
@@ -94,9 +106,3 @@ const cardsList = new Section({
   elementsListSelector
 );
 cardsList.renderItems();
-
-// создание экземпляра класса Api
-const api = new Api(options);
-
-
-api.getIdUser();
