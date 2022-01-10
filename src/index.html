@@ -25,6 +25,17 @@
         </div>
         <button class="button-add button" type="button" id="add-card" aria-label="Кнопка добавить"></button>
       </section>
+      <section class="popup" id="popup-edit-avatar">
+        <div class="popup__container">
+          <button type="button" class="button-close" aria-label="Кнопка закрыть"></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form class="popup__form form" name="form-edit-avatar" id="form-edit-avatar" novalidate>
+            <input type="url" class="form__item" id="avatar-url" name="avatar-link" placeholder="Ссылка на аватар" required>
+            <span class="place-url-input-error form__input-error"></span>
+            <button type="submit" class="form__button">Сохранить</button>
+          </form>
+        </div>
+      </section>
       <section class="popup" id="popup-profile-info">
         <div class="popup__container">
           <button type="button" class="button-close" aria-label="Кнопка закрыть"></button>
