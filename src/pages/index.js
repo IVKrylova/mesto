@@ -6,6 +6,7 @@ import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api';
 
 import {
   buttonEdit,
@@ -21,7 +22,8 @@ import {
   buttonAdd,
   popupElementCardSelector,
   popupElementImageSelector,
-  config
+  config,
+  options
 } from '../utils/constants.js';
 
 // функция установки значений для popup в profile__info
@@ -92,3 +94,6 @@ const cardsList = new Section({
   elementsListSelector
 );
 cardsList.renderItems();
+
+// создание экземпляра класса Api
+const api = new Api(options);
