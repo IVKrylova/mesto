@@ -1,13 +1,14 @@
 export default class Api {
   constructor(options) {
     this.baseUrl = options.baseUrl;
-    this.headers = options.headers;
+    this.authorization = options.headers.authorization;
+    this.contentType = options.headers.authorization['Content-Type'];
   }
 
-  getUserInfo() {
+  getUserInfo(renderUserInfo) {
     return fetch('https://nomoreparties.co/v1/cohort-34/users/me', {
       headers: {
-        authorization: 'e8b623b1-ae65-4d07-9972-4d21425b16b6'
+        authorization: this.authorization
       }
     })
     .then(res => {
@@ -17,12 +18,12 @@ export default class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     })
     .then(data => {
-      return data;
+      const { name, about, avatar } = data;
+      renderUserInfo({ name, about, avatar });
     })
     .catch(err => console.log(err));
   }
 
-  // другие методы работы с API
 }
 
 

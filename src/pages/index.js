@@ -45,16 +45,18 @@ function submitHandlerFormElementCard({ link, name }) {
   cardsList.prependItem({ link, name });
 }
 
+//функция установки данных о пользователе
+function renderUserInfo(data) {
+  document.querySelector(profileNameSelector).textContent = data.name;
+  document.querySelector(profileProfessionSelector).textContent = data.about;
+  profileAvatar.src = data.avatar;
+}
+
 // создание экземпляра класса Api
 const api = new Api(options);
 
 // загрузка информации о пользователе с сервера
-const userInfoFromServer = api.getUserInfo();
-
-// установка данных о пользователе
-document.querySelector(profileNameSelector).textContent = userInfoFromServer.name;
-document.querySelector(profileProfessionSelector).textContent = userInfoFromServer.about;
-profileAvatar.src = userInfoFromServer.avatar;
+api.getUserInfo(renderUserInfo);
 
 // создание экземпляра класса PopupWithImage
 const popupElementImage = new PopupWithImage(popupElementImageSelector);
