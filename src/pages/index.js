@@ -41,7 +41,13 @@ function submitHandlerFormProfileInfo({ name, profession }) {
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  cardsList.prependItem({ link, name });
+  const newCard = api.sendNewCard({ link, name });
+
+  newCard.then(data => {
+    cardsList.then(section => {
+      section.prependItem(data);
+    });
+  });
 }
 
 // функция установки данных о пользователе
