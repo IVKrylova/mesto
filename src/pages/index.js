@@ -15,7 +15,6 @@ import {
   popupProfileInfoSelector,
   profileNameSelector,
   profileProfessionSelector,
-  initialCards,
   elementsListSelector,
   elementTemplateSelector,
   cardSelector,
@@ -45,7 +44,7 @@ function submitHandlerFormElementCard({ link, name }) {
   cardsList.prependItem({ link, name });
 }
 
-//функция установки данных о пользователе
+// функция установки данных о пользователе
 function renderUserInfo(data) {
   document.querySelector(profileNameSelector).textContent = data.name;
   document.querySelector(profileProfessionSelector).textContent = data.about;
@@ -94,17 +93,21 @@ buttonAdd.addEventListener('click', () => {
   popupElementCard.open();
 });
 
-// создание экземпляра класса Section
-const cardsList = new Section({
-  items: initialCards,
-  renderer: item => {
-    // создание экземпляра класса карточки
-    const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
-    const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector);
+// загрузка карточек с сервера
+const cardsList = api.getInitialCards().then(data => {
+  // создание экземпляра класса Section
+  const cardsList = new Section({
+    items: data,
+    renderer: item => {
+      // создание экземпляра класса карточки
+      const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
+      const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector);
 
-    return elementCard.generateElementCard();
-    }
-  },
-  elementsListSelector
-);
-cardsList.renderItems();
+      return elementCard.generateElementCard();
+      }
+    },
+    elementsListSelector
+  );
+  cardsList.renderItems();
+  return cardsList;
+});

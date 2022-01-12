@@ -5,8 +5,9 @@ export default class Api {
     this.contentType = options.headers.authorization['Content-Type'];
   }
 
+  // метод получения информации о пользователе
   getUserInfo(renderUserInfo) {
-    return fetch('https://nomoreparties.co/v1/cohort-34/users/me', {
+    return fetch(`https://nomoreparties.co/v1/cohort-34/users/me`, {
       headers: {
         authorization: this.authorization
       }
@@ -24,32 +25,25 @@ export default class Api {
     .catch(err => console.log(err));
   }
 
-}
-
-
-/* getInitialCards() {
-  //Не забывайте проверять, всё ли в порядке с ответом
-  return fetch('https://mesto.nomoreparties.co/v1/cohort-42/cards', {
-    headers: {
-      authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6'
-    }
-  })
+  // метод получения начального массива карточек
+  getInitialCards() {
+    return fetch(`${this.baseUrl}/cards`, {
+      headers: {
+        authorization: this.authorization
+      }
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
       }
-
-      // Учитывайте случай, когда сервер вернул ошибку - если ошибка, отклоняем промис
       return Promise.reject(`Ошибка: ${res.status}`);
-    });
-} */
-
-
-/* //Обрабатывайте ошибки, попадающие в catch
-api.getInitialCards()
-  .then((result) => {
-    // обрабатываем результат
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  }); */
+    })
+    .then(data => {
+      return data.map(card => {
+        const { name, link } = card;
+        return { name, link };
+      });
+    })
+    .catch(err => console.log(err));
+  }
+}
