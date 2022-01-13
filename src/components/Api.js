@@ -74,5 +74,32 @@ export default class Api {
     })
     .catch(err => console.log(err));
   }
-}
 
+  // метод для редактирования информации о пользователе
+  editProfileInfo(data) {
+    return fetch(`${this.baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this.authorization,
+        'Content-Type': this.contentType
+      },
+      body: JSON.stringify({
+        name: data.name,
+        about: data.profession
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .then(data => {
+      const { name, about } = data;
+
+      return { name, about };
+    })
+    .catch(err => console.log(err));
+  }
+
+}

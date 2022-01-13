@@ -36,7 +36,9 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  userInfo.setUserInfo({ name, profession });
+  api.editProfileInfo({ name, profession }).then(data => {
+    userInfo.setUserInfo(data);
+  });
 }
 
 // oбработчик отправки формы для добавления карточки в elements
