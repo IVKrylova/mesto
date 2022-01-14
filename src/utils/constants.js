@@ -39,3 +39,6 @@ export const options = {
 
 // переменные, необходимые для установки данных о пользователе с сервера
 export const profileAvatar = document.querySelector('.profile__avatar-image');
+
+// переменные, необходимые для реализации удаления карточки
+export const popupDeleteCardSelector = '#popup-delete-card';

@@ -1,10 +1,11 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, elementTemplateSelector) {
+  constructor(data, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._elementTemplateSelector = elementTemplateSelector;
+    this._handleButtonDelete = handleButtonDelete;
   }
 
   // метод, который получает элемент карточки из разметки
@@ -33,7 +34,7 @@ export default class Card {
     });
 
     this._buttonDelete.addEventListener('click', evt => {
-      this._handleDeleteElementCard();
+      this._handleButtonDelete();
     });
 
     this._elementLinkToPopup.addEventListener('click', evt => {

@@ -23,7 +23,8 @@ import {
   popupElementImageSelector,
   config,
   options,
-  profileAvatar
+  profileAvatar,
+  popupDeleteCardSelector
 } from '../utils/constants.js';
 
 // функция установки значений для popup в profile__info
@@ -101,6 +102,10 @@ buttonAdd.addEventListener('click', () => {
   popupElementCard.open();
 });
 
+// создание экземпляра класса PopupWithForm для удаления карточки
+const popupDeletetCard = new PopupWithForm(popupDeleteCardSelector, submitHandlerFormDeleteCard);
+popupDeletetCard.setEventListeners();
+
 // загрузка карточек с сервера
 const cardsList = api.getInitialCards()
   .then(data => {
@@ -117,7 +122,8 @@ const cardsList = api.getInitialCards()
     renderer: item => {
       // создание экземпляра класса карточки
       const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
-      const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector);
+      const handleButtonDelete = popupDeletetCard.open.bind(popupDeletetCard);
+      const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete);
 
       return elementCard.generateElementCard(item);
       }
@@ -127,3 +133,11 @@ const cardsList = api.getInitialCards()
   cardsList.renderItems();
   return cardsList;
 });
+
+
+
+function submitHandlerFormDeleteCard() {
+
+}
+
+
