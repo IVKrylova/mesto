@@ -58,7 +58,7 @@ export default class Card {
     this._elementTitle.textContent = this._name;
 
     // установка колличества лайков
-    if(item.likes.length > 0) {
+    if(item.likes !== undefined && item.likes.length > 0) {
       this._elementCountLikes.textContent = item.likes.length;
     }
 

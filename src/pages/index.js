@@ -109,13 +109,6 @@ popupDeletetCard.setEventListeners();
 // загрузка карточек с сервера
 const cardsList = api.getInitialCards()
   .then(data => {
-    return data.map(card => {
-      const { name, link, likes } = card;
-
-      return { name, link, likes };
-    });
-  })
-  .then(data => {
   // создание экземпляра класса Section
   const cardsList = new Section({
     items: data,

@@ -38,7 +38,13 @@ export default class Api {
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .then(data => data)
+    .then(data => {
+      return data.map(card => {
+      const { name, link, likes } = card;
+
+      return { name, link, likes };
+    });
+  })
     .catch(err => console.log(err));
   }
 
