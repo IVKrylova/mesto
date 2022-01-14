@@ -102,7 +102,15 @@ buttonAdd.addEventListener('click', () => {
 });
 
 // загрузка карточек с сервера
-const cardsList = api.getInitialCards().then(data => {
+const cardsList = api.getInitialCards()
+  .then(data => {
+    return data.map(card => {
+      const { name, link, likes } = card;
+
+      return { name, link, likes };
+    });
+  })
+  .then(data => {
   // создание экземпляра класса Section
   const cardsList = new Section({
     items: data,
@@ -111,7 +119,7 @@ const cardsList = api.getInitialCards().then(data => {
       const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
       const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector);
 
-      return elementCard.generateElementCard();
+      return elementCard.generateElementCard(item);
       }
     },
     elementsListSelector

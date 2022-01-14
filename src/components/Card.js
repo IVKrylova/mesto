@@ -42,18 +42,24 @@ export default class Card {
   }
 
   // метод, который генерирует карточку
-  generateElementCard() {
+  generateElementCard(item) {
     this._element = this._getElementCard();
     this._elementLike = this._element.querySelector('.element__like');
     this._buttonDelete = this._element.querySelector('.button-delete');
     this._elementImage = this._element.querySelector('.element__image');
     this._elementTitle = this._element.querySelector('.element__title');
     this._elementLinkToPopup = this._element.querySelector('.element__link-to-popup');
+    this._elementCountLikes = this._element.querySelector('.element__count-like');
 
     this._setEventListeners();
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
     this._elementTitle.textContent = this._name;
+
+    // установка колличества лайков
+    if(item.likes.length > 0) {
+      this._elementCountLikes.textContent = item.likes.length;
+    }
 
     return this._element;
   }
