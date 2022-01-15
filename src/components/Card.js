@@ -62,6 +62,11 @@ export default class Card {
       this._elementCountLikes.textContent = item.likes.length;
     }
 
+    // убрать кнопку удаления карточки, если карточка создана не мной
+    if(!item.isOwner) {
+      this._buttonDelete.className = 'button-delete_invisible';
+    }
+
     return this._element;
   }
 }

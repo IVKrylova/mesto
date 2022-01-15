@@ -25,8 +25,8 @@ export default class Api {
     .catch(err => console.log(err));
   }
 
-  // метод получения начального массива карточек
-  getInitialCards() {
+  // метод получения массива карточек
+  _getArrayCard() {
     return fetch(`${this.baseUrl}/cards`, {
       headers: {
         authorization: this.authorization
@@ -38,13 +38,7 @@ export default class Api {
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .then(data => {
-      return data.map(card => {
-      const { name, link, likes } = card;
-
-      return { name, link, likes };
-    });
-  })
+    .then(data => data)
     .catch(err => console.log(err));
   }
 
@@ -101,4 +95,53 @@ export default class Api {
     })
     .catch(err => console.log(err));
   }
+
+  // метод получения id пользователя
+  _getUserId() {
+    return fetch(`https://nomoreparties.co/v1/cohort-34/users/me`, {
+      headers: {
+        authorization: this.authorization
+      }
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .then(data => {
+      const { _id } = data;
+
+      return _id;
+    })
+    .catch(err => console.log(err));
+  }
+
+  // метод получения массива карточек со свойством isOwner
+  getInitialCards() {
+   return Promise.all([this._getUserId(), this._getArrayCard()])
+      .then(res => {
+        const userId = res[0];
+        const arrayCard = res[1];
+
+        return arrayCard.map(card => {
+          if(userId == card.owner._id) {
+            card.isOwner = true;
+            return card;
+          } else {
+            card.isOwner = false;
+            return card;
+          }
+        });
+      })
+      .then(data => {
+        return data.map(card => {
+          const { name, link, likes, isOwner } = card;
+
+          return { name, link, likes, isOwner };
+        });
+      })
+  }
+
+
 }

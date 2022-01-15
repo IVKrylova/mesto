@@ -48,6 +48,7 @@ function submitHandlerFormElementCard({ link, name }) {
 
   newCard.then(data => {
     cardsList.then(section => {
+      data.isOwner = true;
       section.prependItem(data);
     });
   });
@@ -126,6 +127,7 @@ const cardsList = api.getInitialCards()
   cardsList.renderItems();
   return cardsList;
 });
+
 
 
 
