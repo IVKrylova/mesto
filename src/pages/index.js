@@ -39,9 +39,10 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  api.editProfileInfo({ name, profession }).then(data => {
-    userInfo.setUserInfo(data);
-  });
+  api.editProfileInfo({ name, profession })
+    .then(data => {
+      userInfo.setUserInfo(data);
+    });
 }
 
 // oбработчик отправки формы для добавления карточки в elements
@@ -116,8 +117,11 @@ function crateSection(data) {
 }
 
 // обработчик формы редактирования аватара
-function submitHandlerFormEditAvatar() {
-
+function submitHandlerFormEditAvatar({ avatar }) {
+  api.editAvatar(avatar)
+    .then(avatar => {
+      profileAvatar.src = avatar;
+    })
 }
 
 // создание экземпляра класса Api

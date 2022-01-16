@@ -218,4 +218,33 @@ export default class Api {
     })
     .catch(err => console.log(err));
   }
+
+  // метод редактирования аватара
+  editAvatar(newAvatarUrl) {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this.authorization,
+        'Content-Type': this.contentType
+      },
+      body: JSON.stringify({
+        avatar: newAvatarUrl
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .then(data => {
+      const { avatar } = data;
+
+      return avatar;
+    })
+    .catch(err => console.log(err));
+  }
+
+
+
 }
