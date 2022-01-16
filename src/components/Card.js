@@ -6,6 +6,9 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._elementTemplateSelector = elementTemplateSelector;
     this._handleButtonDelete = handleButtonDelete;
+    this._id = data._id;
+    this._likes = data.likes;
+    this._isOwner = data.isOwner;
   }
 
   // метод, который получает элемент карточки из разметки
@@ -21,12 +24,6 @@ export default class Card {
     this._elementLike.classList.toggle('element__like_active');
   }
 
-  // обработчик удаления карточки
-  _handleDeleteElementCard() {
-    const elementCardDelete = this._buttonDelete.closest(this._cardSelector);
-    elementCardDelete.remove();
-  }
-
   // установка слушателей событий
   _setEventListeners() {
     this._elementLike.addEventListener('click', evt => {
@@ -34,6 +31,9 @@ export default class Card {
     });
 
     this._buttonDelete.addEventListener('click', evt => {
+     /*  console.log(this._id)
+      console.log(this._inputId); */
+      /*this._inputId.value = this._inputId; */
       this._handleButtonDelete();
     });
 
@@ -43,7 +43,7 @@ export default class Card {
   }
 
   // метод, который генерирует карточку
-  generateElementCard(item) {
+  generateElementCard() {
     this._element = this._getElementCard();
     this._elementLike = this._element.querySelector('.element__like');
     this._buttonDelete = this._element.querySelector('.button-delete');
@@ -58,12 +58,12 @@ export default class Card {
     this._elementTitle.textContent = this._name;
 
     // установка колличества лайков
-    if(item.likes !== undefined && item.likes.length > 0) {
-      this._elementCountLikes.textContent = item.likes.length;
+    if(this._likes !== undefined && this._likes.length > 0) {
+      this._elementCountLikes.textContent = this._likes.length;
     }
 
     // убрать кнопку удаления карточки, если карточка создана не мной
-    if(!item.isOwner) {
+    if(!this._isOwner) {
       this._buttonDelete.className = 'button-delete_invisible';
     }
 

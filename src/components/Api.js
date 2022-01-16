@@ -62,9 +62,9 @@ export default class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     })
     .then(data => {
-      const { link, name } = data;
+      const { link, name, _id } = data;
 
-      return { link, name };
+      return { link, name, _id };
     })
     .catch(err => console.log(err));
   }
@@ -136,12 +136,27 @@ export default class Api {
       })
       .then(data => {
         return data.map(card => {
-          const { name, link, likes, isOwner } = card;
-
-          return { name, link, likes, isOwner };
+          const { name, link, likes, isOwner, _id } = card;
+          return { name, link, likes, isOwner, _id };
         });
       })
   }
+
+  // метод удаления карточки
+  deleteCard(cardId) {
+    const idCard = cardId;
+    return fetch(`${this.baseUrl}/cards/${idCard}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this.authorization,
+        'Content-Type': this.contentType
+      }
+    })
+    .then(res => console.log(`status: ${res.status}`))
+    .catch(err => console.log(err));
+  }
+
+
 
 
 }

@@ -61,6 +61,42 @@ function renderUserInfo(data) {
   profileAvatar.src = data.avatar;
 }
 
+// обработчик формы удаления карточки
+function submitHandlerFormDeleteCard() {
+  api.deleteCard(popupDeletetCard.getCardId());
+  api.getInitialCards()
+    .then(data => {
+      return data.filter(card => {
+        if (card._id !== popupDeletetCard.getCardId()) {
+          return card;
+        }
+      });
+    })
+    .then(data => {
+      document.querySelector(elementsListSelector).innerHTML = '';
+      crateSection(data);
+    })
+}
+
+// функция создания экземпляра класса Section
+function crateSection(data) {
+  const сardsList = new Section({
+    items: data,
+    renderer: item => {
+      // создание экземпляра класса карточки
+      const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
+      const handleButtonDelete = popupDeletetCard.openPopupWithCardId.bind(popupDeletetCard, item);
+      const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete);
+
+    return elementCard.generateElementCard();
+      }
+    },
+    elementsListSelector
+  );
+  сardsList.renderItems();
+  return сardsList;
+}
+
 // создание экземпляра класса Api
 const api = new Api(options);
 
@@ -111,28 +147,6 @@ popupDeletetCard.setEventListeners();
 const cardsList = api.getInitialCards()
   .then(data => {
   // создание экземпляра класса Section
-  const cardsList = new Section({
-    items: data,
-    renderer: item => {
-      // создание экземпляра класса карточки
-      const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
-      const handleButtonDelete = popupDeletetCard.open.bind(popupDeletetCard);
-      const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete);
-
-      return elementCard.generateElementCard(item);
-      }
-    },
-    elementsListSelector
-  );
-  cardsList.renderItems();
+  const cardsList = crateSection(data);
   return cardsList;
 });
-
-
-
-
-function submitHandlerFormDeleteCard() {
-
-}
-
-

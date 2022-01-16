@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     this._submitHandlerForm = submitHandlerForm;
     this._formElement = this._elementPopup.querySelector(formSelector);
     this._inputsList = Array.from(this._formElement.querySelectorAll('.form__item'));
+    this._inputWithIdCard = this._elementPopup.querySelector('.form__input-id');
   }
 
   // метод, который собирает данные всех полей формы
@@ -21,6 +22,17 @@ export default class PopupWithForm extends Popup {
   close() {
     super.close();
     this._formElement.reset();
+  }
+
+  // метод открытия popup для удаления карточки
+  openPopupWithCardId(data) {
+    super.open();
+    this._inputWithIdCard.value = data._id;
+  }
+
+  // метод получения id карточки
+  getCardId() {
+    return this._inputWithIdCard.value;
   }
 
   setEventListeners() {
