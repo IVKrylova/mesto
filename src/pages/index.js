@@ -86,9 +86,25 @@ function crateSection(data) {
       // создание экземпляра класса карточки
       const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
       const handleButtonDelete = popupDeletetCard.openPopupWithCardId.bind(popupDeletetCard, item);
-      const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete);
+      // обработчик постановки лайка
+      const handlePutLike = function(item) {
+        const cardId = item._id;
+        api.putLike(cardId)
+          .then(card => {
+            this.putCountLikes(card.likes.length);
+          })
+      };
+      // обработчик удаления лайка
+      const handleDeleteLike = function(item) {
+        const cardId = item._id;
+        api.deleteLike(cardId)
+          .then(card => {
+            this.putCountLikes(card.likes.length);
+          })
+      };
+      const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete, handlePutLike, handleDeleteLike);
 
-    return elementCard.generateElementCard();
+      return elementCard.generateElementCard();
       }
     },
     elementsListSelector

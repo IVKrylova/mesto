@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete) {
+  constructor(data, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete, handlePutLike, handleDeleteLike) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
@@ -9,6 +9,10 @@ export default class Card {
     this._id = data._id;
     this._likes = data.likes;
     this._isOwner = data.isOwner;
+    this._handlePutLike = handlePutLike;
+    this._handleDeleteLike = handleDeleteLike;
+    this._item = data;
+    this._isLiked = data.isLiked;
   }
 
   // метод, который получает элемент карточки из разметки
@@ -27,19 +31,31 @@ export default class Card {
   // установка слушателей событий
   _setEventListeners() {
     this._elementLike.addEventListener('click', evt => {
+      if(this._elementLike.closest('.element__like_active')) {
+        this._handleDeleteLike(this._item)
+      } else {
+        this._handlePutLike(this._item);
+      }
       this._handleToggleLike();
     });
 
     this._buttonDelete.addEventListener('click', evt => {
-     /*  console.log(this._id)
-      console.log(this._inputId); */
-      /*this._inputId.value = this._inputId; */
       this._handleButtonDelete();
     });
 
     this._elementLinkToPopup.addEventListener('click', evt => {
       this._handleCardClick();
     });
+  }
+
+  // метод установки колличества лайков
+  putCountLikes(countLikes) {
+    if(countLikes == 0) {
+      this._elementCountLikes.textContent = '';
+    } else
+    {
+      this._elementCountLikes.textContent = countLikes;
+    }
   }
 
   // метод, который генерирует карточку
@@ -59,12 +75,17 @@ export default class Card {
 
     // установка колличества лайков
     if(this._likes !== undefined && this._likes.length > 0) {
-      this._elementCountLikes.textContent = this._likes.length;
+      this.putCountLikes(this._likes.length);
     }
 
     // убрать кнопку удаления карточки, если карточка создана не мной
     if(!this._isOwner) {
       this._buttonDelete.className = 'button-delete_invisible';
+    }
+
+    // установка цвета лайка при начальной загрузке карточек
+    if(this._isLiked) {
+      this._elementLike.classList.add('element__like_active');
     }
 
     return this._element;
