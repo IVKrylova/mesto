@@ -42,3 +42,7 @@ export const profileAvatar = document.querySelector('.profile__avatar-image');
 
 // переменные, необходимые для реализации удаления карточки
 export const popupDeleteCardSelector = '#popup-delete-card';
+
+// переменные, необходимые для реализации редактирования аватара
+export const buttonEditAvatar = document.querySelector('.profile__button-edit-avatar');
+export const popupEditAvatarSelector = '#popup-edit-avatar';

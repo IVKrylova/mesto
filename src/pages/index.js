@@ -24,7 +24,9 @@ import {
   config,
   options,
   profileAvatar,
-  popupDeleteCardSelector
+  popupDeleteCardSelector,
+  buttonEditAvatar,
+  popupEditAvatarSelector
 } from '../utils/constants.js';
 
 // функция установки значений для popup в profile__info
@@ -113,6 +115,11 @@ function crateSection(data) {
   return сardsList;
 }
 
+// обработчик формы редактирования аватара
+function submitHandlerFormEditAvatar() {
+
+}
+
 // создание экземпляра класса Api
 const api = new Api(options);
 
@@ -165,4 +172,18 @@ const cardsList = api.getInitialCards()
   // создание экземпляра класса Section
   const cardsList = crateSection(data);
   return cardsList;
+});
+
+// создание экземпляра класса FormValidator для формы редактирования аватара
+const editAvatarFormValidator = new FormValidator(config, '#form-edit-avatar');
+editAvatarFormValidator.enableValidation();
+
+// создание экземпляра класса PopupWithForm для редактирования аватара
+const popupEditAvatar = new PopupWithForm(popupEditAvatarSelector, submitHandlerFormEditAvatar);
+popupEditAvatar.setEventListeners();
+
+// открытие popup для редактирования аватара
+buttonEditAvatar.addEventListener('click', () => {
+  editAvatarFormValidator.resetValidation();
+  popupEditAvatar.open();
 });
