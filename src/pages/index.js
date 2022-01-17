@@ -45,6 +45,7 @@ function submitHandlerFormProfileInfo({ name, profession }) {
   api.editProfileInfo({ name, profession }, reportDownload)
     .then(data => {
       userInfo.setUserInfo(data);
+      popupProfileInfo.close();
     });
 }
 
@@ -57,6 +58,7 @@ function submitHandlerFormElementCard({ link, name }) {
       cardsList.then(section => {
         data.isOwner = true;
         section.prependItem(data);
+        popupElementCard.close();
       });
     });
 }
@@ -127,6 +129,7 @@ function submitHandlerFormEditAvatar({ avatar }) {
   api.editAvatar(avatar, reportDownload)
     .then(avatar => {
       profileAvatar.src = avatar;
+      popupEditAvatar.close();
     })
 }
 
