@@ -39,7 +39,9 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  api.editProfileInfo({ name, profession })
+  const reportDownload = popupProfileInfo.reportDownload.bind(popupProfileInfo);
+
+  api.editProfileInfo({ name, profession }, reportDownload)
     .then(data => {
       userInfo.setUserInfo(data);
     });
@@ -47,14 +49,15 @@ function submitHandlerFormProfileInfo({ name, profession }) {
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  const newCard = api.sendNewCard({ link, name });
+  const reportDownload = popupElementCard.reportDownload.bind(popupElementCard);
 
-  newCard.then(data => {
-    cardsList.then(section => {
-      data.isOwner = true;
-      section.prependItem(data);
+  api.sendNewCard({ link, name }, reportDownload)
+    .then(data => {
+      cardsList.then(section => {
+        data.isOwner = true;
+        section.prependItem(data);
+      });
     });
-  });
 }
 
 // функция установки данных о пользователе
@@ -118,7 +121,9 @@ function crateSection(data) {
 
 // обработчик формы редактирования аватара
 function submitHandlerFormEditAvatar({ avatar }) {
-  api.editAvatar(avatar)
+  const reportDownload = popupEditAvatar.reportDownload.bind(popupEditAvatar);
+
+  api.editAvatar(avatar, reportDownload)
     .then(avatar => {
       profileAvatar.src = avatar;
     })

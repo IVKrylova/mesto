@@ -43,7 +43,7 @@ export default class Api {
   }
 
   // метод отправки новой карточки на сервер
-  sendNewCard(data) {
+  sendNewCard(data, reportDownload) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: {
@@ -56,6 +56,7 @@ export default class Api {
       })
     })
     .then(res => {
+      reportDownload();
       if (res.ok) {
         return res.json();
       }
@@ -70,7 +71,7 @@ export default class Api {
   }
 
   // метод для редактирования информации о пользователе
-  editProfileInfo(data) {
+  editProfileInfo(data, reportDownload) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -83,6 +84,7 @@ export default class Api {
       })
     })
     .then(res => {
+      reportDownload();
       if (res.ok) {
         return res.json();
       }
@@ -171,7 +173,7 @@ export default class Api {
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .then(res => console.log(`status: ${res.status}`))
+    .then(res => res)
     .catch(err => console.log(err));
   }
 
@@ -220,7 +222,7 @@ export default class Api {
   }
 
   // метод редактирования аватара
-  editAvatar(newAvatarUrl) {
+  editAvatar(newAvatarUrl, reportDownload) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -232,6 +234,7 @@ export default class Api {
       })
     })
     .then(res => {
+      reportDownload();
       if (res.ok) {
         return res.json();
       }
@@ -244,7 +247,4 @@ export default class Api {
     })
     .catch(err => console.log(err));
   }
-
-
-
 }
