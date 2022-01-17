@@ -1,22 +1,14 @@
 import Popup from "./Popup.js";
 import { formSelector } from "../utils/constants.js";
 
-export default class PopupWithForm extends Popup {
+export default class PopupWithConfirmDelete extends Popup {
   constructor(popupSelector, submitHandlerForm) {
     super(popupSelector);
     this._submitHandlerForm = submitHandlerForm;
     this._formElement = this._elementPopup.querySelector(formSelector);
-    this._inputsList = Array.from(this._formElement.querySelectorAll('.form__item'));
+    this._inputWithIdCard = this._formElement.querySelector('.form__input-id');
     this._buttonForm = this._formElement.querySelector('.form__button');
     this._buttonFormValue = this._buttonForm.textContent;
-  }
-
-  // метод, который собирает данные всех полей формы
-  _getInputValues() {
-    this._formValues = {};
-    this._inputsList.forEach(input => this._formValues[input.name] = input.value);
-
-    return this._formValues;
   }
 
   // метод закрытия popup
@@ -26,9 +18,15 @@ export default class PopupWithForm extends Popup {
   }
 
   // метод открытия popup
-  open() {
+  openPopupWithCardId(data) {
     super.open();
     this._reportButtonText();
+    this._inputWithIdCard.value = data._id;
+  }
+
+  // метод получения id карточки
+  getCardId() {
+    return this._inputWithIdCard.value;
   }
 
   // метод для изменения кнопки при загрузке данных с сервера
@@ -41,13 +39,12 @@ export default class PopupWithForm extends Popup {
     this._buttonForm.textContent = this._buttonFormValue;
   }
 
-
   setEventListeners() {
     super.setEventListeners();
     // прикрепляем обработчик к форме
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._submitHandlerForm(this._getInputValues());
+      this._submitHandlerForm();
       this.close();
     });
   }

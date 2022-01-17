@@ -6,6 +6,7 @@ import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import PopupWithConfirmDelete from '../components/PopupWithConfirmDelete';
 import Api from '../components/Api';
 
 import {
@@ -172,7 +173,7 @@ buttonAdd.addEventListener('click', () => {
 });
 
 // создание экземпляра класса PopupWithForm для удаления карточки
-const popupDeletetCard = new PopupWithForm(popupDeleteCardSelector, submitHandlerFormDeleteCard);
+const popupDeletetCard = new PopupWithConfirmDelete(popupDeleteCardSelector, submitHandlerFormDeleteCard);
 popupDeletetCard.setEventListeners();
 
 // загрузка карточек с сервера
