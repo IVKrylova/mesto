@@ -24,7 +24,7 @@ export default class Card {
   }
 
   // обработчик переключения цвета лайка при клике
-  _handleToggleLike() {
+  handleToggleLike() {
     this._elementLike.classList.toggle('element__like_active');
   }
 
@@ -36,7 +36,6 @@ export default class Card {
       } else {
         this._handlePutLike(this._item);
       }
-      this._handleToggleLike();
     });
 
     this._buttonDelete.addEventListener('click', evt => {

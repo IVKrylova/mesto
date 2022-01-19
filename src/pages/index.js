@@ -109,6 +109,7 @@ function crateSection(data) {
         api.putLike(cardId)
         .then(card => {
           this.putCountLikes(card.likes.length);
+          this.handleToggleLike();
         })
           .catch(err => console.log(err));
       };
@@ -118,6 +119,7 @@ function crateSection(data) {
         api.deleteLike(cardId)
           .then(card => {
             this.putCountLikes(card.likes.length);
+            this.handleToggleLike();
           })
           .catch(err => console.log(err));
       };
