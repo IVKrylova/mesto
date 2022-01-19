@@ -45,6 +45,9 @@ function submitHandlerFormProfileInfo({ name, profession }) {
   api.editProfileInfo({ name, profession }, reportDownload)
     .then(data => {
       userInfo.setUserInfo(data);
+    })
+    .catch(err => console.log(err))
+    .finally( _ => {
       popupProfileInfo.close();
     });
 }
@@ -58,8 +61,11 @@ function submitHandlerFormElementCard({ link, name }) {
       cardsList.then(section => {
         data.isOwner = true;
         section.prependItem(data);
-        popupElementCard.close();
       });
+    })
+    .catch(err => console.log(err))
+    .finally( _ => {
+      popupElementCard.close();
     });
 }
 
@@ -72,7 +78,8 @@ function renderUserInfo(data) {
 
 // обработчик формы удаления карточки
 function submitHandlerFormDeleteCard() {
-  api.deleteCard(popupDeletetCard.getCardId());
+  api.deleteCard(popupDeletetCard.getCardId())
+    .catch(err => console.log(err));
   api.getInitialCards()
     .then(data => {
       return data.filter(card => {
@@ -85,6 +92,7 @@ function submitHandlerFormDeleteCard() {
       document.querySelector(elementsListSelector).innerHTML = '';
       crateSection(data);
     })
+    .catch(err => console.log(err));
 }
 
 // функция создания экземпляра класса Section
@@ -99,9 +107,10 @@ function crateSection(data) {
       const handlePutLike = function(item) {
         const cardId = item._id;
         api.putLike(cardId)
-          .then(card => {
-            this.putCountLikes(card.likes.length);
-          })
+        .then(card => {
+          this.putCountLikes(card.likes.length);
+        })
+          .catch(err => console.log(err));
       };
       // обработчик удаления лайка
       const handleDeleteLike = function(item) {
@@ -110,6 +119,7 @@ function crateSection(data) {
           .then(card => {
             this.putCountLikes(card.likes.length);
           })
+          .catch(err => console.log(err));
       };
       const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete, handlePutLike, handleDeleteLike);
 
@@ -129,15 +139,19 @@ function submitHandlerFormEditAvatar({ avatar }) {
   api.editAvatar(avatar, reportDownload)
     .then(avatar => {
       profileAvatar.src = avatar;
-      popupEditAvatar.close();
     })
+    .catch(err => console.log(err))
+    .finally( _ => {
+      popupEditAvatar.close();
+    });
 }
 
 // создание экземпляра класса Api
 const api = new Api(options);
 
 // загрузка информации о пользователе с сервера
-api.getUserInfo(renderUserInfo);
+api.getUserInfo(renderUserInfo)
+  .catch(err => console.log(err));
 
 // создание экземпляра класса PopupWithImage
 const popupElementImage = new PopupWithImage(popupElementImageSelector);
@@ -182,10 +196,11 @@ popupDeletetCard.setEventListeners();
 // загрузка карточек с сервера
 const cardsList = api.getInitialCards()
   .then(data => {
-  // создание экземпляра класса Section
-  const cardsList = crateSection(data);
-  return cardsList;
-});
+    // создание экземпляра класса Section
+    const cardsList = crateSection(data);
+    return cardsList;
+  })
+  .catch(err => console.log(err));
 
 // создание экземпляра класса FormValidator для формы редактирования аватара
 const editAvatarFormValidator = new FormValidator(config, '#form-edit-avatar');

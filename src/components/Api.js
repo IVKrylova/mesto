@@ -25,7 +25,6 @@ export default class Api {
       const { name, about, avatar } = data;
       renderUserInfo({ name, about, avatar });
     })
-    .catch(err => console.log(err));
   }
 
   // метод получения массива карточек
@@ -37,7 +36,6 @@ export default class Api {
     })
     .then(this._checkResponse)
     .then(data => data)
-    .catch(err => console.log(err));
   }
 
   // метод отправки новой карточки на сервер
@@ -60,7 +58,6 @@ export default class Api {
 
       return { link, name, _id };
     })
-    .catch(err => console.log(err));
   }
 
   // метод для редактирования информации о пользователе
@@ -83,7 +80,6 @@ export default class Api {
 
       return { name, about };
     })
-    .catch(err => console.log(err));
   }
 
   // метод получения id пользователя
@@ -99,7 +95,6 @@ export default class Api {
 
       return _id;
     })
-    .catch(err => console.log(err));
   }
 
   // метод получения массива карточек со свойствами isOwner и isLiked
@@ -152,7 +147,6 @@ export default class Api {
     })
     .then(this._checkResponse)
     .then(res => res)
-    .catch(err => console.log(err));
   }
 
   // метод для постановки лайка карточке
@@ -169,7 +163,6 @@ export default class Api {
     .then(card => {
       return card
     })
-    .catch(err => console.log(err));
   }
 
   // метод для удаления лайка у карточки
@@ -186,7 +179,6 @@ export default class Api {
     .then(card => {
       return card;
     })
-    .catch(err => console.log(err));
   }
 
   // метод редактирования аватара
@@ -208,6 +200,17 @@ export default class Api {
 
       return avatar;
     })
-    .catch(err => console.log(err));
   }
 }
+
+
+
+
+/* api.метод()
+.then((res) => `res` - это ответ от сервера при успешном запросе, в котором
+чаще всего вся нужная информация для изменения DOM. Тут делаем все изменения
+DOM (лайки, удаления, добавления карточки, закрытия попапов и тд     )
+    . catch((ошибка) => обязательно ловим возможные ошибки в конце запроса )
+    .finally(() => в этом блоке чаще всего изменяют текст кнопки и скрывают
+    эффект загрузки)
+ */
