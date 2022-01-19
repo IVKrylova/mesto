@@ -5,6 +5,14 @@ export default class Api {
     this.contentType = options.headers['Content-Type'];
   }
 
+  // метод проверки ошибок
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   // метод получения информации о пользователе
   getUserInfo(renderUserInfo) {
     return fetch(`https://nomoreparties.co/v1/cohort-34/users/me`, {
@@ -12,12 +20,7 @@ export default class Api {
         authorization: this.authorization
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(data => {
       const { name, about, avatar } = data;
       renderUserInfo({ name, about, avatar });
@@ -32,12 +35,7 @@ export default class Api {
         authorization: this.authorization
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(data => data)
     .catch(err => console.log(err));
   }
@@ -55,14 +53,9 @@ export default class Api {
         link: data.link
       })
     })
-    .then(res => {
-      reportDownload();
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(data => {
+      reportDownload();
       const { link, name, _id } = data;
 
       return { link, name, _id };
@@ -83,14 +76,9 @@ export default class Api {
         about: data.profession
       })
     })
-    .then(res => {
-      reportDownload();
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(data => {
+      reportDownload();
       const { name, about } = data;
 
       return { name, about };
@@ -105,12 +93,7 @@ export default class Api {
         authorization: this.authorization
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(data => {
       const { _id } = data;
 
@@ -167,12 +150,7 @@ export default class Api {
         'Content-Type': this.contentType
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(res => res)
     .catch(err => console.log(err));
   }
@@ -187,12 +165,7 @@ export default class Api {
         'Content-Type': this.contentType
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(card => {
       return card
     })
@@ -209,12 +182,7 @@ export default class Api {
         'Content-Type': this.contentType
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(card => {
       return card;
     })
@@ -233,14 +201,9 @@ export default class Api {
         avatar: newAvatarUrl
       })
     })
-    .then(res => {
-      reportDownload();
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
     .then(data => {
+      reportDownload();
       const { avatar } = data;
 
       return avatar;
