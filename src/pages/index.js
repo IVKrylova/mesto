@@ -40,7 +40,9 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  const reportDownload = popupProfileInfo.reportDownload.bind(popupProfileInfo);
+  const reportDownload = _ => {
+    popupProfileInfo.reportDownload();
+  }
 
   api.editProfileInfo({ name, profession }, reportDownload)
     .then(data => {
@@ -54,7 +56,9 @@ function submitHandlerFormProfileInfo({ name, profession }) {
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  const reportDownload = popupElementCard.reportDownload.bind(popupElementCard);
+  const reportDownload = _ => {
+    popupElementCard.reportDownload();
+  }
 
   api.sendNewCard({ link, name }, reportDownload)
     .then(data => {
@@ -101,8 +105,12 @@ function crateSection(data) {
     items: data,
     renderer: item => {
       // создание экземпляра класса карточки
-      const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
-      const handleButtonDelete = popupDeletetCard.openPopupWithCardId.bind(popupDeletetCard, item);
+      const handleCardClick = _ => {
+        popupElementImage.open(item);
+      }
+      const handleButtonDelete = _ => {
+        popupDeletetCard.openPopupWithCardId(item);
+      }
       // обработчик постановки лайка
       const handlePutLike = function(item) {
         const cardId = item._id;
@@ -125,6 +133,7 @@ function crateSection(data) {
       };
       const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete, handlePutLike, handleDeleteLike);
 
+
       return elementCard.generateElementCard();
       }
     },
@@ -136,7 +145,9 @@ function crateSection(data) {
 
 // обработчик формы редактирования аватара
 function submitHandlerFormEditAvatar({ avatar }) {
-  const reportDownload = popupEditAvatar.reportDownload.bind(popupEditAvatar);
+  const reportDownload = _ => {
+    popupEditAvatar.reportDownload()
+  }
 
   api.editAvatar(avatar, reportDownload)
     .then(avatar => {
