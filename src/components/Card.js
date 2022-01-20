@@ -49,7 +49,7 @@ export default class Card {
 
   // метод установки колличества лайков
   putCountLikes(countLikes) {
-    if(countLikes == 0) {
+    if(countLikes === 0) {
       this._elementCountLikes.textContent = '';
     } else
     {

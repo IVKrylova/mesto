@@ -31,6 +31,7 @@ export default class PopupWithForm extends Popup {
     this._buttonForm.textContent = this._buttonFormValue;
   }
 
+  // метод отображения сообщения о сохранении данных
   renderLoading() {
     this._buttonForm.textContent = 'Сохранение...';
   }

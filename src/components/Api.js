@@ -104,7 +104,7 @@ export default class Api {
         const userId = res[0];
         const arrayCard = res[1];
         const cardsListWithIsOwner = arrayCard.map(card => {
-          if(userId == card.owner._id) {
+          if(userId === card.owner._id) {
             card.isOwner = true;
             return card;
           } else {
@@ -113,7 +113,7 @@ export default class Api {
           }
         });
         const checkLike = function(like) {
-          return userId == like._id;
+          return userId === like._id;
         }
 
         return cardsListWithIsOwner.map(card => {
