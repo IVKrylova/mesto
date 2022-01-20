@@ -28,19 +28,12 @@ export default class PopupWithForm extends Popup {
   // метод открытия popup
   open() {
     super.open();
-    this._reportButtonText();
-  }
-
-  // метод для изменения кнопки при загрузке данных с сервера
-  reportDownload() {
-    this._buttonForm.textContent = 'Сохранение...'
-  }
-
-  // метод для возвращения значения кнопки после загрузки
-  _reportButtonText() {
     this._buttonForm.textContent = this._buttonFormValue;
   }
 
+  renderLoading() {
+    this._buttonForm.textContent = 'Сохранение...';
+  }
 
   setEventListeners() {
     super.setEventListeners();

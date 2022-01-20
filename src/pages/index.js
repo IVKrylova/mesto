@@ -40,11 +40,11 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  const reportDownload = _ => {
-    popupProfileInfo.reportDownload();
+  const renderLoading = _ => {
+    popupProfileInfo.renderLoading();
   }
 
-  api.editProfileInfo({ name, profession }, reportDownload)
+  api.editProfileInfo({ name, profession }, renderLoading)
     .then(data => {
       userInfo.setUserInfo(data);
     })
@@ -56,11 +56,11 @@ function submitHandlerFormProfileInfo({ name, profession }) {
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  const reportDownload = _ => {
-    popupElementCard.reportDownload();
+  const renderLoading = _ => {
+    popupElementCard.renderLoading();
   }
 
-  api.sendNewCard({ link, name }, reportDownload)
+  api.sendNewCard({ link, name }, renderLoading)
     .then(data => {
       cardsList.then(section => {
         data.isOwner = true;
@@ -109,7 +109,7 @@ function crateSection(data) {
         popupElementImage.open(item);
       }
       const handleButtonDelete = _ => {
-        popupDeletetCard.openPopupWithCardId(item);
+        popupDeletetCard.open(item);
       }
       // обработчик постановки лайка
       const handlePutLike = function(item) {
@@ -145,11 +145,11 @@ function crateSection(data) {
 
 // обработчик формы редактирования аватара
 function submitHandlerFormEditAvatar({ avatar }) {
-  const reportDownload = _ => {
-    popupEditAvatar.reportDownload()
+  const renderLoading = _ => {
+    popupEditAvatar.renderLoading()
   }
 
-  api.editAvatar(avatar, reportDownload)
+  api.editAvatar(avatar, renderLoading)
     .then(avatar => {
       profileAvatar.src = avatar;
     })

@@ -39,7 +39,7 @@ export default class Api {
   }
 
   // метод отправки новой карточки на сервер
-  sendNewCard(data, reportDownload) {
+  sendNewCard(data, renderLoading) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: {
@@ -53,7 +53,7 @@ export default class Api {
     })
     .then(this._checkResponse)
     .then(data => {
-      reportDownload();
+      renderLoading();
       const { link, name, _id } = data;
 
       return { link, name, _id };
@@ -61,7 +61,7 @@ export default class Api {
   }
 
   // метод для редактирования информации о пользователе
-  editProfileInfo(data, reportDownload) {
+  editProfileInfo(data, renderLoading) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -75,7 +75,7 @@ export default class Api {
     })
     .then(this._checkResponse)
     .then(data => {
-      reportDownload();
+      renderLoading();
       const { name, about } = data;
 
       return { name, about };
@@ -182,7 +182,7 @@ export default class Api {
   }
 
   // метод редактирования аватара
-  editAvatar(newAvatarUrl, reportDownload) {
+  editAvatar(newAvatarUrl, renderLoading) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -195,22 +195,10 @@ export default class Api {
     })
     .then(this._checkResponse)
     .then(data => {
-      reportDownload();
+      renderLoading();
       const { avatar } = data;
 
       return avatar;
     })
   }
 }
-
-
-
-
-/* api.метод()
-.then((res) => `res` - это ответ от сервера при успешном запросе, в котором
-чаще всего вся нужная информация для изменения DOM. Тут делаем все изменения
-DOM (лайки, удаления, добавления карточки, закрытия попапов и тд     )
-    . catch((ошибка) => обязательно ловим возможные ошибки в конце запроса )
-    .finally(() => в этом блоке чаще всего изменяют текст кнопки и скрывают
-    эффект загрузки)
- */
