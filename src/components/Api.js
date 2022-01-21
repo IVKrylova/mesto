@@ -14,17 +14,17 @@ export default class Api {
   }
 
   // метод получения информации о пользователе
-  getUserInfo(renderUserInfo) {
+  getUserInfo(/* renderUserInfo */) {
     return fetch(`https://nomoreparties.co/v1/cohort-34/users/me`, {
       headers: {
         authorization: this.authorization
       }
     })
     .then(this._checkResponse)
-    .then(data => {
+    /* .then(data => {
       const { name, about, avatar } = data;
       renderUserInfo({ name, about, avatar });
-    })
+    }) */
   }
 
   // метод получения массива карточек

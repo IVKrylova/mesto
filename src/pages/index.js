@@ -24,7 +24,7 @@ import {
   popupElementImageSelector,
   config,
   options,
-  profileAvatar,
+  /* profileAvatar, */
   popupDeleteCardSelector,
   buttonEditAvatar,
   popupEditAvatarSelector
@@ -73,12 +73,12 @@ function submitHandlerFormElementCard({ link, name }) {
     });
 }
 
-// функция установки данных о пользователе
+/* // функция установки данных о пользователе
 function renderUserInfo(data) {
   document.querySelector(profileNameSelector).textContent = data.name;
   document.querySelector(profileProfessionSelector).textContent = data.about;
   profileAvatar.src = data.avatar;
-}
+} */
 
 // обработчик формы удаления карточки
 function submitHandlerFormDeleteCard() {
@@ -151,7 +151,8 @@ function submitHandlerFormEditAvatar({ avatar }) {
 
   api.editAvatar(avatar, renderLoading)
     .then(avatar => {
-      profileAvatar.src = avatar;
+      /* profileAvatar.src = avatar; */ //!!!!!!!!!!!!!
+      userInfo.editAvatar(avatar);
     })
     .catch(err => console.log(err))
     .finally( _ => {
@@ -162,9 +163,7 @@ function submitHandlerFormEditAvatar({ avatar }) {
 // создание экземпляра класса Api
 const api = new Api(options);
 
-// загрузка информации о пользователе с сервера
-api.getUserInfo(renderUserInfo)
-  .catch(err => console.log(err));
+
 
 // создание экземпляра класса PopupWithImage
 const popupElementImage = new PopupWithImage(popupElementImageSelector);
@@ -172,6 +171,19 @@ popupElementImage.setEventListeners();
 
 // созданиe экземпляра класса UserInfo
 const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
+
+
+
+// загрузка информации о пользователе с сервера
+api.getUserInfo(/* userInfo.renderUserInfo */)
+  .then(data => {
+    const { name, about, avatar } = data;
+
+    userInfo.renderUserInfo({ name, about, avatar });
+  })
+  .catch(err => console.log(err));
+
+
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
