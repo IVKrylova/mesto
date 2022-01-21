@@ -24,7 +24,6 @@ import {
   popupElementImageSelector,
   config,
   options,
-  profileAvatar,
   popupDeleteCardSelector,
   buttonEditAvatar,
   popupEditAvatarSelector
@@ -40,39 +39,47 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  const reportDownload = popupProfileInfo.reportDownload.bind(popupProfileInfo);
+  api.editProfileInfo({ name, profession })
+    .then(data => {
+      popupProfileInfo.renderLoading();
+      const { name, about } = data;
 
-  api.editProfileInfo({ name, profession }, reportDownload)
+      return { name, about };
+    })
     .then(data => {
       userInfo.setUserInfo(data);
+    })
+    .catch(err => console.log(err))
+    .finally( _ => {
       popupProfileInfo.close();
     });
 }
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  const reportDownload = popupElementCard.reportDownload.bind(popupElementCard);
+  api.sendNewCard({ link, name })
+    .then(data => {
+      popupElementCard.renderLoading();
+      const { link, name, _id } = data;
 
-  api.sendNewCard({ link, name }, reportDownload)
+      return { link, name, _id };
+    })
     .then(data => {
       cardsList.then(section => {
         data.isOwner = true;
         section.prependItem(data);
-        popupElementCard.close();
       });
+    })
+    .catch(err => console.log(err))
+    .finally( _ => {
+      popupElementCard.close();
     });
-}
-
-// функция установки данных о пользователе
-function renderUserInfo(data) {
-  document.querySelector(profileNameSelector).textContent = data.name;
-  document.querySelector(profileProfessionSelector).textContent = data.about;
-  profileAvatar.src = data.avatar;
 }
 
 // обработчик формы удаления карточки
 function submitHandlerFormDeleteCard() {
-  api.deleteCard(popupDeletetCard.getCardId());
+  api.deleteCard(popupDeletetCard.getCardId())
+    .catch(err => console.log(err));
   api.getInitialCards()
     .then(data => {
       return data.filter(card => {
@@ -85,6 +92,7 @@ function submitHandlerFormDeleteCard() {
       document.querySelector(elementsListSelector).innerHTML = '';
       crateSection(data);
     })
+    .catch(err => console.log(err));
 }
 
 // функция создания экземпляра класса Section
@@ -93,15 +101,21 @@ function crateSection(data) {
     items: data,
     renderer: item => {
       // создание экземпляра класса карточки
-      const handleCardClick = popupElementImage.open.bind(popupElementImage, item);
-      const handleButtonDelete = popupDeletetCard.openPopupWithCardId.bind(popupDeletetCard, item);
+      const handleCardClick = _ => {
+        popupElementImage.open(item);
+      }
+      const handleButtonDelete = _ => {
+        popupDeletetCard.open(item);
+      }
       // обработчик постановки лайка
       const handlePutLike = function(item) {
         const cardId = item._id;
         api.putLike(cardId)
           .then(card => {
             this.putCountLikes(card.likes.length);
+            this.handleToggleLike();
           })
+          .catch(err => console.log(err));
       };
       // обработчик удаления лайка
       const handleDeleteLike = function(item) {
@@ -109,7 +123,9 @@ function crateSection(data) {
         api.deleteLike(cardId)
           .then(card => {
             this.putCountLikes(card.likes.length);
+            this.handleToggleLike();
           })
+          .catch(err => console.log(err));
       };
       const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete, handlePutLike, handleDeleteLike);
 
@@ -124,20 +140,24 @@ function crateSection(data) {
 
 // обработчик формы редактирования аватара
 function submitHandlerFormEditAvatar({ avatar }) {
-  const reportDownload = popupEditAvatar.reportDownload.bind(popupEditAvatar);
+  api.editAvatar(avatar)
+    .then(data => {
+      popupEditAvatar.renderLoading();
+      const { avatar } = data;
 
-  api.editAvatar(avatar, reportDownload)
-    .then(avatar => {
-      profileAvatar.src = avatar;
-      popupEditAvatar.close();
+      return avatar;
     })
+    .then(avatar => {
+      userInfo.editAvatar(avatar);
+    })
+    .catch(err => console.log(err))
+    .finally( _ => {
+      popupEditAvatar.close();
+    });
 }
 
 // создание экземпляра класса Api
 const api = new Api(options);
-
-// загрузка информации о пользователе с сервера
-api.getUserInfo(renderUserInfo);
 
 // создание экземпляра класса PopupWithImage
 const popupElementImage = new PopupWithImage(popupElementImageSelector);
@@ -145,6 +165,15 @@ popupElementImage.setEventListeners();
 
 // созданиe экземпляра класса UserInfo
 const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
+
+// загрузка информации о пользователе с сервера
+api.getUserInfo()
+  .then(data => {
+    const { name, about, avatar, _id } = data;
+
+    userInfo.renderUserInfo({ name, about, avatar, _id });
+  })
+  .catch(err => console.log(err));
 
 // открытие popup в profile__info
 buttonEdit.addEventListener('click', () => {
@@ -182,10 +211,12 @@ popupDeletetCard.setEventListeners();
 // загрузка карточек с сервера
 const cardsList = api.getInitialCards()
   .then(data => {
-  // создание экземпляра класса Section
-  const cardsList = crateSection(data);
-  return cardsList;
-});
+    // создание экземпляра класса Section
+    const cardsList = crateSection(data);
+
+    return cardsList;
+  })
+  .catch(err => console.log(err));
 
 // создание экземпляра класса FormValidator для формы редактирования аватара
 const editAvatarFormValidator = new FormValidator(config, '#form-edit-avatar');

@@ -7,8 +7,6 @@ export default class PopupWithConfirmDelete extends Popup {
     this._submitHandlerForm = submitHandlerForm;
     this._formElement = this._elementPopup.querySelector(formSelector);
     this._inputWithIdCard = this._formElement.querySelector('.form__input-id');
-    this._buttonForm = this._formElement.querySelector('.form__button');
-    this._buttonFormValue = this._buttonForm.textContent;
   }
 
   // метод закрытия popup
@@ -18,25 +16,14 @@ export default class PopupWithConfirmDelete extends Popup {
   }
 
   // метод открытия popup
-  openPopupWithCardId(data) {
+  open(data) {
     super.open();
-    this._reportButtonText();
     this._inputWithIdCard.value = data._id;
   }
 
   // метод получения id карточки
   getCardId() {
     return this._inputWithIdCard.value;
-  }
-
-  // метод для изменения кнопки при загрузке данных с сервера
-  reportDownload() {
-    this._buttonForm.textContent = 'Сохранение...'
-  }
-
-  // метод для возвращения значения кнопки после загрузки
-  _reportButtonText() {
-    this._buttonForm.textContent = this._buttonFormValue;
   }
 
   setEventListeners() {

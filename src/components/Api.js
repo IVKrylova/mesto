@@ -5,24 +5,22 @@ export default class Api {
     this.contentType = options.headers['Content-Type'];
   }
 
+  // метод проверки ошибок
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   // метод получения информации о пользователе
-  getUserInfo(renderUserInfo) {
+  getUserInfo() {
     return fetch(`https://nomoreparties.co/v1/cohort-34/users/me`, {
       headers: {
         authorization: this.authorization
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => {
-      const { name, about, avatar } = data;
-      renderUserInfo({ name, about, avatar });
-    })
-    .catch(err => console.log(err));
+    .then(this._checkResponse)
   }
 
   // метод получения массива карточек
@@ -32,18 +30,11 @@ export default class Api {
         authorization: this.authorization
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => data)
-    .catch(err => console.log(err));
+    .then(this._checkResponse)
   }
 
   // метод отправки новой карточки на сервер
-  sendNewCard(data, reportDownload) {
+  sendNewCard(data) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: {
@@ -55,23 +46,11 @@ export default class Api {
         link: data.link
       })
     })
-    .then(res => {
-      reportDownload();
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => {
-      const { link, name, _id } = data;
-
-      return { link, name, _id };
-    })
-    .catch(err => console.log(err));
+    .then(this._checkResponse)
   }
 
   // метод для редактирования информации о пользователе
-  editProfileInfo(data, reportDownload) {
+  editProfileInfo(data) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -83,50 +62,17 @@ export default class Api {
         about: data.profession
       })
     })
-    .then(res => {
-      reportDownload();
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => {
-      const { name, about } = data;
-
-      return { name, about };
-    })
-    .catch(err => console.log(err));
-  }
-
-  // метод получения id пользователя
-  _getUserId() {
-    return fetch(`https://nomoreparties.co/v1/cohort-34/users/me`, {
-      headers: {
-        authorization: this.authorization
-      }
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => {
-      const { _id } = data;
-
-      return _id;
-    })
-    .catch(err => console.log(err));
+    .then(this._checkResponse)
   }
 
   // метод получения массива карточек со свойствами isOwner и isLiked
   getInitialCards() {
-   return Promise.all([this._getUserId(), this._getArrayCard()])
+   return Promise.all([this.getUserInfo(), this._getArrayCard()])
       .then(res => {
-        const userId = res[0];
-        const arrayCard = res[1];
-        const cardsListWithIsOwner = arrayCard.map(card => {
-          if(userId == card.owner._id) {
+        const userInfo = res[0];
+        const arrayCards = res[1];
+        const cardsListWithIsOwner = arrayCards.map(card => {
+          if(userInfo._id === card.owner._id) {
             card.isOwner = true;
             return card;
           } else {
@@ -135,7 +81,7 @@ export default class Api {
           }
         });
         const checkLike = function(like) {
-          return userId == like._id;
+          return userInfo._id === like._id;
         }
 
         return cardsListWithIsOwner.map(card => {
@@ -167,14 +113,7 @@ export default class Api {
         'Content-Type': this.contentType
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(res => res)
-    .catch(err => console.log(err));
+    .then(this._checkResponse)
   }
 
   // метод для постановки лайка карточке
@@ -187,16 +126,7 @@ export default class Api {
         'Content-Type': this.contentType
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(card => {
-      return card
-    })
-    .catch(err => console.log(err));
+    .then(this._checkResponse)
   }
 
   // метод для удаления лайка у карточки
@@ -209,20 +139,11 @@ export default class Api {
         'Content-Type': this.contentType
       }
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(card => {
-      return card;
-    })
-    .catch(err => console.log(err));
+    .then(this._checkResponse)
   }
 
   // метод редактирования аватара
-  editAvatar(newAvatarUrl, reportDownload) {
+  editAvatar(newAvatarUrl) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -233,18 +154,6 @@ export default class Api {
         avatar: newAvatarUrl
       })
     })
-    .then(res => {
-      reportDownload();
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => {
-      const { avatar } = data;
-
-      return avatar;
-    })
-    .catch(err => console.log(err));
+    .then(this._checkResponse)
   }
 }
