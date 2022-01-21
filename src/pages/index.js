@@ -39,11 +39,13 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  const renderLoading = _ => {
-    popupProfileInfo.renderLoading();
-  }
+  api.editProfileInfo({ name, profession })
+    .then(data => {
+      popupProfileInfo.renderLoading();
+      const { name, about } = data;
 
-  api.editProfileInfo({ name, profession }, renderLoading)
+      return { name, about };
+    })
     .then(data => {
       userInfo.setUserInfo(data);
     })
@@ -55,11 +57,13 @@ function submitHandlerFormProfileInfo({ name, profession }) {
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  const renderLoading = _ => {
-    popupElementCard.renderLoading();
-  }
+  api.sendNewCard({ link, name })
+    .then(data => {
+      popupElementCard.renderLoading();
+      const { link, name, _id } = data;
 
-  api.sendNewCard({ link, name }, renderLoading)
+      return { link, name, _id };
+    })
     .then(data => {
       cardsList.then(section => {
         data.isOwner = true;
@@ -107,10 +111,10 @@ function crateSection(data) {
       const handlePutLike = function(item) {
         const cardId = item._id;
         api.putLike(cardId)
-        .then(card => {
-          this.putCountLikes(card.likes.length);
-          this.handleToggleLike();
-        })
+          .then(card => {
+            this.putCountLikes(card.likes.length);
+            this.handleToggleLike();
+          })
           .catch(err => console.log(err));
       };
       // обработчик удаления лайка
@@ -125,7 +129,6 @@ function crateSection(data) {
       };
       const elementCard = new Card(item, cardSelector, handleCardClick, elementTemplateSelector, handleButtonDelete, handlePutLike, handleDeleteLike);
 
-
       return elementCard.generateElementCard();
       }
     },
@@ -137,11 +140,13 @@ function crateSection(data) {
 
 // обработчик формы редактирования аватара
 function submitHandlerFormEditAvatar({ avatar }) {
-  const renderLoading = _ => {
-    popupEditAvatar.renderLoading()
-  }
+  api.editAvatar(avatar)
+    .then(data => {
+      popupEditAvatar.renderLoading();
+      const { avatar } = data;
 
-  api.editAvatar(avatar, renderLoading)
+      return avatar;
+    })
     .then(avatar => {
       userInfo.editAvatar(avatar);
     })
@@ -162,7 +167,7 @@ popupElementImage.setEventListeners();
 const userInfo = new UserInfo({ profileNameSelector, profileProfessionSelector });
 
 // загрузка информации о пользователе с сервера
-api.getUserInfo(/* userInfo.renderUserInfo */)
+api.getUserInfo()
   .then(data => {
     const { name, about, avatar, _id } = data;
 
@@ -208,6 +213,7 @@ const cardsList = api.getInitialCards()
   .then(data => {
     // создание экземпляра класса Section
     const cardsList = crateSection(data);
+
     return cardsList;
   })
   .catch(err => console.log(err));

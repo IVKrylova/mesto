@@ -31,11 +31,10 @@ export default class Api {
       }
     })
     .then(this._checkResponse)
-    .then(data => data)
   }
 
   // метод отправки новой карточки на сервер
-  sendNewCard(data, renderLoading) {
+  sendNewCard(data) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: {
@@ -48,16 +47,10 @@ export default class Api {
       })
     })
     .then(this._checkResponse)
-    .then(data => {
-      renderLoading();
-      const { link, name, _id } = data;
-
-      return { link, name, _id };
-    })
   }
 
   // метод для редактирования информации о пользователе
-  editProfileInfo(data, renderLoading) {
+  editProfileInfo(data) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -70,12 +63,6 @@ export default class Api {
       })
     })
     .then(this._checkResponse)
-    .then(data => {
-      renderLoading();
-      const { name, about } = data;
-
-      return { name, about };
-    })
   }
 
   // метод получения массива карточек со свойствами isOwner и isLiked
@@ -127,7 +114,6 @@ export default class Api {
       }
     })
     .then(this._checkResponse)
-    .then(res => res)
   }
 
   // метод для постановки лайка карточке
@@ -141,9 +127,6 @@ export default class Api {
       }
     })
     .then(this._checkResponse)
-    .then(card => {
-      return card
-    })
   }
 
   // метод для удаления лайка у карточки
@@ -157,13 +140,10 @@ export default class Api {
       }
     })
     .then(this._checkResponse)
-    .then(card => {
-      return card;
-    })
   }
 
   // метод редактирования аватара
-  editAvatar(newAvatarUrl, renderLoading) {
+  editAvatar(newAvatarUrl) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -175,11 +155,5 @@ export default class Api {
       })
     })
     .then(this._checkResponse)
-    .then(data => {
-      renderLoading();
-      const { avatar } = data;
-
-      return avatar;
-    })
   }
 }
