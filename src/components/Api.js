@@ -14,17 +14,13 @@ export default class Api {
   }
 
   // метод получения информации о пользователе
-  getUserInfo(/* renderUserInfo */) {
+  getUserInfo() {
     return fetch(`https://nomoreparties.co/v1/cohort-34/users/me`, {
       headers: {
         authorization: this.authorization
       }
     })
     .then(this._checkResponse)
-    /* .then(data => {
-      const { name, about, avatar } = data;
-      renderUserInfo({ name, about, avatar });
-    }) */
   }
 
   // метод получения массива карточек
@@ -82,29 +78,14 @@ export default class Api {
     })
   }
 
-  // метод получения id пользователя
-  _getUserId() {
-    return fetch(`https://nomoreparties.co/v1/cohort-34/users/me`, {
-      headers: {
-        authorization: this.authorization
-      }
-    })
-    .then(this._checkResponse)
-    .then(data => {
-      const { _id } = data;
-
-      return _id;
-    })
-  }
-
   // метод получения массива карточек со свойствами isOwner и isLiked
   getInitialCards() {
-   return Promise.all([this._getUserId(), this._getArrayCard()])
+   return Promise.all([this.getUserInfo(), this._getArrayCard()])
       .then(res => {
-        const userId = res[0];
-        const arrayCard = res[1];
-        const cardsListWithIsOwner = arrayCard.map(card => {
-          if(userId === card.owner._id) {
+        const userInfo = res[0];
+        const arrayCards = res[1];
+        const cardsListWithIsOwner = arrayCards.map(card => {
+          if(userInfo._id === card.owner._id) {
             card.isOwner = true;
             return card;
           } else {
@@ -113,7 +94,7 @@ export default class Api {
           }
         });
         const checkLike = function(like) {
-          return userId === like._id;
+          return userInfo._id === like._id;
         }
 
         return cardsListWithIsOwner.map(card => {
