@@ -48,11 +48,9 @@ function submitHandlerFormProfileInfo({ name, profession }) {
     })
     .then(data => {
       userInfo.setUserInfo(data);
+      popupProfileInfo.close();
     })
     .catch(err => console.log(err))
-    .finally( _ => {
-      popupProfileInfo.close();
-    });
 }
 
 // oбработчик отправки формы для добавления карточки в elements
@@ -68,12 +66,10 @@ function submitHandlerFormElementCard({ link, name }) {
       cardsList.then(section => {
         data.isOwner = true;
         section.prependItem(data);
+        popupElementCard.close();
       });
     })
     .catch(err => console.log(err))
-    .finally( _ => {
-      popupElementCard.close();
-    });
 }
 
 // обработчик формы удаления карточки
@@ -149,11 +145,9 @@ function submitHandlerFormEditAvatar({ avatar }) {
     })
     .then(avatar => {
       userInfo.editAvatar(avatar);
+      popupEditAvatar.close();
     })
     .catch(err => console.log(err))
-    .finally( _ => {
-      popupEditAvatar.close();
-    });
 }
 
 // создание экземпляра класса Api
