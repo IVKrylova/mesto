@@ -34,7 +34,7 @@ export default class Api {
   }
 
   // метод отправки новой карточки на сервер
-  sendNewCard(data) {
+  sendNewCard(data, renderLoading) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: {
@@ -46,11 +46,15 @@ export default class Api {
         link: data.link
       })
     })
+    .then(res => {
+      renderLoading(res.ok);
+      return res;
+    })
     .then(this._checkResponse)
   }
 
   // метод для редактирования информации о пользователе
-  editProfileInfo(data) {
+  editProfileInfo(data, renderLoading) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -61,6 +65,10 @@ export default class Api {
         name: data.name,
         about: data.profession
       })
+    })
+    .then(res => {
+      renderLoading(res.ok);
+      return res;
     })
     .then(this._checkResponse)
   }
@@ -143,7 +151,7 @@ export default class Api {
   }
 
   // метод редактирования аватара
-  editAvatar(newAvatarUrl) {
+  editAvatar(newAvatarUrl, renderLoading) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -153,6 +161,10 @@ export default class Api {
       body: JSON.stringify({
         avatar: newAvatarUrl
       })
+    })
+    .then(res => {
+      renderLoading(res.ok);
+      return res;
     })
     .then(this._checkResponse)
   }

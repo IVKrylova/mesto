@@ -9,6 +9,7 @@ export default class PopupWithForm extends Popup {
     this._inputsList = Array.from(this._formElement.querySelectorAll('.form__item'));
     this._buttonForm = this._formElement.querySelector('.form__button');
     this._buttonFormValue = this._buttonForm.textContent;
+    this.renderLoading = this.renderLoading.bind(this);
   }
 
   // метод, который собирает данные всех полей формы
@@ -32,8 +33,12 @@ export default class PopupWithForm extends Popup {
   }
 
   // метод отображения сообщения о сохранении данных
-  renderLoading() {
-    this._buttonForm.textContent = 'Сохранение...';
+  renderLoading(status) {
+    if(status) {
+      this._buttonForm.textContent = 'Сохранение...';
+    } else {
+      this._buttonForm.textContent = this._buttonFormValue;
+    }
   }
 
   setEventListeners() {

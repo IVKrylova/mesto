@@ -39,9 +39,8 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  api.editProfileInfo({ name, profession })
+  api.editProfileInfo({ name, profession }, popupProfileInfo.renderLoading)
     .then(data => {
-      popupProfileInfo.renderLoading();
       const { name, about } = data;
 
       return { name, about };
@@ -55,9 +54,8 @@ function submitHandlerFormProfileInfo({ name, profession }) {
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  api.sendNewCard({ link, name })
+  api.sendNewCard({ link, name }, popupElementCard.renderLoading)
     .then(data => {
-      popupElementCard.renderLoading();
       const { link, name, _id } = data;
 
       return { link, name, _id };
@@ -136,9 +134,8 @@ function crateSection(data) {
 
 // обработчик формы редактирования аватара
 function submitHandlerFormEditAvatar({ avatar }) {
-  api.editAvatar(avatar)
+  api.editAvatar(avatar, popupEditAvatar.renderLoading)
     .then(data => {
-      popupEditAvatar.renderLoading();
       const { avatar } = data;
 
       return avatar;
