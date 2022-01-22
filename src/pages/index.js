@@ -39,27 +39,23 @@ function setValuesPopupProfileInfo() {
 
 // oбработчик отправки формы в profile__info
 function submitHandlerFormProfileInfo({ name, profession }) {
-  api.editProfileInfo({ name, profession })
+  api.editProfileInfo({ name, profession }, popupProfileInfo.renderLoading)
     .then(data => {
-      popupProfileInfo.renderLoading();
       const { name, about } = data;
 
       return { name, about };
     })
     .then(data => {
       userInfo.setUserInfo(data);
+      popupProfileInfo.close();
     })
     .catch(err => console.log(err))
-    .finally( _ => {
-      popupProfileInfo.close();
-    });
 }
 
 // oбработчик отправки формы для добавления карточки в elements
 function submitHandlerFormElementCard({ link, name }) {
-  api.sendNewCard({ link, name })
+  api.sendNewCard({ link, name }, popupElementCard.renderLoading)
     .then(data => {
-      popupElementCard.renderLoading();
       const { link, name, _id } = data;
 
       return { link, name, _id };
@@ -68,12 +64,10 @@ function submitHandlerFormElementCard({ link, name }) {
       cardsList.then(section => {
         data.isOwner = true;
         section.prependItem(data);
+        popupElementCard.close();
       });
     })
     .catch(err => console.log(err))
-    .finally( _ => {
-      popupElementCard.close();
-    });
 }
 
 // обработчик формы удаления карточки
@@ -140,20 +134,17 @@ function crateSection(data) {
 
 // обработчик формы редактирования аватара
 function submitHandlerFormEditAvatar({ avatar }) {
-  api.editAvatar(avatar)
+  api.editAvatar(avatar, popupEditAvatar.renderLoading)
     .then(data => {
-      popupEditAvatar.renderLoading();
       const { avatar } = data;
 
       return avatar;
     })
     .then(avatar => {
       userInfo.editAvatar(avatar);
+      popupEditAvatar.close();
     })
     .catch(err => console.log(err))
-    .finally( _ => {
-      popupEditAvatar.close();
-    });
 }
 
 // создание экземпляра класса Api
